@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/calculatorParent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_dark"
+    tools:context=".Calculator">
+
+    <TextView
+        android:id="@+id/answerBGTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/holo_blue_bright"
+        app:layout_constraintBottom_toTopOf="@id/separateDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/customBGView"
+        android:layout_width="150dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp"
+        android:background="@android:color/holo_blue_light"
+        android:elevation="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/additionButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/dataScrollView"
+        app:layout_constraintTop_toTopOf="@+id/unitRadioGroup" />
+
+    <ScrollView
+        android:id="@+id/dataScrollView"
+        android:layout_width="200dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/holo_blue_light"
+        android:elevation="5dp"
+        android:fadeScrollbars="false"
+        app:layout_constraintBottom_toTopOf="@+id/adFrameLayout"
+        app:layout_constraintEnd_toStartOf="@+id/customBGView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/unitRadioGroup">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/dataChipGroup"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:elevation="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent">
+
+        </com.google.android.material.chip.ChipGroup>
+
+    </ScrollView>
+
+    <ScrollView
+        android:id="@+id/animeScrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        android:elevation="10dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/dataScrollView"
+        app:layout_constraintEnd_toEndOf="@+id/dataScrollView"
+        app:layout_constraintStart_toStartOf="@+id/dataScrollView"
+        app:layout_constraintTop_toTopOf="@+id/dataScrollView">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/animeChipGroup"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:elevation="10dp"
+            app:layout_constraintStart_toStartOf="@+id/dataScrollView"
+            app:layout_constraintTop_toTopOf="@+id/dataScrollView">
+
+        </com.google.android.material.chip.ChipGroup>
+    </ScrollView>
+
+    <RadioGroup
+        android:id="@+id/unitRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/dataScrollView"
+        app:layout_constraintStart_toStartOf="@+id/dataScrollView"
+        app:layout_constraintTop_toTopOf="@id/separateDivider">
+
+        <RadioButton
+            android:id="@+id/inchButton"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:button="?attr/selectableItemBackgroundBorderless"
+            android:paddingLeft="15dp"
+            android:text="@string/inchTextViewText"
+            android:textColor="@android:color/holo_orange_light" />
+
+        <RadioButton
+            android:id="@+id/mmButton"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:button="?attr/selectableItemBackgroundBorderless"
+            android:paddingLeft="15dp"
+            android:text="@string/mmTextViewText"
+            android:textColor="@android:color/holo_orange_light" />
+
+        <RadioButton
+            android:id="@+id/cmButton"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:button="?attr/selectableItemBackgroundBorderless"
+            android:paddingLeft="15dp"
+            android:text="@string/cmTextViewText"
+            android:textColor="@android:color/holo_orange_light" />
+
+    </RadioGroup>
+
+    <ImageButton
+        android:id="@+id/copyDataButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:elevation="5dp"
+        android:onClick="copyDataToClip"
+        app:layout_constraintEnd_toEndOf="@+id/dataScrollView"
+        app:layout_constraintTop_toBottomOf="@+id/unitRadioGroup"
+        app:srcCompat="?attr/actionModeCopyDrawable" />
+
+    <ImageButton
+        android:id="@+id/copyAnswerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:onClick="copyAnswerToClip"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/answerButton"
+        app:layout_constraintStart_toEndOf="@+id/answerButton"
+        app:layout_constraintTop_toTopOf="@+id/answerButton"
+        app:srcCompat="?attr/actionModeCopyDrawable" />
+
+    <TextView
+        android:id="@+id/customUnitView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="5dp"
+        android:text="@string/cmTextViewText"
+        app:layout_constraintBaseline_toBaselineOf="@+id/customValueEditText"
+        app:layout_constraintStart_toEndOf="@+id/customValueEditText" />
+
+    <EditText
+        android:id="@+id/customValueEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:elevation="5dp"
+        android:ems="5"
+        android:inputType="numberDecimal"
+        android:maxLength="8"
+        app:layout_constraintEnd_toEndOf="@+id/customBGView"
+        app:layout_constraintTop_toBottomOf="@+id/customValueTextView" />
+
+    <TextView
+        android:id="@+id/customValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="5dp"
+        android:text="@string/customValueText"
+        app:layout_constraintBottom_toTopOf="@+id/dataScrollView"
+        app:layout_constraintEnd_toStartOf="@+id/customUnitView" />
+
+    <ImageButton
+        android:id="@+id/addCustomValueButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="5dp"
+        android:onClick="addCustom"
+        app:layout_constraintEnd_toStartOf="@+id/customUnitView"
+        app:layout_constraintTop_toBottomOf="@+id/customUnitView"
+        app:srcCompat="@drawable/save_alt_24px" />
+
+    <Button
+        android:id="@+id/additionButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:onClick="addAddition"
+        android:text="+"
+        app:layout_constraintBottom_toTopOf="@+id/subtractionButton"
+        app:layout_constraintEnd_toEndOf="@+id/subtractionButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/subtractionButton"
+        app:layout_constraintTop_toBottomOf="@+id/customValueEditText" />
+
+    <Button
+        android:id="@+id/subtractionButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="addSubtraction"
+        android:text="-"
+        app:layout_constraintBottom_toTopOf="@+id/multiplicationButton"
+        app:layout_constraintEnd_toEndOf="@+id/multiplicationButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/multiplicationButton"
+        app:layout_constraintTop_toBottomOf="@+id/additionButton" />
+
+    <Button
+        android:id="@+id/multiplicationButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="addMultiplication"
+        android:text="×"
+        app:layout_constraintBottom_toTopOf="@+id/divisionButton"
+        app:layout_constraintEnd_toEndOf="@+id/divisionButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/divisionButton"
+        app:layout_constraintTop_toBottomOf="@+id/subtractionButton" />
+
+    <Button
+        android:id="@+id/divisionButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="addDivision"
+        android:text="÷"
+        app:layout_constraintBottom_toTopOf="@+id/sumAllButton"
+        app:layout_constraintEnd_toEndOf="@+id/sumAllButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/sumAllButton"
+        app:layout_constraintTop_toBottomOf="@+id/multiplicationButton" />
+
+    <Button
+        android:id="@+id/sumAllButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:onClick="sumAll"
+        android:text="@string/sumAllText"
+        app:layout_constraintBottom_toTopOf="@+id/clearAllButton"
+        app:layout_constraintEnd_toEndOf="@+id/clearAllButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/clearAllButton"
+        app:layout_constraintTop_toBottomOf="@+id/divisionButton" />
+
+    <Button
+        android:id="@+id/clearAllButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="clearAll"
+        android:text="@string/clearAllText"
+        app:layout_constraintBottom_toTopOf="@+id/adFrameLayout"
+        app:layout_constraintStart_toStartOf="@+id/customValueEditText"
+        app:layout_constraintTop_toBottomOf="@+id/sumAllButton" />
+
+    <TextView
+        android:id="@+id/answerTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/answerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="addAnswer"
+        android:textColor="#000000"
+        android:visibility="invisible"
+        app:backgroundTint="#FFFFFF"
+        app:cornerRadius="20dp"
+        app:layout_constraintStart_toEndOf="@+id/equalTextView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/equationChipGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/equationDivider">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/equationChip1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fiveEmptySpaceText"
+            app:closeIconEnabled="true" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/equationChip2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/oneEmptySpaceText"
+            app:closeIconEnabled="true" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/equationChip3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="@string/fiveEmptySpaceText"
+            app:closeIconEnabled="true"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </com.google.android.material.chip.ChipGroup>
+
+    <View
+        android:id="@+id/equationDivider"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="64dp"
+        android:background="?android:attr/listDivider"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/answerBGTextView" />
+
+    <TextView
+        android:id="@+id/equalTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="="
+        android:visibility="invisible"
+        app:layout_constraintBaseline_toBaselineOf="@id/answerTextView"
+        app:layout_constraintStart_toEndOf="@id/answerTextView" />
+
+    <View
+        android:id="@+id/separateDivider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="64dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/equationDivider" />
+
+    <FrameLayout
+        android:id="@+id/adFrameLayout"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </FrameLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

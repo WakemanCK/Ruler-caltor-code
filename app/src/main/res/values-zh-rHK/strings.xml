@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">小尺子（附計數機）</string>
+    <string name="optionText">選項</string>
+    <string name="calibrateButtonText">校準</string>
+    <string name="optionButtonText">選項</string>
+    <string name="doneButtonText">完成</string>
+    <string name="calibrateText">校準比例：</string>
+    <string name="rulerHeadSwitchText">顯示尺子頭段</string>
+    <string name="resetButtonText">重置</string>
+    <string name="resetPopupText">是否要重置所有設定？</string>
+    <string name="yesButtonText">是</string>
+    <string name="cancelButtonText">取消</string>
+    <string name="thickLineSwitchText">粗線條</string>
+    <string name="inchTextViewText">寸</string>
+    <string name="cmTextViewText">厘米</string>
+    <string name="guidingLinesSwitchText">顯示測量線</string>
+    <string name="decimalPlaceText">小數位：</string>
+    <string name="resetToastText">設定已重置！\n自動校準完成。</string>
+    <string name="mmTextViewText">毫米</string>
+    <string name="metricTextViewText">公制單位：</string>
+    <string name="dataFullToastText">資料格已滿！</string>
+    <string name="autoCalibrateText">自動校準完成。</string>
+    <string name="calculatorButtonText">計數機</string>
+    <string name="inTextViewText">寸</string>
+    <string name="copyClipToastText">已複製到系統剪貼板。</string>
+    <string name="customValueText">自訂數值</string>
+    <string name="sumAllText">數值總和</string>
+    <string name="clearAllText">清除所有數值</string>
+    <string name="informationTextViewText"><b>小尺子（附計數機） v%s</b>\n\n\nWakeman Chau\nhauwingstudio@hotmail.com\n© 2020\nAll rights reserved</string>
+    <string name="sumAllAnswerText">所有數值的總和</string>
+    <string name="errorText">錯誤！</string>
+    <string name="tapTextViewText">← 點擊以\n記錄數值 →</string>
+</resources>
