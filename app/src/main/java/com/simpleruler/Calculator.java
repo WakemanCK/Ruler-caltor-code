@@ -11,7 +11,6 @@ import android.content.ClipboardManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,12 +22,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -42,7 +35,6 @@ public class Calculator extends AppCompatActivity {
     int dataUnit = 2; // 0 = inch; 1 = mm; 2 = cm
     int dataIndex = 0;
     ChipGroup dataGroup;
-    private AdView mAdView;
     private FrameLayout adContainerView;
 
     @Override
@@ -51,26 +43,10 @@ public class Calculator extends AppCompatActivity {
         setContentView(R.layout.activity_calculator);
 
         // Load Ad
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
         adContainerView = findViewById(R.id.adFrameLayout);
-        mAdView = new AdView(this);
-        mAdView.setAdUnitId("ca-app-pub-1067337728169403/4623341024");
-        adContainerView.addView(mAdView);
-        AdRequest adRequest = new AdRequest.Builder().build();
         Display display = getWindowManager().getDefaultDisplay();
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        display.getMetrics(outMetrics);
-        float widthPixels = outMetrics.widthPixels;
-        float density = outMetrics.density;
-        int adWidth = (int) (widthPixels / density);
-        AdSize adSize = AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth);
-        mAdView.setAdSize(adSize);
-        mAdView.loadAd(adRequest);
-
+        GMS gmsAd = new GMS();
+        gmsAd.init(this, adContainerView, display);
 
         // Unit selection
         final RadioGroup unitGroup = findViewById(R.id.unitRadioGroup);
@@ -142,7 +118,7 @@ public class Calculator extends AppCompatActivity {
         for (int i : viewInt) {
             setupHideKeyboardListener(findViewById(i));
         }
-    } // end of OnCreate
+    }// end of OnCreate
 
     private void highLight(int getIndex) {
         RadioGroup radioGroup = findViewById(R.id.unitRadioGroup);
