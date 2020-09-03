@@ -34,7 +34,12 @@ public class Calculator extends AppCompatActivity {
     float[] dataValue;
     int dataUnit = 2; // 0 = inch; 1 = mm; 2 = cm
     int dataIndex = 0;
-    ChipGroup dataGroup;
+    String eqString = "0";
+    String eqSubstring, eqNum1String, eqNum2String, eqOperator;
+    BigDecimal eqNum1, eqNum2;
+    boolean eqEnteringNum1 = true;
+    boolean eqNumHasDot = false;
+    TextView equationView, answerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,19 +52,19 @@ public class Calculator extends AppCompatActivity {
         GMS gmsAd = new GMS();
         gmsAd.init(this, adContainerView, display);
 
-        // Unit selection
+        // Init and unit selection
+        final TextView equationView = findViewById(R.id.equationTextView);
+        final TextView answerView = findViewById(R.id.answerTextView);
         final RadioGroup unitGroup = findViewById(R.id.unitRadioGroup);
         highLight(dataUnit);
         unitGroup.setOnCheckedChangeListener(
                 new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup radioGroup, int childIndex) {
-                        int newIndex = radioGroup.indexOfChild(findViewById(childIndex));
-                        highLight(newIndex);
-                       int oldUnit = dataUnit;
-                        dataUnit = newIndex;
-                        // set data unit
-                        printDataList(dataGroup);
+                        dataUnit = radioGroup.indexOfChild(findViewById(childIndex));
+                        highLight(dataUnit);
+                       
+                        // debug renew dataList
                     }
                 }
         );
@@ -67,10 +72,9 @@ public class Calculator extends AppCompatActivity {
         Intent intent = getIntent();
         dataValue = intent.getFloatArrayExtra(MainActivity.EXTRA_VALUE);
         dataIndex = intent.getIntExtra(MainActivity.EXTRA_INDEX, 0);
-        dataGroup = findViewById(R.id.dataChipGroup);
-        printDataList(dataGroup);
-        // Setup equation
-//start
+        
+        // debug fill datalistview
+        
     }// end of OnCreate
 
     private void highLight(int getIndex) {
@@ -85,7 +89,7 @@ public class Calculator extends AppCompatActivity {
     }
 
     // Change units
-    private float convertInchMMCM(int getOld, int getNew, float getValue) {
+ /*   private float convertInchMMCM(int getOld, int getNew, float getValue) {
         float f = 0f;
         switch (getOld) { // 0 = inch; 1 = mm; 2 = cm
             case 0:
@@ -113,7 +117,7 @@ public class Calculator extends AppCompatActivity {
                 break;
         }
         return f;
-    }
+    } */
 
     private String convertNumberWithUnit(float getValue) {
         String convertedText = "";
@@ -132,7 +136,7 @@ public class Calculator extends AppCompatActivity {
         return convertedText;
     }
 
-    private String convertNumber(float getValue) {
+/*    private String convertNumber(float getValue) {
         String convertedText = "";
         switch (dataUnit) { // 0 = inch; 1 = mm; 2 = cm
             case 0:
@@ -147,17 +151,17 @@ public class Calculator extends AppCompatActivity {
                 break;
         }
         return convertedText;
-    }
+    } */
 
     // Data related
-    private void printDataList(ChipGroup getGroup) {
+/*    private void printDataList(ChipGroup getGroup) {
         getGroup.removeAllViews();
         for (int i = 0; i <= dataIndex; i++) {
             addDataItem(dataValue[i], getGroup);
         }
-    }
+    } */
 
-    private void addDataItem(float getValue, ChipGroup getGroup) {
+/*    private void addDataItem(float getValue, ChipGroup getGroup) {
         final Chip newChip = new Chip(this);
         final String chipText = convertNumberWithUnit(getValue);
         final String equationText = convertNumber(getValue);
@@ -176,16 +180,8 @@ public class Calculator extends AppCompatActivity {
                 checkEquation();
             }
         });
-    }
+    }  */
 
-    // Custom value related
-    public void setupHideKeyboardListener(View view) {
-        view.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
-    }
 
     private boolean testValidFloat(String getString) {
         try {
@@ -198,57 +194,99 @@ public class Calculator extends AppCompatActivity {
 
     // Add operators
     public void addAddition(View view) {
-       Chip equationChip2 = findViewById(R.id.equationChip2);
-        equationChip2.setText("+");
-        checkEquation();
+              checkEquation("+");
     }
 
     public void addSubtraction(View view) {
-        Chip equationChip2 = findViewById(R.id.equationChip2);
-        equationChip2.setText("-");
-        checkEquation();
+        checkEquation("-");
     }
 
     public void addMultiplication(View view) {
-        Chip equationChip2 = findViewById(R.id.equationChip2);
-        equationChip2.setText("×");
-        checkEquation();
+        checkEquation("×");
     }
 
     public void addDivision(View view) {
-        Chip equationChip2 = findViewById(R.id.equationChip2);
-        equationChip2.setText("÷");
-        checkEquation();
+        checkEquation("÷");
     }
-
-    // Calculate
-    private void checkEquation() {
-        final Chip equationChip1 = findViewById(R.id.equationChip1);
-        final Chip equationChip2 = findViewById(R.id.equationChip2);
-        final Chip equationChip3 = findViewById(R.id.equationChip3);
-        final ChipGroup equationGroup = findViewById(R.id.equationChipGroup);
-        if (equationChip1.getText() == getString(R.string.fiveEmptySpaceText) ||
-                equationChip2.getText() == getString(R.string.oneEmptySpaceText) ||
-                equationChip3.getText() == getString(R.string.fiveEmptySpaceText)) {
-            return;
+        
+    public void addEqual(View view) {
+        checkEquation("=");
+    }
+    
+    public void addZero(View view) {
+        addNumber("0");
+    }
+    
+    public void addOne(View view) {
+        addNumber("1");
+    }
+    
+    public void addTwo(View view) {
+        addNumber("2");
+    }
+        
+    public void addThree(View view) {
+        addNumber("3");
+    }
+        
+    public void addFour(View view) {
+        addNumber("4");
+    }
+        
+    public void addFive(View view) {
+        addNumber("5");
+    }
+        
+    public void addSix(View view) {
+        addNumber("6");
+    }
+        
+    public void addSeven(View view) {
+        addNumber("7");
+    }
+        
+    public void addEight(View view) {
+        addNumber("8");
+    }
+        
+    public void addNine(View view) {
+        addNumber("9");
+    }
+        
+    public void addDot(View view) {
+        if (!eqNumHasDot) {
+            addNumber(".");
+            eqNumHasDot = true;
         }
+    }
+    
+    // Calculate
+    private void addNumber(String getString) {
+        if (eqEnteringNum1) {
+            eqNum1String = eqNum1String + getString;
+            equationView.setText(eqNum1String);
+        } else {
+            eqSubstring = eqSubstring + getString;
+            String s = eqNum1 + eqOperator + eqSubstring;
+            equationView.setText(s);
+    }
+    
+    private void checkEquation() {
+      eqNumHasDot = false;
+        
+        
+        
+        
+        
+        
+        
+        
+        // old code below
         final BigDecimal num1 = new BigDecimal(equationChip1.getText().toString());
         final String operator = equationChip2.getText().toString();
         final BigDecimal num2 = new BigDecimal(equationChip3.getText().toString());
-        equationChip1.setCloseIconVisible(false);
-        equationChip2.setCloseIconVisible(false);
-        equationChip3.setCloseIconVisible(false);
-        ObjectAnimator animation = ObjectAnimator.ofFloat(equationGroup, "translationY",
-                -findViewById(R.id.equationDivider).getY());
-        animation.setDuration(300);
-        int[] viewInt = {R.id.answerTextView, R.id.equalTextView, R.id.answerButton, R.id.copyAnswerButton};
-        for (int i : viewInt) {
-            findViewById(i).setVisibility(View.INVISIBLE);
-        }
-        animation.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                String equationText = num1 + getString(R.string.fiveEmptySpaceText) + getString(R.string.fiveEmptySpaceText) +
+        
+              String equationText = num1 + getString(R.string.fiveEmptySpaceText) + getString(R.string.fiveEmptySpaceText) +
                         operator + getString(R.string.fiveEmptySpaceText) + getString(R.string.fiveEmptySpaceText) +
                         num2 + getString(R.string.fiveEmptySpaceText);
                 TextView equationView = findViewById(R.id.answerTextView);
