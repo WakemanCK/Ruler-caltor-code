@@ -271,10 +271,15 @@ public class Calculator extends AppCompatActivity {
             equationView.setText(s);
     }
     
-    private void checkEquation() {
+    private void checkEquation(String getString) {
       eqNumHasDot = false;
-        
-        
+        if (eqEnteringNum1) {
+            eqOperator = getString;
+            String s = eqNum1 + eqOperator;
+            equationView.setText(s);
+            eqEnteringNum1 = false;
+        } else {
+        if 
         
         
         
