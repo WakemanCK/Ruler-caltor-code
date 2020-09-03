@@ -25,8 +25,8 @@
     <string name="inTextViewText">寸</string>
     <string name="copyClipToastText">已複製到系统剪贴板。</string>
     <string name="customValueText">自订数值</string>
-    <string name="sumAllText">数值总和</string>
-    <string name="clearAllText">清除所有数值</string>
+    <string name="sumAllText">总和</string>
+    <string name="clearAllText">清除</string>
     <string name="informationTextViewText"><b>小尺子（附计算器） v%s</b>\n\n\nWakeman Chau\nhauwingstudio@hotmail.com\n© 2020\nAll rights reserved</string>
     <string name="sumAllAnswerText">所有数值的总和</string>
     <string name="errorText">错误！</string>
