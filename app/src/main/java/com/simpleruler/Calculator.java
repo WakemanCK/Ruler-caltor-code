@@ -15,9 +15,11 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,9 +36,12 @@ public class Calculator extends AppCompatActivity {
     float[] dataValue;
     int dataUnit = 2; // 0 = inch; 1 = mm; 2 = cm
     int dataIndex = 0;
-    String eqString = "0";
-    String eqSubstring, eqNum1String, eqNum2String, eqOperator;
-    BigDecimal eqNum1, eqNum2;
+    String eqString = "";
+    String eqSubstring = "";
+    String eqNum1String = "";
+    String eqNum2String = "";
+    String eqOperator = "";
+    //   BigDecimal eqNum1, eqNum2;
     boolean eqEnteringNum1 = true;
     boolean eqNumHasDot = false;
     TextView equationView, answerView;
@@ -55,6 +60,7 @@ public class Calculator extends AppCompatActivity {
         // Init and unit selection
         final TextView equationView = findViewById(R.id.equationTextView);
         final TextView answerView = findViewById(R.id.answerTextView);
+        answerView.setText("0");
         final RadioGroup unitGroup = findViewById(R.id.unitRadioGroup);
         highLight(dataUnit);
         unitGroup.setOnCheckedChangeListener(
@@ -63,7 +69,7 @@ public class Calculator extends AppCompatActivity {
                     public void onCheckedChanged(RadioGroup radioGroup, int childIndex) {
                         dataUnit = radioGroup.indexOfChild(findViewById(childIndex));
                         highLight(dataUnit);
-                       
+                        showList(dataValue);
                         // debug renew dataList
                     }
                 }
@@ -72,9 +78,7 @@ public class Calculator extends AppCompatActivity {
         Intent intent = getIntent();
         dataValue = intent.getFloatArrayExtra(MainActivity.EXTRA_VALUE);
         dataIndex = intent.getIntExtra(MainActivity.EXTRA_INDEX, 0);
-        
-        // debug fill datalistview
-        
+        showList(dataValue);
     }// end of OnCreate
 
     private void highLight(int getIndex) {
@@ -86,6 +90,17 @@ public class Calculator extends AppCompatActivity {
                 radioGroup.getChildAt(i).setBackgroundColor(getColor(R.color.colorListDark));
             }
         }
+    }
+
+    private void showList(float[] data){
+        String[] dataString = new String[10];
+        for (int i = 0; i < 10; i++) {
+            dataString[i] = convertNumberWithUnit(data[i]);
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, dataString);
+        ListView listView = (ListView) findViewById(R.id.dataListView);
+        listView.setAdapter(adapter);
     }
 
     // Change units
@@ -194,7 +209,7 @@ public class Calculator extends AppCompatActivity {
 
     // Add operators
     public void addAddition(View view) {
-              checkEquation("+");
+        checkEquation("+");
     }
 
     public void addSubtraction(View view) {
@@ -208,142 +223,153 @@ public class Calculator extends AppCompatActivity {
     public void addDivision(View view) {
         checkEquation("÷");
     }
-        
+
     public void addEqual(View view) {
         checkEquation("=");
     }
-    
+
     public void addZero(View view) {
         addNumber("0");
     }
-    
+
     public void addOne(View view) {
         addNumber("1");
     }
-    
+
     public void addTwo(View view) {
         addNumber("2");
     }
-        
+
     public void addThree(View view) {
         addNumber("3");
     }
-        
+
     public void addFour(View view) {
         addNumber("4");
     }
-        
+
     public void addFive(View view) {
         addNumber("5");
     }
-        
+
     public void addSix(View view) {
         addNumber("6");
     }
-        
+
     public void addSeven(View view) {
         addNumber("7");
     }
-        
+
     public void addEight(View view) {
         addNumber("8");
     }
-        
+
     public void addNine(View view) {
         addNumber("9");
     }
-        
+
     public void addDot(View view) {
         if (!eqNumHasDot) {
             addNumber(".");
             eqNumHasDot = true;
         }
     }
-    
+
     // Calculate
-    private void addNumber(String getString) {
+    private void addNumber(String getNumber) {
         if (eqEnteringNum1) {
-            eqNum1String = eqNum1String + getString;
+            eqNum1String = eqNum1String + getNumber;
             equationView.setText(eqNum1String);
         } else {
-            eqSubstring = eqSubstring + getString;
-            String s = eqNum1 + eqOperator + eqSubstring;
-            equationView.setText(s);
-    }
-    
-    private void checkEquation(String getString) {
-      eqNumHasDot = false;
-        if (eqEnteringNum1) {
-            eqOperator = getString;
-            String s = eqNum1 + eqOperator;
-            equationView.setText(s);
-            eqEnteringNum1 = false;
-        } else {
-        if 
-        
-        
-        
-        
-        
-        
-        // old code below
-        final BigDecimal num1 = new BigDecimal(equationChip1.getText().toString());
-        final String operator = equationChip2.getText().toString();
-        final BigDecimal num2 = new BigDecimal(equationChip3.getText().toString());
-        
-              String equationText = num1 + getString(R.string.fiveEmptySpaceText) + getString(R.string.fiveEmptySpaceText) +
-                        operator + getString(R.string.fiveEmptySpaceText) + getString(R.string.fiveEmptySpaceText) +
-                        num2 + getString(R.string.fiveEmptySpaceText);
-                TextView equationView = findViewById(R.id.answerTextView);
-                equationView.setText(equationText);
-                BigDecimal answer = BigDecimal.ZERO;
-                try {
-                    switch (operator) {
-                        case "+":
-                            answer = num1.add(num2);
-                            break;
-                        case "-":
-                            answer = num1.subtract(num2);
-                            break;
-                        case "×":
-                            answer = num1.multiply(num2);
-                            break;
-                        case "÷":
-                            answer = num1.divide(num2, 4, RoundingMode.HALF_UP);
-                            break;
-                        default:
-                            break;
-                    }
-                } catch (ArithmeticException e) {
-                    Toast.makeText(getApplicationContext(), R.string.errorText, Toast.LENGTH_SHORT).show();
-                    equationChip1.setText(R.string.fiveEmptySpaceText);
-                    equationChip2.setText(R.string.oneEmptySpaceText);
-                    equationChip3.setText(R.string.fiveEmptySpaceText);
-                    equationChip1.setCloseIconVisible(true);
-                    equationChip2.setCloseIconVisible(true);
-                    equationChip3.setCloseIconVisible(true);
-                    equationGroup.setY(findViewById(R.id.equationDivider).getY());
-                    return;
-                }
-                answer = answer.stripTrailingZeros();
-                Button answerButton = findViewById(R.id.answerButton);
-                answerButton.setText(answer.toPlainString());
-                int[] viewInt = {R.id.answerTextView, R.id.equalTextView, R.id.answerButton, R.id.copyAnswerButton};
-                for (int i : viewInt) {
-                    findViewById(i).setVisibility(View.VISIBLE);
-                    equationChip1.setText(R.string.fiveEmptySpaceText);
-                    equationChip2.setText(R.string.oneEmptySpaceText);
-                    equationChip3.setText(R.string.fiveEmptySpaceText);
-                    equationChip1.setCloseIconVisible(true);
-                    equationChip2.setCloseIconVisible(true);
-                    equationChip3.setCloseIconVisible(true);
-                    equationGroup.setY(findViewById(R.id.equationDivider).getY());
-                }
-            }
-        });
-        animation.start();
+            eqNum2String = eqNum2String + getNumber;
+            equationView.setText(eqNum2String);
+        }
     }
 
+    private void checkEquation(String getOperator) {
+        eqNumHasDot = false;
+        if (eqEnteringNum1) {
+            eqOperator = getOperator;
+            eqString = eqNum1String + eqOperator;
+            equationView.setText(eqString);
+            eqEnteringNum1 = false;
+            eqNum2String = "";
+            answerView.setText("0");
+            return;
+        }
+        if ((eqOperator.equals("+") || eqOperator.equals("-")) && (getOperator.equals("×") || getOperator.equals("÷"))) {
+            if (eqNum2String.equals("")) {
+                eqSubstring = eqSubstring.substring(0, eqSubstring.length() - 1) + getOperator;
+            } else {
+                eqSubstring = eqSubstring + eqNum2String + getOperator;
+            }
+            eqString = eqNum1String + eqOperator + eqSubstring;
+            equationView.setText(eqString);
+            eqNum2String = "";
+            answerView.setText("0");
+            return;
+        }
+        if (eqOperator.equals("×") || eqOperator.equals("÷")) {
+            eqString = eqNum1String + eqOperator + eqSubstring;
+            BigDecimal answer = calculateMultiplication(eqString);
+            eqString = String.valueOf(answer) + getOperator;
+            equationView.setText(eqString);
+            eqNum2String = "";
+            answerView.setText("0");
+            return;
+        }
+        // + and - below
+        BigDecimal subStringAns;
+        subStringAns = calculateMultiplication(eqSubstring);
+        BigDecimal answer = new BigDecimal(eqNum1String);
+        if (eqOperator.equals("+")) {
+            answer = answer.add(subStringAns);
+        }
+        if (eqOperator.equals("-")) {
+            answer = answer.subtract(subStringAns);
+        }
+        eqNum1String = String.valueOf(answer);
+        eqOperator = getOperator;
+        eqSubstring = "";
+        eqNum2String = "";
+        eqString = eqNum1String + eqOperator;
+        equationView.setText(eqString);
+    }
+
+
+
+    private BigDecimal calculateMultiplication(String getEqString) {
+        int maxPart = getEqString.length()/2 + 1;
+        BigDecimal[] number = new BigDecimal[maxPart];
+        boolean[] isMultiply = new boolean[maxPart];
+        int count = 0;
+        int startIndex = 0;
+        for (int index = 1; index < getEqString.length()-2; index++) {
+            if (getEqString.charAt(index) == '×') {
+                number[count] = new BigDecimal(getEqString.substring(startIndex,index));
+                isMultiply[count] = true;
+                startIndex = index + 1;
+                count++;
+            }
+            if (getEqString.charAt(index) == '÷') {
+                number[count] = new BigDecimal(getEqString.substring(startIndex,index));
+                isMultiply[count] = false;
+                startIndex = index + 1;
+                count++;
+            }
+        }
+        number[count] = new BigDecimal(getEqString.substring(startIndex));
+        BigDecimal answer = number[0];
+        for (int i = 0; i < count-1; i++) {
+            if (isMultiply[i]){
+                answer = answer.multiply(number[i+1]);
+            } else {
+                answer = answer.divide(number[i+1]);
+            }
+        }
+        return answer;
+    }
+/*
     public void sumAll(View view) {
         final TextView textView = findViewById(R.id.answerTextView);
         final Button answerButton = findViewById(R.id.answerButton);
@@ -410,7 +436,6 @@ public class Calculator extends AppCompatActivity {
 
     // Copy to clipboard
     public void copyDataToClip(View view) {
-        hideSoftKeyboard(Calculator.this);
         StringBuilder dataText = new StringBuilder();
         for (int i = 0; i < dataGroup.getChildCount(); i++) {
             Chip chip = (Chip) dataGroup.getChildAt(i);
@@ -423,7 +448,6 @@ public class Calculator extends AppCompatActivity {
     }
 
     public void copyAnswerToClip(View view) {
-        hideSoftKeyboard(Calculator.this);
         Button answerButton = findViewById(R.id.answerButton);
         String answerText = answerButton.getText() + "\n";
         ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
@@ -431,4 +455,6 @@ public class Calculator extends AppCompatActivity {
         clipboard.setPrimaryClip(clip);
         Toast.makeText(Calculator.this, R.string.copyClipToastText, Toast.LENGTH_SHORT).show();
     }
+
+ */
 }
