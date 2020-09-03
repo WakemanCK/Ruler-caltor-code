@@ -35,7 +35,6 @@ public class Calculator extends AppCompatActivity {
     int dataUnit = 2; // 0 = inch; 1 = mm; 2 = cm
     int dataIndex = 0;
     ChipGroup dataGroup;
-    private FrameLayout adContainerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +42,7 @@ public class Calculator extends AppCompatActivity {
         setContentView(R.layout.activity_calculator);
 
         // Load Ad
-        adContainerView = findViewById(R.id.adFrameLayout);
+        FrameLayout adContainerView = findViewById(R.id.adFrameLayout);
         Display display = getWindowManager().getDefaultDisplay();
         GMS gmsAd = new GMS();
         gmsAd.init(this, adContainerView, display);
@@ -55,34 +54,12 @@ public class Calculator extends AppCompatActivity {
                 new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup radioGroup, int childIndex) {
-                        hideSoftKeyboard(Calculator.this);
                         int newIndex = radioGroup.indexOfChild(findViewById(childIndex));
                         highLight(newIndex);
-                        final TextView customUnit = findViewById(R.id.customUnitView);
-                        int oldUnit = dataUnit;
+                       int oldUnit = dataUnit;
                         dataUnit = newIndex;
-                        // set custom value unit
-                        EditText editText = findViewById(R.id.customValueEditText);
-                        String customValue = editText.getText().toString();
-                        if (testValidFloat(customValue)) {
-                            float newValue = convertInchMMCM(oldUnit, dataUnit, Float.parseFloat(customValue));
-                            editText.setText(String.valueOf(newValue));
-                        }
-                        switch (dataUnit) { // 0 = inch; 1 = mm; 2 = cm
-                            case 0:
-                                customUnit.setText(R.string.inTextViewText);
-                                break;
-                            case 1:
-                                customUnit.setText(R.string.mmTextViewText);
-                                break;
-                            case 2:
-                                customUnit.setText(R.string.cmTextViewText);
-                                break;
-                            default:
-                                break;
-                        }
                         // set data unit
-                        printDataChip(dataGroup);
+                        printDataList(dataGroup);
                     }
                 }
         );
@@ -91,42 +68,18 @@ public class Calculator extends AppCompatActivity {
         dataValue = intent.getFloatArrayExtra(MainActivity.EXTRA_VALUE);
         dataIndex = intent.getIntExtra(MainActivity.EXTRA_INDEX, 0);
         dataGroup = findViewById(R.id.dataChipGroup);
-        printDataChip(dataGroup);
+        printDataList(dataGroup);
         // Setup equation
-        final Chip equationChip1 = findViewById(R.id.equationChip1);
-        final Chip equationChip2 = findViewById(R.id.equationChip2);
-        final Chip equationChip3 = findViewById(R.id.equationChip3);
-        equationChip1.setOnCloseIconClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                equationChip1.setText(getString(R.string.fiveEmptySpaceText));
-            }
-        });
-        equationChip2.setOnCloseIconClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                equationChip2.setText(getString(R.string.oneEmptySpaceText));
-            }
-        });
-        equationChip3.setOnCloseIconClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                equationChip3.setText(getString(R.string.fiveEmptySpaceText));
-            }
-        });
-        int[] viewInt = {R.id.calculatorParent, R.id.dataScrollView, R.id.dataChipGroup, R.id.customValueTextView, R.id.customUnitView};
-        for (int i : viewInt) {
-            setupHideKeyboardListener(findViewById(i));
-        }
+
     }// end of OnCreate
 
     private void highLight(int getIndex) {
         RadioGroup radioGroup = findViewById(R.id.unitRadioGroup);
         for (int i = 0; i < 3; i++) {
             if (i == getIndex) {
-                radioGroup.getChildAt(i).setBackgroundColor(Color.BLACK);
+                radioGroup.getChildAt(i).setBackgroundColor(getColor(R.color.colorList));
             } else {
-                radioGroup.getChildAt(i).setBackgroundColor(Color.GRAY);
+                radioGroup.getChildAt(i).setBackgroundColor(getColor(R.color.colorListDark));
             }
         }
     }
@@ -197,14 +150,14 @@ public class Calculator extends AppCompatActivity {
     }
 
     // Data related
-    private void printDataChip(ChipGroup getGroup) {
+    private void printDataList(ChipGroup getGroup) {
         getGroup.removeAllViews();
         for (int i = 0; i <= dataIndex; i++) {
-            addDataChip(dataValue[i], getGroup);
+            addDataItem(dataValue[i], getGroup);
         }
     }
 
-    private void addDataChip(float getValue, ChipGroup getGroup) {
+    private void addDataItem(float getValue, ChipGroup getGroup) {
         final Chip newChip = new Chip(this);
         final String chipText = convertNumberWithUnit(getValue);
         final String equationText = convertNumber(getValue);
@@ -213,7 +166,6 @@ public class Calculator extends AppCompatActivity {
         newChip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                hideSoftKeyboard(Calculator.this);
                 Chip equationChip1 = findViewById(R.id.equationChip1);
                 Chip equationChip3 = findViewById(R.id.equationChip3);
                 if (equationChip1.getText() == getString(R.string.fiveEmptySpaceText)) {
@@ -230,36 +182,9 @@ public class Calculator extends AppCompatActivity {
     public void setupHideKeyboardListener(View view) {
         view.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
-                hideSoftKeyboard(Calculator.this);
                 return false;
             }
         });
-    }
-
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        try {
-            inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
-        } catch (NullPointerException e3) {
-            e3.printStackTrace();
-        }
-    }
-
-    public void addCustom(View view) {
-        hideSoftKeyboard(Calculator.this);
-        EditText editText = findViewById(R.id.customValueEditText);
-        String customValue = String.valueOf(editText.getText());
-        if (!testValidFloat(customValue)) {
-            return;
-        }
-        Chip equationChip1 = findViewById(R.id.equationChip1);
-        Chip equationChip3 = findViewById(R.id.equationChip3);
-        if (equationChip1.getText() == getString(R.string.fiveEmptySpaceText)) {
-            equationChip1.setText(customValue);
-        } else {
-            equationChip3.setText(customValue);
-        }
-        checkEquation();
     }
 
     private boolean testValidFloat(String getString) {
@@ -273,28 +198,24 @@ public class Calculator extends AppCompatActivity {
 
     // Add operators
     public void addAddition(View view) {
-        hideSoftKeyboard(Calculator.this);
-        Chip equationChip2 = findViewById(R.id.equationChip2);
+       Chip equationChip2 = findViewById(R.id.equationChip2);
         equationChip2.setText("+");
         checkEquation();
     }
 
     public void addSubtraction(View view) {
-        hideSoftKeyboard(Calculator.this);
         Chip equationChip2 = findViewById(R.id.equationChip2);
         equationChip2.setText("-");
         checkEquation();
     }
 
     public void addMultiplication(View view) {
-        hideSoftKeyboard(Calculator.this);
         Chip equationChip2 = findViewById(R.id.equationChip2);
         equationChip2.setText("×");
         checkEquation();
     }
 
     public void addDivision(View view) {
-        hideSoftKeyboard(Calculator.this);
         Chip equationChip2 = findViewById(R.id.equationChip2);
         equationChip2.setText("÷");
         checkEquation();

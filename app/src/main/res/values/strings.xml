@@ -31,8 +31,8 @@
     <string name="inTextViewText">in</string>
     <string name="copyClipToastText">Copied to clipboard.</string>
     <string name="customValueText">Custom Value</string>
-    <string name="sumAllText">Sum All</string>
-    <string name="clearAllText">Clear All</string>
+    <string name="sumAllText">Sum</string>
+    <string name="clearAllText">Clear</string>
     <string name="oneEmptySpaceText" translatable="false">" "</string>
     <string name="fiveEmptySpaceText" translatable="false">"     "</string>
     <string name="informationTextViewText">"<b>Ruler (with Calc) v%s</b>\n\n\nWakeman Chau\nhauwingstudio@hotmail.com\n© 2020\nAll rights reserved"</string>
