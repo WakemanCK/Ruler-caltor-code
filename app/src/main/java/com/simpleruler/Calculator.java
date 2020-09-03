@@ -70,7 +70,7 @@ public class Calculator extends AppCompatActivity {
         dataGroup = findViewById(R.id.dataChipGroup);
         printDataList(dataGroup);
         // Setup equation
-
+//start
     }// end of OnCreate
 
     private void highLight(int getIndex) {
