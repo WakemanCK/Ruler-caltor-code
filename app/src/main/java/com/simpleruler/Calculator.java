@@ -38,10 +38,9 @@ public class Calculator extends AppCompatActivity {
     int dataIndex = 0;
     String eqString = "";
     String eqSubstring = "";
-    String eqNum1String = "";
-    String eqNum2String = "";
+    String eqNum1 = "";
+    String eqNum2 = "";
     String eqOperator = "";
-    //   BigDecimal eqNum1, eqNum2;
     boolean eqEnteringNum1 = true;
     boolean eqNumHasDot = false;
     TextView equationView, answerView;
@@ -280,15 +279,31 @@ public class Calculator extends AppCompatActivity {
             eqNumHasDot = true;
         }
     }
+    
+    public void delete(View view) {
+        if eqNum2String 
+    }
+    
+    public void clearEquation(View view) {
+         eqString = "";
+        eqSubstring = "";
+        eqNum1 = "";
+        eqNum2 = "";
+        eqOperator = "";
+        eqEnteringNum1 = true;
+        eqNumHasDot = false;
+        equationView.setText("");
+        answerView.setText("0");
+    }
 
     // Calculate
     private void addNumber(String getNumber) {
         if (eqEnteringNum1) {
-            eqNum1String = eqNum1String + getNumber;
-            answerView.setText(eqNum1String);
+            eqNum1 = eqNum1 + getNumber;
+            answerView.setText(eqNum1);
         } else {
-            eqNum2String = eqNum2String + getNumber;
-            answerView.setText(eqNum2String);
+            eqNum2 = eqNum2 + getNumber;
+            answerView.setText(eqNum2);
         }
     }
 
@@ -296,58 +311,58 @@ public class Calculator extends AppCompatActivity {
         eqNumHasDot = false;
         if (eqEnteringNum1) {
             eqOperator = getOperator;
-            if (eqNum1String.equals("")) {
-                eqNum1String = "0";
+            if (eqNum1.equals("")) {
+                eqNum1 = "0";
             }
-            eqString = eqNum1String + eqOperator;
+            eqString = eqNum1 + eqOperator;
             equationView.setText(eqString);
             eqEnteringNum1 = false;
-            eqNum2String = "";
+            eqNum2 = "";
             answerView.setText("0");
             return;
         }
         if ((eqOperator.equals("+") || eqOperator.equals("-")) && (getOperator.equals("×") || getOperator.equals("÷"))) {
-            if (eqNum2String.equals("")) {
+            if (eqNum2.equals("")) {
                 eqSubstring = eqSubstring.substring(0, eqSubstring.length() - 1) + getOperator;
             } else {
-                eqSubstring = eqSubstring + eqNum2String + getOperator;
+                eqSubstring = eqSubstring + eqNum2 + getOperator;
             }
-            eqString = eqNum1String + eqOperator + eqSubstring;
+            eqString = eqNum1 + eqOperator + eqSubstring;
             equationView.setText(eqString);
-            eqNum2String = "";
+            eqNum2 = "";
             answerView.setText("0");
             return;
         }
         if (eqOperator.equals("×") || eqOperator.equals("÷")) {
-            eqString = eqNum1String + eqOperator + eqSubstring + eqNum2String;
+            eqString = eqNum1 + eqOperator + eqSubstring + eqNum2;
             BigDecimal answer = calculateMultiplication(eqString);
             eqString = String.valueOf(answer) + getOperator;
             equationView.setText(eqString);
-            eqNum2String = "";
+            eqNum2 = "";
             answerView.setText("0");
             return;
         }
         // = or + or - below
         BigDecimal subStringAns;
-        eqSubstring = eqSubstring + eqNum2String;
+        eqSubstring = eqSubstring + eqNum2;
         subStringAns = calculateMultiplication(eqSubstring);
-        BigDecimal answer = new BigDecimal(eqNum1String);
+        BigDecimal answer = new BigDecimal(eqNum1);
         if (eqOperator.equals("+")) {
             answer = answer.add(subStringAns);
         }
         if (eqOperator.equals("-")) {
             answer = answer.subtract(subStringAns);
         }
-        eqNum1String = String.valueOf(answer);
+        eqNum1 = String.valueOf(answer);
         eqOperator = getOperator;
         eqSubstring = "";
-        eqNum2String = "";
+        eqNum2 = "";
         if (eqOperator == "="){
-            eqString = eqOperator + eqNum1String;
-            eqSubstring = "";
-            eqNum2String = "";
+            eqString = eqOperator + eqNum1;
+            eqOperator = "";
+            eqEnteringNum1 = true;
         } else {
-            eqString = eqNum1String + eqOperator;
+            eqString = eqNum1 + eqOperator;
         }
         equationView.setText(eqString);
         eqNum2String = "";
