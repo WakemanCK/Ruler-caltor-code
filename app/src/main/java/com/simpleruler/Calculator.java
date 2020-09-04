@@ -94,8 +94,12 @@ public class Calculator extends AppCompatActivity {
 
     private void showList(float[] data){
         String[] dataString = new String[10];
+        int j = 0
         for (int i = 0; i < 10; i++) {
-            dataString[i] = convertNumberWithUnit(data[i]);
+            if (data[i] >= 0) {
+            dataString[j] = convertNumberWithUnit(data[i]);
+                j++;
+            }
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, dataString);
@@ -290,6 +294,9 @@ public class Calculator extends AppCompatActivity {
         eqNumHasDot = false;
         if (eqEnteringNum1) {
             eqOperator = getOperator;
+            if (eqNum1String.equals("")) {
+                eqNum1String = "0";
+            }
             eqString = eqNum1String + eqOperator;
             equationView.setText(eqString);
             eqEnteringNum1 = false;
