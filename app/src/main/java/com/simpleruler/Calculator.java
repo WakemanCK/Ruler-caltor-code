@@ -390,6 +390,26 @@ public class Calculator extends AppCompatActivity {
         }
         return answer;
     }
+        
+    public void sumAll(View view) {
+        BigDecimal sum = BigDecimal.ZERO;
+                String s;
+                for (int i = 0; i <= dataIndex; i++) {
+                    s = convertNumber(dataValue[i]);
+                    sum = sum.add(new BigDecimal(s));
+                }
+                sum = sum.stripTrailingZeros();
+           eqNum1 = sum.toPlainString();
+          eqOperator = "";
+          eqSubstring = "";
+          eqNum2 = "";
+            eqEnteringNum1 = true;
+         eqNumHasDot = eqNum1.contains('.');
+                questionView.setText(R.string.sumAllAnswerText);
+                answerView.setText(eqNum1);
+    }
+        
+
 /*
     public void sumAll(View view) {
         final TextView textView = findViewById(R.id.answerTextView);
