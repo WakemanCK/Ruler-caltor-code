@@ -58,8 +58,8 @@ public class Calculator extends AppCompatActivity {
         gmsAd.init(this, adContainerView, display);
 
         // Init and unit selection
-        final TextView equationView = findViewById(R.id.equationTextView);
-        final TextView answerView = findViewById(R.id.answerTextView);
+        equationView = findViewById(R.id.equationTextView);
+        answerView = findViewById(R.id.answerTextView);
         answerView.setText("0");
         final RadioGroup unitGroup = findViewById(R.id.unitRadioGroup);
         highLight(dataUnit);
@@ -92,13 +92,15 @@ public class Calculator extends AppCompatActivity {
         }
     }
 
-    private void showList(float[] data){
+    private void showList(float[] data) {
         String[] dataString = new String[10];
-        int j = 0
+        //int j = 0;
         for (int i = 0; i < 10; i++) {
             if (data[i] >= 0) {
-            dataString[j] = convertNumberWithUnit(data[i]);
-                j++;
+                dataString[i] = convertNumberWithUnit(data[i]);
+                //j++;
+            } else {
+                dataString[i] = "";
             }
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -283,10 +285,10 @@ public class Calculator extends AppCompatActivity {
     private void addNumber(String getNumber) {
         if (eqEnteringNum1) {
             eqNum1String = eqNum1String + getNumber;
-            equationView.setText(eqNum1String);
+            answerView.setText(eqNum1String);
         } else {
             eqNum2String = eqNum2String + getNumber;
-            equationView.setText(eqNum2String);
+            answerView.setText(eqNum2String);
         }
     }
 
@@ -317,7 +319,7 @@ public class Calculator extends AppCompatActivity {
             return;
         }
         if (eqOperator.equals("×") || eqOperator.equals("÷")) {
-            eqString = eqNum1String + eqOperator + eqSubstring;
+            eqString = eqNum1String + eqOperator + eqSubstring + eqNum2String;
             BigDecimal answer = calculateMultiplication(eqString);
             eqString = String.valueOf(answer) + getOperator;
             equationView.setText(eqString);
@@ -327,6 +329,7 @@ public class Calculator extends AppCompatActivity {
         }
         // + and - below
         BigDecimal subStringAns;
+        eqSubstring = eqSubstring + eqNum2String;
         subStringAns = calculateMultiplication(eqSubstring);
         BigDecimal answer = new BigDecimal(eqNum1String);
         if (eqOperator.equals("+")) {
@@ -341,25 +344,26 @@ public class Calculator extends AppCompatActivity {
         eqNum2String = "";
         eqString = eqNum1String + eqOperator;
         equationView.setText(eqString);
+        eqNum2String = "";
+        answerView.setText("0");
     }
 
 
-
     private BigDecimal calculateMultiplication(String getEqString) {
-        int maxPart = getEqString.length()/2 + 1;
+        int maxPart = getEqString.length() / 2 + 1;
         BigDecimal[] number = new BigDecimal[maxPart];
         boolean[] isMultiply = new boolean[maxPart];
         int count = 0;
         int startIndex = 0;
-        for (int index = 1; index < getEqString.length()-2; index++) {
+        for (int index = 1; index < getEqString.length() - 1; index++) {
             if (getEqString.charAt(index) == '×') {
-                number[count] = new BigDecimal(getEqString.substring(startIndex,index));
+                number[count] = new BigDecimal(getEqString.substring(startIndex, index));
                 isMultiply[count] = true;
                 startIndex = index + 1;
                 count++;
             }
             if (getEqString.charAt(index) == '÷') {
-                number[count] = new BigDecimal(getEqString.substring(startIndex,index));
+                number[count] = new BigDecimal(getEqString.substring(startIndex, index));
                 isMultiply[count] = false;
                 startIndex = index + 1;
                 count++;
@@ -367,11 +371,11 @@ public class Calculator extends AppCompatActivity {
         }
         number[count] = new BigDecimal(getEqString.substring(startIndex));
         BigDecimal answer = number[0];
-        for (int i = 0; i < count-1; i++) {
-            if (isMultiply[i]){
-                answer = answer.multiply(number[i+1]);
+        for (int i = 0; i < count - 1; i++) {
+            if (isMultiply[i]) {
+                answer = answer.multiply(number[i + 1]);
             } else {
-                answer = answer.divide(number[i+1]);
+                answer = answer.divide(number[i + 1]);
             }
         }
         return answer;
