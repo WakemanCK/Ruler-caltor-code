@@ -327,7 +327,7 @@ public class Calculator extends AppCompatActivity {
             answerView.setText("0");
             return;
         }
-        // + and - below
+        // = or + or - below
         BigDecimal subStringAns;
         eqSubstring = eqSubstring + eqNum2String;
         subStringAns = calculateMultiplication(eqSubstring);
@@ -342,7 +342,13 @@ public class Calculator extends AppCompatActivity {
         eqOperator = getOperator;
         eqSubstring = "";
         eqNum2String = "";
-        eqString = eqNum1String + eqOperator;
+        if (eqOperator == "="){
+            eqString = eqOperator + eqNum1String;
+            eqSubstring = "";
+            eqNum2String = "";
+        } else {
+            eqString = eqNum1String + eqOperator;
+        }
         equationView.setText(eqString);
         eqNum2String = "";
         answerView.setText("0");
