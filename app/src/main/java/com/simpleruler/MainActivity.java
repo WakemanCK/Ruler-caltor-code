@@ -289,11 +289,12 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.resetToastText, Toast.LENGTH_SHORT).show();
             }
         }
-        if (requestCode == 2 && resultCode == 11) {
+    }
+    
+    public void clearAll(View view) {
             dataGroup.removeAllViews();
             dataIndex = -1;
         }
-    }
 
     // Calibrate
     public void scaleUp(View view) {
