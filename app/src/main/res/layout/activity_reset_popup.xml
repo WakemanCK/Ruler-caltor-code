@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/colorPrimary"
     tools:context=".ResetPopup">
 
     <TextView
@@ -25,6 +25,7 @@
         android:layout_marginTop="16dp"
         android:onClick="goReset"
         android:text="@string/yesButtonText"
+        app:backgroundTint="@color/colorPrimaryDark"
         app:layout_constraintEnd_toStartOf="@+id/cancelButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/resetPopupTextView" />
@@ -36,6 +37,7 @@
         android:layout_marginTop="16dp"
         android:onClick="cancelReset"
         android:text="@string/cancelButtonText"
+        app:backgroundTint="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/yesButton"

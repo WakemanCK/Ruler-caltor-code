@@ -281,6 +281,12 @@ public class MainActivity extends AppCompatActivity {
                 openOption();
             }
 
+            // Clear data
+            if (resultCode == 7) {
+                dataGroup.removeAllViews();
+                dataIndex = -1;
+            }
+
             //  Reset
             if (resultCode == 9) {
                 SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
@@ -290,11 +296,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-    
-    public void clearAll(View view) {
-            dataGroup.removeAllViews();
-            dataIndex = -1;
-        }
 
     // Calibrate
     public void scaleUp(View view) {

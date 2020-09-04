@@ -32,11 +32,11 @@
     <string name="copyClipToastText">Copied to clipboard.</string>
     <string name="customValueText">Custom Value</string>
     <string name="sumAllText">Sum</string>
-    <string name="clearAllText">Clear</string>
+    <string name="clearAllText">Clear all data</string>
     <string name="oneEmptySpaceText" translatable="false">" "</string>
     <string name="fiveEmptySpaceText" translatable="false">"     "</string>
     <string name="informationTextViewText">"<b>Ruler (with Calc) v%s</b>\n\n\nWakeman Chau\nhauwingstudio@hotmail.com\n© 2020\nAll rights reserved"</string>
-    <string name="sumAllAnswerText">Sum of all the data</string>
+    <string name="sumAllAnswerText">Sum of data</string>
     <string name="errorText">Error!</string>
     <string name="tapTextViewText">← Tap to record\nmeasurement →</string>
 </resources>

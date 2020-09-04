@@ -26,9 +26,9 @@
     <string name="copyClipToastText">已複製到系統剪貼板。</string>
     <string name="customValueText">自訂數值</string>
     <string name="sumAllText">總和</string>
-    <string name="clearAllText">清除</string>
+    <string name="clearAllText">清除所有數值</string>
     <string name="informationTextViewText"><b>小尺子（附計數機） v%s</b>\n\n\nWakeman Chau\nhauwingstudio@hotmail.com\n© 2020\nAll rights reserved</string>
-    <string name="sumAllAnswerText">所有數值的總和</string>
+    <string name="sumAllAnswerText">數值總和</string>
     <string name="errorText">錯誤！</string>
     <string name="tapTextViewText">← 點擊以\n記錄數值 →</string>
 </resources>

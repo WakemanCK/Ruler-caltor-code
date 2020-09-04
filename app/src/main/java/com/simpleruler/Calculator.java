@@ -2,12 +2,6 @@ package com.simpleruler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
-import android.app.Activity;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,6 +9,7 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,7 +37,8 @@ public class Calculator extends AppCompatActivity {
     String eqNum2 = "";
     String eqOperator = "";
     boolean eqEnteringNum1 = true;
-    boolean eqNumHasDot = false;
+  //  boolean eqNumHasDot = false;
+    boolean justPressedEqual = false;
     TextView equationView, answerView;
 
     @Override
@@ -83,13 +79,14 @@ public class Calculator extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 if (eqEnteringNum1) {
-                    eqNum1 = dataValue[position];
+                    eqNum1 = convertNumber(dataValue[position]);
                     answerView.setText(eqNum1);
-                    eqNumHasDot = eqNum1.contains('.');
+           //         eqNumHasDot = eqNum1.contains(".");
                 } else {
-                    eqNum2 = dataValue[position];
+                    eqNum2 = convertNumber(dataValue[position]);
                     answerView.setText(eqNum2);
-                    eqNumHasDot = eqNum2.contains('.');
+              //      eqNumHasDot = eqNum2.contains(".");
+                }
             }
         });
     }// end of OnCreate
@@ -170,7 +167,7 @@ public class Calculator extends AppCompatActivity {
         return convertedText;
     }
 
-/*    private String convertNumber(float getValue) {
+    private String convertNumber(float getValue) {
         String convertedText = "";
         switch (dataUnit) { // 0 = inch; 1 = mm; 2 = cm
             case 0:
@@ -185,7 +182,7 @@ public class Calculator extends AppCompatActivity {
                 break;
         }
         return convertedText;
-    } */
+    }
 
     // Buttons
     public void addAddition(View view) {
@@ -205,7 +202,7 @@ public class Calculator extends AppCompatActivity {
     }
 
     public void addEqual(View view) {
-        checkEquation("=");
+        equalPressed();
     }
 
     public void addZero(View view) {
@@ -249,45 +246,63 @@ public class Calculator extends AppCompatActivity {
     }
 
     public void addDot(View view) {
-        if (!eqNumHasDot) {
-            addNumber(".");
-            eqNumHasDot = true;
+        if (eqEnteringNum1) {
+            if (!eqNum1.contains(".")) {
+                addNumber(".");
+            }
+        } else {
+            if (!eqNum2.contains(".")) {
+                addNumber(".");
+            }
         }
+        //if (!eqNumHasDot) {
+          //  addNumber(".");
+            //eqNumHasDot = true;
+        //}
     }
-    
+
     public void delete(View view) {
         if (eqEnteringNum1) {
             if (eqNum1.length() < 2) {
                 eqNum1 = "";
                 answerView.setText("0");
+       //         eqNumHasDot = false;
             } else {
-                eqNum1 = eqNum1.substring(0, eqNum1.length()-1);   
+                eqNum1 = eqNum1.substring(0, eqNum1.length() - 1);
+                answerView.setText(eqNum1);
+         //       eqNumHasDot = eqNum1.contains(".");
             }
         } else {
-               if (eqEnteringNum2) {
             if (eqNum2.length() < 2) {
                 eqNum2 = "";
                 answerView.setText("0");
+        //        eqNumHasDot = false;
             } else {
-                eqNum2 = eqNum2.substring(0, eqNum2.length()-1);   
+                eqNum2 = eqNum2.substring(0, eqNum2.length() - 1);
+                answerView.setText(eqNum2);
+          //      eqNumHasDot = eqNum2.contains(".");
             }
         }
     }
-    
+
     public void clearEquation(View view) {
-         eqString = "";
+        eqString = "";
         eqSubstring = "";
         eqNum1 = "";
         eqNum2 = "";
         eqOperator = "";
         eqEnteringNum1 = true;
-        eqNumHasDot = false;
+    //    eqNumHasDot = false;
         equationView.setText("");
         answerView.setText("0");
     }
 
     // Calculate
     private void addNumber(String getNumber) {
+        if (justPressedEqual) {
+            eqNum1 = "";
+            justPressedEqual = false;
+        }
         if (eqEnteringNum1) {
             eqNum1 = eqNum1 + getNumber;
             answerView.setText(eqNum1);
@@ -298,7 +313,8 @@ public class Calculator extends AppCompatActivity {
     }
 
     private void checkEquation(String getOperator) {
-        eqNumHasDot = false;
+    //    eqNumHasDot = false;
+        justPressedEqual = false;
         if (eqEnteringNum1) {
             eqOperator = getOperator;
             if (eqNum1.equals("")) {
@@ -325,14 +341,16 @@ public class Calculator extends AppCompatActivity {
         }
         if (eqOperator.equals("×") || eqOperator.equals("÷")) {
             eqString = eqNum1 + eqOperator + eqSubstring + eqNum2;
-            BigDecimal answer = calculateMultiplication(eqString);
-            eqString = String.valueOf(answer) + getOperator;
+            eqNum1 = String.valueOf(calculateMultiplication(eqString));
+            eqOperator = getOperator;
+            eqString = eqNum1 + getOperator;
             equationView.setText(eqString);
             eqNum2 = "";
             answerView.setText("0");
+     //       eqNumHasDot = false;
             return;
         }
-        // = or + or - below
+        // + or - below
         BigDecimal subStringAns;
         eqSubstring = eqSubstring + eqNum2;
         subStringAns = calculateMultiplication(eqSubstring);
@@ -347,16 +365,41 @@ public class Calculator extends AppCompatActivity {
         eqOperator = getOperator;
         eqSubstring = "";
         eqNum2 = "";
-        if (eqOperator == "="){
-            eqString = eqOperator + eqNum1;
-            eqOperator = "";
-            eqEnteringNum1 = true;
-        } else {
-            eqString = eqNum1 + eqOperator;
-        }
+        eqString = eqNum1 + eqOperator;
         equationView.setText(eqString);
-        eqNum2String = "";
         answerView.setText("0");
+   //     eqNumHasDot = false;
+    }
+
+    private void equalPressed() {
+        if (eqEnteringNum1) {
+            return;
+        }
+        BigDecimal answer;
+        eqString = eqNum1 + eqOperator + eqSubstring + eqNum2;
+        equationView.setText(eqString + "=");
+        if (eqOperator.equals("×") || eqOperator.equals("÷")) {
+            answer = calculateMultiplication(eqString);
+        } else {  // + or - below
+            BigDecimal subStringAns;
+            eqSubstring = eqSubstring + eqNum2;
+            subStringAns = calculateMultiplication(eqSubstring);
+            answer = new BigDecimal(eqNum1);
+            if (eqOperator.equals("+")) {
+                answer = answer.add(subStringAns);
+            }
+            if (eqOperator.equals("-")) {
+                answer = answer.subtract(subStringAns);
+            }
+        }
+        eqNum1 = String.valueOf(answer);
+        eqOperator = "";
+        eqSubstring = "";
+        eqNum2 = "";
+        eqEnteringNum1 = true;
+        justPressedEqual = true;
+     //   eqNumHasDot = false;
+        answerView.setText(eqNum1);
     }
 
     private BigDecimal calculateMultiplication(String getEqString) {
@@ -381,7 +424,7 @@ public class Calculator extends AppCompatActivity {
         }
         number[count] = new BigDecimal(getEqString.substring(startIndex));
         BigDecimal answer = number[0];
-        for (int i = 0; i < count - 1; i++) {
+        for (int i = 0; i < count; i++) {
             if (isMultiply[i]) {
                 answer = answer.multiply(number[i + 1]);
             } else {
@@ -390,23 +433,23 @@ public class Calculator extends AppCompatActivity {
         }
         return answer;
     }
-        
+
     public void sumAll(View view) {
         BigDecimal sum = BigDecimal.ZERO;
-                String s;
-                for (int i = 0; i <= dataIndex; i++) {
-                    s = convertNumber(dataValue[i]);
-                    sum = sum.add(new BigDecimal(s));
-                }
-                sum = sum.stripTrailingZeros();
-           eqNum1 = sum.toPlainString();
-          eqOperator = "";
-          eqSubstring = "";
-          eqNum2 = "";
-            eqEnteringNum1 = true;
-         eqNumHasDot = eqNum1.contains('.');
-                questionView.setText(R.string.sumAllAnswerText);
-                answerView.setText(eqNum1);
+        String s;
+        for (int i = 0; i <= dataIndex; i++) {
+            s = convertNumber(dataValue[i]);
+            sum = sum.add(new BigDecimal(s));
+        }
+        sum = sum.stripTrailingZeros();
+        eqNum1 = sum.toPlainString();
+        eqOperator = "";
+        eqSubstring = "";
+        eqNum2 = "";
+        eqEnteringNum1 = true;
+   //     eqNumHasDot = eqNum1.contains(".");
+        equationView.setText(R.string.sumAllAnswerText);
+        answerView.setText(eqNum1);
     }
         
 

@@ -120,6 +120,12 @@ public class Option extends AppCompatActivity {
         }
     }
 
+    public void clearAll(View view) {
+        Intent intent = new Intent();
+        setResult(7, intent);  // Request 1 result 7 = clear data
+        finish();
+    }
+
     public void chooseCM(View view) {
         metricCM = true;
         Intent intent = new Intent();
