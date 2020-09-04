@@ -9,16 +9,6 @@
     tools:context=".Calculator">
 
     <FrameLayout
-        android:id="@+id/adFrameLayout"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-    </FrameLayout>
-
-    <FrameLayout
         android:id="@+id/answerFrameLayout"
         android:layout_width="0dp"
         android:layout_height="120dp"
@@ -398,14 +388,11 @@
         android:id="@+id/dataListView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-               android:background="@color/colorList"
-        app:layout_constraintBottom_toTopOf="@+id/adFrameLayout"
+        android:background="@color/colorList"
+        app:layout_constraintBottom_toTopOf="@+id/sumAllButton"
         app:layout_constraintEnd_toEndOf="@id/zeroButton"
         app:layout_constraintStart_toStartOf="@+id/dotButton"
-        app:layout_constraintTop_toTopOf="@+id/delButton"
-
-        />
-
+        app:layout_constraintTop_toTopOf="@+id/delButton" />
 
     <Button
         android:id="@+id/clearAllButton"
@@ -415,7 +402,7 @@
         android:text="@string/clearAllText"
         android:textSize="10sp"
         app:backgroundTint="@color/colorListButton"
-        app:layout_constraintBottom_toBottomOf="@+id/dataListView"
+        app:layout_constraintBottom_toTopOf="@+id/adFrameLayout"
         app:layout_constraintEnd_toEndOf="@+id/dataListView"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/sumAllButton" />
@@ -428,7 +415,7 @@
         android:text="@string/sumAllText"
         android:textSize="10sp"
         app:backgroundTint="@color/colorListButton"
-        app:layout_constraintBottom_toBottomOf="@+id/dataListView"
+        app:layout_constraintBottom_toTopOf="@+id/adFrameLayout"
         app:layout_constraintEnd_toStartOf="@+id/clearAllButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/dataListView" />
@@ -444,7 +431,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/dataListView"
         app:layout_constraintStart_toEndOf="@+id/dataListView"
         app:srcCompat="?attr/actionModeCopyDrawable" />
-
 
     <RadioGroup
         android:id="@+id/unitRadioGroup"
@@ -487,5 +473,13 @@
 
     </RadioGroup>
 
+    <FrameLayout
+        android:id="@+id/adFrameLayout"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
