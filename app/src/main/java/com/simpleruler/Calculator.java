@@ -281,7 +281,22 @@ public class Calculator extends AppCompatActivity {
     }
     
     public void delete(View view) {
-        if eqNum2String 
+        if (eqEnteringNum1) {
+            if (eqNum1.length() < 2) {
+                eqNum1 = "";
+                answerView.setText("0");
+            } else {
+                eqNum1 = eqNum1.substring(0, eqNum1.length()-1);   
+            }
+        } else {
+               if (eqEnteringNum2) {
+            if (eqNum2.length() < 2) {
+                eqNum2 = "";
+                answerView.setText("0");
+            } else {
+                eqNum2 = eqNum2.substring(0, eqNum2.length()-1);   
+            }
+        }
     }
     
     public void clearEquation(View view) {
