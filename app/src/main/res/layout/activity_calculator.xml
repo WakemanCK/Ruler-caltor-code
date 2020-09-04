@@ -23,21 +23,25 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/answerTextView"
+            android:id="@+id/equationTextView"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="60dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
+                  android:textSize="30sp"
+                  android:textAlignment="textEnd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/equationTextView"
+            android:id="@+id/answerTextView"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="60dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
+                  android:textSize="30sp"
+                  android:textAlignment="textEnd"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
