@@ -405,8 +405,8 @@
         android:layout_height="0dp"
         android:background="@color/colorList"
         app:layout_constraintBottom_toTopOf="@+id/sumAllButton"
-        app:layout_constraintEnd_toEndOf="@id/zeroButton"
-        app:layout_constraintStart_toStartOf="@+id/dotButton"
+        app:layout_constraintEnd_toEndOf="@id/equalButton"
+        app:layout_constraintStart_toStartOf="@+id/zeroButton"
         app:layout_constraintTop_toTopOf="@+id/delButton" />
 
     <Button
@@ -441,7 +441,7 @@
         android:layout_height="wrap_content"
         android:onClick="copyDataToClip"
         app:layout_constraintBottom_toTopOf="@+id/adFrameLayout"
-        app:layout_constraintStart_toEndOf="@+id/dataListView"
+        app:layout_constraintEnd_toStartOf="@+id/dataListView"
         app:srcCompat="?attr/actionModeCopyDrawable" />
 
     <RadioGroup
@@ -450,7 +450,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:orientation="vertical"
-        app:layout_constraintStart_toEndOf="@+id/dataListView"
+        app:layout_constraintEnd_toStartOf="@+id/dataListView"
         app:layout_constraintTop_toTopOf="@id/dataListView">
 
         <RadioButton
