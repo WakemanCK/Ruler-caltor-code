@@ -69,7 +69,6 @@ public class Calculator extends AppCompatActivity {
                         dataUnit = radioGroup.indexOfChild(findViewById(childIndex));
                         highLight(dataUnit);
                         showList(dataValue);
-                        // debug renew dataList
                     }
                 }
         );
@@ -78,6 +77,21 @@ public class Calculator extends AppCompatActivity {
         dataValue = intent.getFloatArrayExtra(MainActivity.EXTRA_VALUE);
         dataIndex = intent.getIntExtra(MainActivity.EXTRA_INDEX, 0);
         showList(dataValue);
+        ListView dataList = (ListView) findViewById(R.id.dataListView);
+        dataList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                if (eqEnteringNum1) {
+                    eqNum1 = dataValue[position];
+                    answerView.setText(eqNum1);
+                    eqNumHasDot = eqNum1.contains('.');
+                } else {
+                    eqNum2 = dataValue[position];
+                    answerView.setText(eqNum2);
+                    eqNumHasDot = eqNum2.contains('.');
+            }
+        });
     }// end of OnCreate
 
     private void highLight(int getIndex) {
