@@ -404,23 +404,10 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/colorList"
-        app:layout_constraintBottom_toTopOf="@+id/sumAllButton"
+        app:layout_constraintBottom_toTopOf="@+id/adFrameLayout"
         app:layout_constraintEnd_toEndOf="@id/equalButton"
         app:layout_constraintStart_toStartOf="@+id/zeroButton"
         app:layout_constraintTop_toTopOf="@+id/delButton" />
-
-    <Button
-        android:id="@+id/clearAllButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="clearAll"
-        android:text="@string/clearAllText"
-        android:textSize="10sp"
-        app:backgroundTint="@color/colorListButton"
-        app:layout_constraintBottom_toTopOf="@+id/adFrameLayout"
-        app:layout_constraintEnd_toEndOf="@+id/dataListView"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/sumAllButton" />
 
     <Button
         android:id="@+id/sumAllButton"
@@ -431,9 +418,7 @@
         android:textSize="10sp"
         app:backgroundTint="@color/colorListButton"
         app:layout_constraintBottom_toTopOf="@+id/adFrameLayout"
-        app:layout_constraintEnd_toStartOf="@+id/clearAllButton"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/dataListView" />
+        app:layout_constraintEnd_toStartOf="@+id/dataListView" />
 
     <ImageButton
         android:id="@+id/copyDataButton"
@@ -441,7 +426,7 @@
         android:layout_height="wrap_content"
         android:onClick="copyDataToClip"
         app:layout_constraintBottom_toTopOf="@+id/adFrameLayout"
-        app:layout_constraintEnd_toStartOf="@+id/dataListView"
+        app:layout_constraintEnd_toEndOf="@+id/dataListView"
         app:srcCompat="?attr/actionModeCopyDrawable" />
 
     <RadioGroup
