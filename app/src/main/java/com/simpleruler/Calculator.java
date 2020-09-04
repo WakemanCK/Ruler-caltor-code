@@ -106,9 +106,9 @@ public class Calculator extends AppCompatActivity {
     }
 
     private void showList(float[] data) {
-        String[] dataString = new String[10];
+        String[] dataString = new String[dataIndex + 1];
         //int j = 0;
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i <= dataIndex; i++) {
             if (data[i] >= 0) {
                 dataString[i] = convertNumberWithUnit(data[i]);
                 //j++;
@@ -187,46 +187,7 @@ public class Calculator extends AppCompatActivity {
         return convertedText;
     } */
 
-    // Data related
-/*    private void printDataList(ChipGroup getGroup) {
-        getGroup.removeAllViews();
-        for (int i = 0; i <= dataIndex; i++) {
-            addDataItem(dataValue[i], getGroup);
-        }
-    } */
-
-/*    private void addDataItem(float getValue, ChipGroup getGroup) {
-        final Chip newChip = new Chip(this);
-        final String chipText = convertNumberWithUnit(getValue);
-        final String equationText = convertNumber(getValue);
-        newChip.setText(chipText);
-        getGroup.addView(newChip);
-        newChip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Chip equationChip1 = findViewById(R.id.equationChip1);
-                Chip equationChip3 = findViewById(R.id.equationChip3);
-                if (equationChip1.getText() == getString(R.string.fiveEmptySpaceText)) {
-                    equationChip1.setText(equationText);
-                } else {
-                    equationChip3.setText(equationText);
-                }
-                checkEquation();
-            }
-        });
-    }  */
-
-
-    private boolean testValidFloat(String getString) {
-        try {
-            Float.parseFloat(getString);
-        } catch (NumberFormatException e) {
-            return false;
-        }
-        return true;
-    }
-
-    // Add operators
+    // Buttons
     public void addAddition(View view) {
         checkEquation("+");
     }
@@ -397,7 +358,6 @@ public class Calculator extends AppCompatActivity {
         eqNum2String = "";
         answerView.setText("0");
     }
-
 
     private BigDecimal calculateMultiplication(String getEqString) {
         int maxPart = getEqString.length() / 2 + 1;
