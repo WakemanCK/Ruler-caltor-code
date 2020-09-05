@@ -30,6 +30,7 @@
             android:gravity="end"
             android:textAlignment="textEnd"
             android:textSize="50sp"
+            android:typeface="monospace"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -41,6 +42,7 @@
             android:gravity="end"
             android:textAlignment="textEnd"
             android:textSize="50sp"
+            android:typeface="monospace"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
     </FrameLayout>

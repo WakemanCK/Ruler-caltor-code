@@ -29,8 +29,9 @@
     <string name="clearAllText">清除所有数值</string>
     <string name="informationTextViewText"><b>小尺子（附计算器） v%s</b>\n\n\nWakeman Chau\nhauwingstudio@hotmail.com\n© 2020\nAll rights reserved</string>
     <string name="sumAllAnswerText">数值总和</string>
+    <string name="tapTextViewText">← 点击以\n记录数值 →</string>
     <string name="errorText">错误！</string>
     <string name="dividedByZeroErrText">错误：不能除以零</string>
     <string name="exceedMaxErrText">错误：超过最大数值</string>
-    <string name="tapTextViewText">← 点击以\n记录数值 →</string>
+    <string name="expressionTooLongText">错误：公式太长了</string>
 </resources>

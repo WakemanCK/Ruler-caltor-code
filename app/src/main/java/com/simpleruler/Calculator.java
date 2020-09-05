@@ -2,6 +2,8 @@ package com.simpleruler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -29,7 +31,7 @@ import static com.simpleruler.MainActivity.decimalPlace;
 
 public class Calculator extends AppCompatActivity {
     float[] dataValue;
-    String[] 
+    String[] dataString;
     int dataUnit = 2; // 0 = inch; 1 = mm; 2 = cm
     int dataIndex = 0;
     String eqString = "";
@@ -39,6 +41,7 @@ public class Calculator extends AppCompatActivity {
     String eqOperator = "";
     boolean eqEnteringNum1 = true;
     boolean justPressedEqual = false;
+    boolean changingOperator = false;
     TextView equationView, answerView;
 
     @Override
@@ -74,7 +77,7 @@ public class Calculator extends AppCompatActivity {
         dataIndex = intent.getIntExtra(MainActivity.EXTRA_INDEX, 0);
         dataString = new String[dataIndex + 1];
         showList(dataValue);
-        ListView dataList = (ListView) findViewById(R.id.dataListView);
+        ListView dataList = findViewById(R.id.dataListView);
         dataList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
@@ -111,7 +114,7 @@ public class Calculator extends AppCompatActivity {
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, dataString);
-        ListView listView = (ListView) findViewById(R.id.dataListView);
+        ListView listView = findViewById(R.id.dataListView);
         listView.setAdapter(adapter);
     }
 
@@ -283,17 +286,6 @@ public class Calculator extends AppCompatActivity {
         equationView.setText("");
         answerView.setText("0");
     }
-   
-    public void showExceedMaxErr() {
-        eqString = "";
-        eqSubstring = "";
-        eqNum1 = "";
-        eqNum2 = "";
-        eqOperator = "";
-        eqEnteringNum1 = true;
-        equationView.setText(getString(R.string.exceedMaxErrText);
-        answerView.setText("0");
-    }
 
     // Calculate
     private void addNumber(String getNumber) {
@@ -302,16 +294,41 @@ public class Calculator extends AppCompatActivity {
             justPressedEqual = false;
         }
         if (eqEnteringNum1) {
-            if (eqNum1.length() < 11) {
-            eqNum1 = eqNum1 + getNumber;
-            answerView.setText(eqNum1);
+            if (eqNum1.length() < 10) {
+                eqNum1 = eqNum1 + getNumber;
+                answerView.setText(eqNum1);
+            } else {
+                Toast.makeText(this, getString(R.string.exceedMaxErrText), Toast.LENGTH_SHORT).show();
             }
         } else {
-            if (eqNum2.length() < 11) {
-            eqNum2 = eqNum2 + getNumber;
-            answerView.setText(eqNum2);
+            if (eqNum2.length() < 10) {
+                eqNum2 = eqNum2 + getNumber;
+                answerView.setText(eqNum2);
+            } else {
+                Toast.makeText(this, getString(R.string.exceedMaxErrText), Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private void showEquation(String stringToShow) {
+        if (stringToShow.length() > 44) {
+            Toast.makeText(this, getString(R.string.expressionTooLongText), Toast.LENGTH_SHORT).show();
+            eqString = "";
+            eqSubstring = "";
+            eqNum1 = "";
+            eqNum2 = "";
+            eqOperator = "";
+            eqEnteringNum1 = true;
+            equationView.setTextSize(50);
+            equationView.setText(getString(R.string.errorText));
+            return;
+        }
+        if (stringToShow.length() > 11) {
+            equationView.setTextSize(25);
+        } else {
+            equationView.setTextSize(50);
+        }
+        equationView.setText(stringToShow);
     }
 
     private void checkEquation(String getOperator) {
@@ -323,18 +340,39 @@ public class Calculator extends AppCompatActivity {
                 eqNum1 = "0";
             }
             eqString = eqNum1 + eqOperator;
-            equationView.setText(eqString);
+            // equationView.setText(eqString);
+            showEquation(eqString);
             eqEnteringNum1 = false;
             eqNum2 = "";
+            eqSubstring = "";
             answerView.setText("0");
             return;
         }
+        // Check changing operator
+        if (eqNum2.equals("")) {
+            if (eqSubstring.equals("")) {
+                eqEnteringNum1 = true;
+                checkEquation(getOperator);
+                return;
+            } else {
+                eqSubstring = eqSubstring.substring(0, eqSubstring.length() - 1);
+                eqNum2 = eqSubstring;
+                eqSubstring = "";
+                changingOperator = true;
+                checkEquation(getOperator);
+                return;
+            }
+        }
         // Check not divided by zero
-        BigDecimal tempNum2 = new BigDecimal(eqNum2).stripTrailingZeros();
-        if ((eqString.charAt(eqString.length()) == "÷") && (tempNum2.equals(BigDecimal.ZERO))) {
-            answerView.setText(getString(R.string.dividedByZeroErrText));
-            eqNum2 = "";
-            return;
+        if (!changingOperator) {
+            BigDecimal tempNum2 = new BigDecimal(eqNum2).stripTrailingZeros();
+            if ((eqString.charAt(eqString.length() - 1) == '÷') && (tempNum2.equals(BigDecimal.ZERO))) {
+                answerView.setText(getString(R.string.errorText));
+                Toast.makeText(this, getString(R.string.dividedByZeroErrText), Toast.LENGTH_SHORT).show();
+                eqNum2 = "";
+                return;
+            }
+        }
         // Check whether need to do multiplication or division BEFORE addition or subtraction
         if ((eqOperator.equals("+") || eqOperator.equals("-")) && (getOperator.equals("×") || getOperator.equals("÷"))) {
             if (eqNum2.equals("")) {
@@ -343,7 +381,8 @@ public class Calculator extends AppCompatActivity {
                 eqSubstring = eqSubstring + eqNum2 + getOperator;
             }
             eqString = eqNum1 + eqOperator + eqSubstring;
-            equationView.setText(eqString);
+            //equationView.setText(eqString);
+            showEquation(eqString);
             eqNum2 = "";
             answerView.setText("0");
             return;
@@ -352,14 +391,11 @@ public class Calculator extends AppCompatActivity {
         if (eqOperator.equals("×") || eqOperator.equals("÷")) {
             eqString = eqNum1 + eqOperator + eqSubstring + eqNum2;
             BigDecimal answer = calculateMultiplication(eqString);
-            if (answer.compareTo(9999999999999) == -1) {
-                    showExceedMaxErr();
-                  return;
-            }
-            eqNum1 = String.valueOf(answer);
+            eqNum1 = String.valueOf(answer.stripTrailingZeros());
             eqOperator = getOperator;
             eqString = eqNum1 + getOperator;
-            equationView.setText(eqString);
+            //equationView.setText(eqString);
+            showEquation(eqString);
             eqNum2 = "";
             answerView.setText("0");
             return;
@@ -375,26 +411,39 @@ public class Calculator extends AppCompatActivity {
         if (eqOperator.equals("-")) {
             answer = answer.subtract(subStringAns);
         }
-            if (answer.compareTo(9999999999999) == -1) {
-                    showExceedMaxErr();
-                  return;
-                                       }
-        eqNum1 = String.valueOf(answer);
+        eqNum1 = String.valueOf(answer.stripTrailingZeros());
         eqOperator = getOperator;
         eqSubstring = "";
         eqNum2 = "";
         eqString = eqNum1 + eqOperator;
-        equationView.setText(eqString);
+        //equationView.setText(eqString);
+        showEquation(eqString);
         answerView.setText("0");
     }
 
     private void equalPressed() {
-        if (eqEnteringNum1) {
+        if ((eqEnteringNum1) || (eqSubstring.equals(""))) {
             return;
         }
+        // Check changing operator
+        if (eqNum2.equals("")) {
+            eqSubstring = eqSubstring.substring(0, eqSubstring.length() - 1);
+            changingOperator = true;
+        }
+        // Check not divided by zero
+        if (!changingOperator) {
+            BigDecimal tempNum2 = new BigDecimal(eqNum2).stripTrailingZeros();
+            if ((eqString.charAt(eqString.length() - 1) == '÷') && (tempNum2.equals(BigDecimal.ZERO))) {
+                answerView.setText(getString(R.string.errorText));
+                Toast.makeText(this, getString(R.string.dividedByZeroErrText), Toast.LENGTH_SHORT).show();
+                eqNum2 = "";
+                return;
+            }
+        }
+        // Start calculation
         BigDecimal answer;
         eqString = eqNum1 + eqOperator + eqSubstring + eqNum2;
-        equationView.setText(eqString + "=");
+        showEquation(eqString + "+");
         if (eqOperator.equals("×") || eqOperator.equals("÷")) {
             answer = calculateMultiplication(eqString);
         } else {  // + or - below
@@ -409,7 +458,7 @@ public class Calculator extends AppCompatActivity {
                 answer = answer.subtract(subStringAns);
             }
         }
-        eqNum1 = String.valueOf(answer);
+        eqNum1 = String.valueOf(answer.stripTrailingZeros());
         eqOperator = "";
         eqSubstring = "";
         eqNum2 = "";
@@ -467,12 +516,12 @@ public class Calculator extends AppCompatActivity {
         equationView.setText(R.string.sumAllAnswerText);
         answerView.setText(eqNum1);
     }
-        
-            // Copy to clipboard
+
+    // Copy to clipboard
     public void copyDataToClip(View view) {
         StringBuilder dataText = new StringBuilder();
         for (int i = 0; i <= dataIndex; i++) {
-            dataText.append(dataString[i]).append("\n");;
+            dataText.append(dataString[i]).append("\n");
         }
         ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("data text", dataText.toString());
