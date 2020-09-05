@@ -313,8 +313,8 @@ public class Calculator extends AppCompatActivity {
     }
 
     private void checkEquation(String getOperator) {
-    //    eqNumHasDot = false;
         justPressedEqual = false;
+        // Check entering Num1
         if (eqEnteringNum1) {
             eqOperator = getOperator;
             if (eqNum1.equals("")) {
@@ -327,6 +327,13 @@ public class Calculator extends AppCompatActivity {
             answerView.setText("0");
             return;
         }
+        // Check not divided by zero
+        BigDecimal tempNum2 = new BigDecimal(eqNum2).stripTrailingZeros();
+        if ((eqString.charAt(eqString.length()) == "÷") && (tempNum2.equals(BigDecimal.ZERO))) {
+            answerView.setText(getString(R.string.dividedByZeroErrText));
+            eqNum2 = "";
+            return;
+        // Check whether need to do multiplication or division BEFORE addition or subtraction
         if ((eqOperator.equals("+") || eqOperator.equals("-")) && (getOperator.equals("×") || getOperator.equals("÷"))) {
             if (eqNum2.equals("")) {
                 eqSubstring = eqSubstring.substring(0, eqSubstring.length() - 1) + getOperator;
@@ -339,6 +346,7 @@ public class Calculator extends AppCompatActivity {
             answerView.setText("0");
             return;
         }
+        // Start actual calculation, × or ÷ first
         if (eqOperator.equals("×") || eqOperator.equals("÷")) {
             eqString = eqNum1 + eqOperator + eqSubstring + eqNum2;
             eqNum1 = String.valueOf(calculateMultiplication(eqString));
@@ -347,7 +355,6 @@ public class Calculator extends AppCompatActivity {
             equationView.setText(eqString);
             eqNum2 = "";
             answerView.setText("0");
-     //       eqNumHasDot = false;
             return;
         }
         // + or - below
@@ -368,7 +375,6 @@ public class Calculator extends AppCompatActivity {
         eqString = eqNum1 + eqOperator;
         equationView.setText(eqString);
         answerView.setText("0");
-   //     eqNumHasDot = false;
     }
 
     private void equalPressed() {
@@ -444,6 +450,7 @@ public class Calculator extends AppCompatActivity {
         sum = sum.stripTrailingZeros();
         eqNum1 = sum.toPlainString();
         eqOperator = "";
+        eqString = "";
         eqSubstring = "";
         eqNum2 = "";
         eqEnteringNum1 = true;
