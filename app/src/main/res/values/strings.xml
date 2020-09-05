@@ -38,5 +38,6 @@
     <string name="informationTextViewText">"<b>Ruler (with Calc) v%s</b>\n\n\nWakeman Chau\nhauwingstudio@hotmail.com\n© 2020\nAll rights reserved"</string>
     <string name="sumAllAnswerText">Sum of data</string>
     <string name="errorText">Error!</string>
+    <string name="dividedByZeroErrText">Error: divided by zero</string>
     <string name="tapTextViewText">← Tap to record\nmeasurement →</string>
 </resources>
