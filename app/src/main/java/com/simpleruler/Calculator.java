@@ -29,6 +29,7 @@ import static com.simpleruler.MainActivity.decimalPlace;
 
 public class Calculator extends AppCompatActivity {
     float[] dataValue;
+    String[] 
     int dataUnit = 2; // 0 = inch; 1 = mm; 2 = cm
     int dataIndex = 0;
     String eqString = "";
@@ -37,7 +38,6 @@ public class Calculator extends AppCompatActivity {
     String eqNum2 = "";
     String eqOperator = "";
     boolean eqEnteringNum1 = true;
-  //  boolean eqNumHasDot = false;
     boolean justPressedEqual = false;
     TextView equationView, answerView;
 
@@ -72,6 +72,7 @@ public class Calculator extends AppCompatActivity {
         Intent intent = getIntent();
         dataValue = intent.getFloatArrayExtra(MainActivity.EXTRA_VALUE);
         dataIndex = intent.getIntExtra(MainActivity.EXTRA_INDEX, 0);
+        dataString = new String[dataIndex + 1];
         showList(dataValue);
         ListView dataList = (ListView) findViewById(R.id.dataListView);
         dataList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -81,11 +82,9 @@ public class Calculator extends AppCompatActivity {
                 if (eqEnteringNum1) {
                     eqNum1 = convertNumber(dataValue[position]);
                     answerView.setText(eqNum1);
-           //         eqNumHasDot = eqNum1.contains(".");
                 } else {
                     eqNum2 = convertNumber(dataValue[position]);
                     answerView.setText(eqNum2);
-              //      eqNumHasDot = eqNum2.contains(".");
                 }
             }
         });
@@ -103,12 +102,9 @@ public class Calculator extends AppCompatActivity {
     }
 
     private void showList(float[] data) {
-        String[] dataString = new String[dataIndex + 1];
-        //int j = 0;
         for (int i = 0; i <= dataIndex; i++) {
             if (data[i] >= 0) {
                 dataString[i] = convertNumberWithUnit(data[i]);
-                //j++;
             } else {
                 dataString[i] = "";
             }
@@ -255,10 +251,6 @@ public class Calculator extends AppCompatActivity {
                 addNumber(".");
             }
         }
-        //if (!eqNumHasDot) {
-          //  addNumber(".");
-            //eqNumHasDot = true;
-        //}
     }
 
     public void delete(View view) {
@@ -266,21 +258,17 @@ public class Calculator extends AppCompatActivity {
             if (eqNum1.length() < 2) {
                 eqNum1 = "";
                 answerView.setText("0");
-       //         eqNumHasDot = false;
             } else {
                 eqNum1 = eqNum1.substring(0, eqNum1.length() - 1);
                 answerView.setText(eqNum1);
-         //       eqNumHasDot = eqNum1.contains(".");
             }
         } else {
             if (eqNum2.length() < 2) {
                 eqNum2 = "";
                 answerView.setText("0");
-        //        eqNumHasDot = false;
             } else {
                 eqNum2 = eqNum2.substring(0, eqNum2.length() - 1);
                 answerView.setText(eqNum2);
-          //      eqNumHasDot = eqNum2.contains(".");
             }
         }
     }
@@ -427,7 +415,6 @@ public class Calculator extends AppCompatActivity {
         eqNum2 = "";
         eqEnteringNum1 = true;
         justPressedEqual = true;
-     //   eqNumHasDot = false;
         answerView.setText(eqNum1);
     }
 
@@ -477,11 +464,29 @@ public class Calculator extends AppCompatActivity {
         eqSubstring = "";
         eqNum2 = "";
         eqEnteringNum1 = true;
-   //     eqNumHasDot = eqNum1.contains(".");
         equationView.setText(R.string.sumAllAnswerText);
         answerView.setText(eqNum1);
     }
         
+            // Copy to clipboard
+    public void copyDataToClip(View view) {
+        StringBuilder dataText = new StringBuilder();
+        for (int i = 0; i <= dataIndex; i++) {
+            dataText.append(dataString[i]).append("\n");;
+        }
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("data text", dataText.toString());
+        clipboard.setPrimaryClip(clip);
+        Toast.makeText(Calculator.this, R.string.copyClipToastText, Toast.LENGTH_SHORT).show();
+    }
+
+    public void copyAnswerToClip(View view) {
+        String answerText = answerView.getText() + "\n";
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("data text", answerText);
+        clipboard.setPrimaryClip(clip);
+        Toast.makeText(Calculator.this, R.string.copyClipToastText, Toast.LENGTH_SHORT).show();
+    }
 
 /*
     public void sumAll(View view) {
@@ -548,27 +553,7 @@ public class Calculator extends AppCompatActivity {
         checkEquation();
     }
 
-    // Copy to clipboard
-    public void copyDataToClip(View view) {
-        StringBuilder dataText = new StringBuilder();
-        for (int i = 0; i < dataGroup.getChildCount(); i++) {
-            Chip chip = (Chip) dataGroup.getChildAt(i);
-            dataText.append(chip.getText()).append("\n");
-        }
-        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText("data text", dataText.toString());
-        clipboard.setPrimaryClip(clip);
-        Toast.makeText(Calculator.this, R.string.copyClipToastText, Toast.LENGTH_SHORT).show();
-    }
 
-    public void copyAnswerToClip(View view) {
-        Button answerButton = findViewById(R.id.answerButton);
-        String answerText = answerButton.getText() + "\n";
-        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText("data text", answerText);
-        clipboard.setPrimaryClip(clip);
-        Toast.makeText(Calculator.this, R.string.copyClipToastText, Toast.LENGTH_SHORT).show();
-    }
 
  */
 }
