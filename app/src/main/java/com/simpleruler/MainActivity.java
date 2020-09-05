@@ -1,4 +1,4 @@
-/*  Ruler (with Calc) v1.03a
+/*  Ruler (with Calc) v2.00
     Wakeman Chau
     hauwingstudio@hotmail.com
     © 2020

@@ -23,14 +23,14 @@ android {
         noad {
             dimension 'adversion'
             applicationIdSuffix '.noad'
-            versionCode 7
-            versionName '1.04n'
+            versionCode 11
+            versionName '2.00n'
         }
         withad {
             dimension 'adversion'
             applicationIdSuffix '.g'
-            versionCode 8
-            versionName '1.04g'
+            versionCode 12
+            versionName '2.00g'
         }
     }
 }

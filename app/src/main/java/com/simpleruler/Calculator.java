@@ -5,24 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Display;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -117,37 +109,6 @@ public class Calculator extends AppCompatActivity {
         ListView listView = findViewById(R.id.dataListView);
         listView.setAdapter(adapter);
     }
-
-    // Change units
- /*   private float convertInchMMCM(int getOld, int getNew, float getValue) {
-        float f = 0f;
-        switch (getOld) { // 0 = inch; 1 = mm; 2 = cm
-            case 0:
-                if (getNew == 1) {
-                    f = getValue * 25.4f;
-                } else {
-                    f = getValue * 2.54f;
-                }
-                break;
-            case 1:
-                if (getNew == 2) {
-                    f = getValue / 10f;
-                } else {
-                    f = getValue / 25.4f;
-                }
-                break;
-            case 2:
-                if (getNew == 1) {
-                    f = getValue * 10f;
-                } else {
-                    f = getValue / 2.54f;
-                }
-                break;
-            default:
-                break;
-        }
-        return f;
-    } */
 
     private String convertNumberWithUnit(float getValue) {
         String convertedText = "";
@@ -263,7 +224,7 @@ public class Calculator extends AppCompatActivity {
                 answerView.setText("0");
             } else {
                 eqNum1 = eqNum1.substring(0, eqNum1.length() - 1);
-                answerView.setText(eqNum1);
+                showAnswer(eqNum1);
             }
         } else {
             if (eqNum2.length() < 2) {
@@ -271,7 +232,7 @@ public class Calculator extends AppCompatActivity {
                 answerView.setText("0");
             } else {
                 eqNum2 = eqNum2.substring(0, eqNum2.length() - 1);
-                answerView.setText(eqNum2);
+                showAnswer(eqNum2);
             }
         }
     }
@@ -289,6 +250,8 @@ public class Calculator extends AppCompatActivity {
 
     // Calculate
     private void addNumber(String getNumber) {
+        changingOperator = false;
+        answerView.setTextSize(50);
         if (justPressedEqual) {
             eqNum1 = "";
             justPressedEqual = false;
@@ -331,6 +294,27 @@ public class Calculator extends AppCompatActivity {
         equationView.setText(stringToShow);
     }
 
+    private void showAnswer(String stringToShow) {
+        if (stringToShow.length() > 44) {
+            Toast.makeText(this, getString(R.string.expressionTooLongText), Toast.LENGTH_SHORT).show();
+            eqString = "";
+            eqSubstring = "";
+            eqNum1 = "";
+            eqNum2 = "";
+            eqOperator = "";
+            eqEnteringNum1 = true;
+            answerView.setTextSize(50);
+            answerView.setText(getString(R.string.errorText));
+            return;
+        }
+        if (stringToShow.length() > 11) {
+            answerView.setTextSize(25);
+        } else {
+            answerView.setTextSize(50);
+        }
+        answerView.setText(stringToShow);
+    }
+
     private void checkEquation(String getOperator) {
         justPressedEqual = false;
         // Check entering Num1
@@ -340,7 +324,6 @@ public class Calculator extends AppCompatActivity {
                 eqNum1 = "0";
             }
             eqString = eqNum1 + eqOperator;
-            // equationView.setText(eqString);
             showEquation(eqString);
             eqEnteringNum1 = false;
             eqNum2 = "";
@@ -381,7 +364,6 @@ public class Calculator extends AppCompatActivity {
                 eqSubstring = eqSubstring + eqNum2 + getOperator;
             }
             eqString = eqNum1 + eqOperator + eqSubstring;
-            //equationView.setText(eqString);
             showEquation(eqString);
             eqNum2 = "";
             answerView.setText("0");
@@ -391,10 +373,12 @@ public class Calculator extends AppCompatActivity {
         if (eqOperator.equals("×") || eqOperator.equals("÷")) {
             eqString = eqNum1 + eqOperator + eqSubstring + eqNum2;
             BigDecimal answer = calculateMultiplication(eqString);
-            eqNum1 = String.valueOf(answer.stripTrailingZeros());
+            eqNum1 = answer.stripTrailingZeros().toPlainString();
+            if (eqNum1.length() > 12) {
+                eqNum1 = answer.stripTrailingZeros().toString();
+            }
             eqOperator = getOperator;
             eqString = eqNum1 + getOperator;
-            //equationView.setText(eqString);
             showEquation(eqString);
             eqNum2 = "";
             answerView.setText("0");
@@ -411,18 +395,20 @@ public class Calculator extends AppCompatActivity {
         if (eqOperator.equals("-")) {
             answer = answer.subtract(subStringAns);
         }
-        eqNum1 = String.valueOf(answer.stripTrailingZeros());
+        eqNum1 = answer.stripTrailingZeros().toPlainString();
+        if (eqNum1.length() > 12) {
+            eqNum1 = answer.stripTrailingZeros().toString();
+        }
         eqOperator = getOperator;
         eqSubstring = "";
         eqNum2 = "";
         eqString = eqNum1 + eqOperator;
-        //equationView.setText(eqString);
         showEquation(eqString);
         answerView.setText("0");
     }
 
     private void equalPressed() {
-        if ((eqEnteringNum1) || (eqSubstring.equals(""))) {
+        if (eqEnteringNum1) {
             return;
         }
         // Check changing operator
@@ -443,7 +429,7 @@ public class Calculator extends AppCompatActivity {
         // Start calculation
         BigDecimal answer;
         eqString = eqNum1 + eqOperator + eqSubstring + eqNum2;
-        showEquation(eqString + "+");
+        showEquation(eqString + "=");
         if (eqOperator.equals("×") || eqOperator.equals("÷")) {
             answer = calculateMultiplication(eqString);
         } else {  // + or - below
@@ -458,13 +444,16 @@ public class Calculator extends AppCompatActivity {
                 answer = answer.subtract(subStringAns);
             }
         }
-        eqNum1 = String.valueOf(answer.stripTrailingZeros());
+        eqNum1 = answer.stripTrailingZeros().toPlainString();
+        if (eqNum1.length() > 12) {
+            eqNum1 = answer.stripTrailingZeros().toString();
+        }
         eqOperator = "";
         eqSubstring = "";
         eqNum2 = "";
         eqEnteringNum1 = true;
         justPressedEqual = true;
-        answerView.setText(eqNum1);
+        showAnswer(eqNum1);
     }
 
     private BigDecimal calculateMultiplication(String getEqString) {
@@ -514,7 +503,7 @@ public class Calculator extends AppCompatActivity {
         eqNum2 = "";
         eqEnteringNum1 = true;
         equationView.setText(R.string.sumAllAnswerText);
-        answerView.setText(eqNum1);
+        showAnswer(eqNum1);
     }
 
     // Copy to clipboard
@@ -537,72 +526,4 @@ public class Calculator extends AppCompatActivity {
         Toast.makeText(Calculator.this, R.string.copyClipToastText, Toast.LENGTH_SHORT).show();
     }
 
-/*
-    public void sumAll(View view) {
-        final TextView textView = findViewById(R.id.answerTextView);
-        final Button answerButton = findViewById(R.id.answerButton);
-
-        final View animeView = findViewById(R.id.animeScrollView);
-        ChipGroup animeGroup = findViewById(R.id.animeChipGroup);
-        float targetY = -animeView.getY() * 2f - 100f;
-        printDataChip(animeGroup);
-        animeView.setY(findViewById(R.id.dataScrollView).getY());
-        animeView.setScaleY(1);
-        animeView.setVisibility(View.VISIBLE);
-        ObjectAnimator animation = ObjectAnimator.ofFloat(animeView, "translationY", targetY);
-        ObjectAnimator animationHeight = ObjectAnimator.ofFloat(animeView, "scaleY", 0);
-        animation.setDuration(600);
-        animationHeight.setDuration(600);
-        int[] viewInt = {R.id.answerTextView, R.id.equalTextView, R.id.answerButton, R.id.copyAnswerButton};
-        for (int i : viewInt) {
-            findViewById(i).setVisibility(View.INVISIBLE);
-        }
-        animation.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                BigDecimal sum = BigDecimal.ZERO;
-                String s;
-                for (int i = 0; i < dataGroup.getChildCount(); i++) {
-                    s = convertNumber(dataValue[i]);
-                    sum = sum.add(new BigDecimal(s));
-                }
-                sum = sum.stripTrailingZeros();
-                textView.setText(R.string.sumAllAnswerText);
-                answerButton.setText(sum.toPlainString());
-                int[] viewInt = {R.id.answerTextView, R.id.equalTextView, R.id.answerButton, R.id.copyAnswerButton};
-                for (int i : viewInt) {
-                    findViewById(i).setVisibility(View.VISIBLE);
-                }
-                animeView.setVisibility(View.INVISIBLE);
-                animeView.setY(findViewById(R.id.dataScrollView).getY());
-                animeView.setScaleY(1);
-            }
-        });
-        animation.start();
-        animationHeight.start();
-    }
-
-    // Others
-    public void clearAll(View view) {
-        Intent intent = new Intent();
-        setResult(11, intent);  // Request 2 result 11 = clear all
-        finish();
-    }
-
-    public void addAnswer(View view) {
-        Button answerButton = findViewById(R.id.answerButton);
-        String answerValue = String.valueOf(answerButton.getText());
-        Chip equationChip1 = findViewById(R.id.equationChip1);
-        Chip equationChip3 = findViewById(R.id.equationChip3);
-        if (equationChip1.getText() == getString(R.string.fiveEmptySpaceText)) {
-            equationChip1.setText(answerValue);
-        } else {
-            equationChip3.setText(answerValue);
-        }
-        checkEquation();
-    }
-
-
-
- */
 }
