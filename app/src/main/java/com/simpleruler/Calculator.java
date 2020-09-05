@@ -292,8 +292,18 @@ public class Calculator extends AppCompatActivity {
         eqNum2 = "";
         eqOperator = "";
         eqEnteringNum1 = true;
-    //    eqNumHasDot = false;
         equationView.setText("");
+        answerView.setText("0");
+    }
+   
+    public void showExceedMaxErr() {
+        eqString = "";
+        eqSubstring = "";
+        eqNum1 = "";
+        eqNum2 = "";
+        eqOperator = "";
+        eqEnteringNum1 = true;
+        equationView.setText(getString(R.string.exceedMaxErrText);
         answerView.setText("0");
     }
 
@@ -304,11 +314,15 @@ public class Calculator extends AppCompatActivity {
             justPressedEqual = false;
         }
         if (eqEnteringNum1) {
+            if (eqNum1.length() < 11) {
             eqNum1 = eqNum1 + getNumber;
             answerView.setText(eqNum1);
+            }
         } else {
+            if (eqNum2.length() < 11) {
             eqNum2 = eqNum2 + getNumber;
             answerView.setText(eqNum2);
+            }
         }
     }
 
@@ -349,7 +363,12 @@ public class Calculator extends AppCompatActivity {
         // Start actual calculation, × or ÷ first
         if (eqOperator.equals("×") || eqOperator.equals("÷")) {
             eqString = eqNum1 + eqOperator + eqSubstring + eqNum2;
-            eqNum1 = String.valueOf(calculateMultiplication(eqString));
+            BigDecimal answer = calculateMultiplication(eqString);
+            if (answer.compareTo(9999999999999) == -1) {
+                    showExceedMaxErr();
+                  return;
+            }
+            eqNum1 = String.valueOf(answer);
             eqOperator = getOperator;
             eqString = eqNum1 + getOperator;
             equationView.setText(eqString);
@@ -368,6 +387,10 @@ public class Calculator extends AppCompatActivity {
         if (eqOperator.equals("-")) {
             answer = answer.subtract(subStringAns);
         }
+            if (answer.compareTo(9999999999999) == -1) {
+                    showExceedMaxErr();
+                  return;
+                                       }
         eqNum1 = String.valueOf(answer);
         eqOperator = getOperator;
         eqSubstring = "";
@@ -434,7 +457,7 @@ public class Calculator extends AppCompatActivity {
             if (isMultiply[i]) {
                 answer = answer.multiply(number[i + 1]);
             } else {
-                answer = answer.divide(number[i + 1]);
+                answer = answer.divide(number[i + 1], 10, RoundingMode.HALF_UP);
             }
         }
         return answer;
