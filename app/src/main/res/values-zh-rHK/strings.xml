@@ -31,5 +31,6 @@
     <string name="sumAllAnswerText">數值總和</string>
     <string name="errorText">錯誤！</string>
     <string name="dividedByZeroErrText">錯誤：不能除以零</string>
+    <string name="exceedMaxErrText">錯誤：超過最大數值</string>
     <string name="tapTextViewText">← 點擊以\n記錄數值 →</string>
 </resources>
