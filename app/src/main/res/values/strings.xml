@@ -39,5 +39,6 @@
     <string name="sumAllAnswerText">Sum of data</string>
     <string name="errorText">Error!</string>
     <string name="dividedByZeroErrText">Error: divided by zero</string>
+    <string name="exceedMaxErrText">Error: exceed maximum value</string>
     <string name="tapTextViewText">← Tap to record\nmeasurement →</string>
 </resources>
