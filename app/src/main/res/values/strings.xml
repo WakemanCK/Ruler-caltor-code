@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Ruler (with Calc)</string>
-    <string name="optionText">Option</string>
     <string name="calibrateButtonText">Calibrate</string>
     <string name="optionButtonText">Option</string>
     <string name="doneButtonText">Done</string>
@@ -8,6 +7,7 @@
     <string name="pref_ruler_height_key" translatable="false">prefRulerHeightKey</string>
     <string name="calibrateText">"Calibration Ratio: "</string>
     <string name="rulerHeadSwitchText">Show ruler head</string>
+    <string name="shortFormUnitSwitchText">Short Form Units</string>
     <string name="resetButtonText">Reset</string>
     <string name="resetPopupText">Are you sure you want \nto reset all preferences?</string>
     <string name="yesButtonText">Yes</string>
@@ -30,7 +30,6 @@
     <string name="calculatorButtonText">Calculator</string>
     <string name="inTextViewText">in</string>
     <string name="copyClipToastText">Copied to clipboard.</string>
-    <string name="customValueText">Custom Value</string>
     <string name="sumAllText">Sum</string>
     <string name="clearAllText">Clear all data</string>
     <string name="oneEmptySpaceText" translatable="false">" "</string>
@@ -42,4 +41,5 @@
     <string name="dividedByZeroErrText">Error: divided by zero</string>
     <string name="exceedMaxErrText">Error: exceed maximum value</string>
     <string name="expressionTooLongText">Error: expression too long</string>
+    <string name="pref_short_form_unit_key">prefShortFormUnitKey</string>
 </resources>

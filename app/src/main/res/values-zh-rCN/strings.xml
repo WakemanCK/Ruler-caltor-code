@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">小尺子（附计算器）</string>
-    <string name="optionText">选项</string>
     <string name="calibrateButtonText">校准</string>
     <string name="optionButtonText">选项</string>
     <string name="doneButtonText">完成</string>
     <string name="calibrateText">校准比例：</string>
     <string name="rulerHeadSwitchText">显示尺子头段</string>
+    <string name="shortFormUnitSwitchText">单位使用简写</string>
     <string name="resetButtonText">重置</string>
     <string name="resetPopupText">是否要重置所有设定？</string>
     <string name="yesButtonText">是</string>
@@ -24,7 +24,6 @@
     <string name="calculatorButtonText">计算器</string>
     <string name="inTextViewText">寸</string>
     <string name="copyClipToastText">已複製到系统剪贴板。</string>
-    <string name="customValueText">自订数值</string>
     <string name="sumAllText">总和</string>
     <string name="clearAllText">清除所有数值</string>
     <string name="informationTextViewText"><b>小尺子（附计算器） v%s</b>\n\n\nWakeman Chau\nhauwingstudio@hotmail.com\n© 2020\nAll rights reserved</string>

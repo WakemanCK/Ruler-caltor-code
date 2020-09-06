@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     static boolean calibrated = false;
     static boolean rulerHead;
     static boolean thickline;
+    static boolean shortFormUnit;
     static String rulerImage = "rulerthin";
     static String rulerInchImage = "rulerinchthin";
     static String calibrateTextStatic;
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 rulerHeight = sharedPref.getInt(getString(R.string.pref_ruler_height_key), RULER_IMAGE_HEIGHT);
                 rulerHead = sharedPref.getBoolean(getString(R.string.pref_ruler_head_key), true);
                 thickline = sharedPref.getBoolean(getString(R.string.pref_thick_lines_key), false);
+                shortFormUnit = sharedPref.getBoolean(getString(R.string.pref_short_form_unit_key), true);
                 guidingLines = sharedPref.getBoolean(getString(R.string.pref_guiding_lines_key), true);
                 decimalPlace = sharedPref.getInt(getString(R.string.pref_decimal_place_key), 1);
                 metricCM = sharedPref.getBoolean(getString(R.string.pref_metric_cm_key), true);
@@ -158,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
         calibrated = true;
         rulerHead = true;
         thickline = false;
+        shortFormUnit = true;
         guidingLines = true;
         decimalPlace = 1;
         metricCM = true;
@@ -243,6 +246,15 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putBoolean(getString(R.string.pref_thick_lines_key), thickline);
+                editor.apply();
+                openOption();
+            }
+
+            if (resultCode == 8) {
+
+                SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putBoolean(getString(R.string.pref_short_form_unit_key), shortFormUnit);
                 editor.apply();
                 openOption();
             }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.icu.util.ULocale;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -13,11 +14,13 @@ import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import static com.simpleruler.MainActivity.decimalPlace;
 import static com.simpleruler.MainActivity.guidingLines;
 import static com.simpleruler.MainActivity.metricCM;
 import static com.simpleruler.MainActivity.rulerHead;
+import static com.simpleruler.MainActivity.shortFormUnit;
 import static com.simpleruler.MainActivity.thickline;
 
 
@@ -33,6 +36,11 @@ public class Option extends AppCompatActivity {
         int height = (int) (displayMetrics.heightPixels * 0.09f * (13f - displayMetrics.heightPixels / displayMetrics.ydpi));
         getWindow().setLayout(width, height);
 
+        // Init
+        if (!String.valueOf(java.util.Locale.getDefault()).contains("zh")){
+            findViewById(R.id.shortFormUnitSwitch).setVisibility(View.GONE);
+            findViewById(R.id.divider6).setVisibility(View.GONE);
+        }
         // Head switch
         Switch toggleHead = findViewById(R.id.headSwitch);
         toggleHead.setChecked(rulerHead);
@@ -45,7 +53,6 @@ public class Option extends AppCompatActivity {
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
-
         // Thick lines switch
         Switch toggleThickLines = findViewById(R.id.thickLinesSwitch);
         toggleThickLines.setChecked(thickline);
@@ -58,7 +65,18 @@ public class Option extends AppCompatActivity {
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
-
+        // Use shortform unit switch
+        Switch toggleShortFormUnit = findViewById(R.id.shortFormUnitSwitch);
+        toggleShortFormUnit.setChecked(shortFormUnit);
+        toggleShortFormUnit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                shortFormUnit = buttonView.isChecked();
+                Intent intent = new Intent();
+                setResult(8, intent);   // Request 1 result 8 = switch shortform unit
+                finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
         // Guiding Lines switch
         Switch toggleGuidingLines = findViewById(R.id.guidingLinesSwitch);
         toggleGuidingLines.setChecked(guidingLines);
@@ -71,7 +89,6 @@ public class Option extends AppCompatActivity {
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
-
         // Seek bar and metric buttons
         SeekBar seekBar = findViewById(R.id.decimalPlaceBar);
         seekBar.setProgress(decimalPlace);
@@ -81,7 +98,6 @@ public class Option extends AppCompatActivity {
         TextView metricText = findViewById(R.id.metricTextView);
         String s = (getString(R.string.decimalPlaceText) + decimalPlace);
         decimalPlaceText.setText(s);
-
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 decimalPlace = progress;

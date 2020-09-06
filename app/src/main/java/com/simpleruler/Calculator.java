@@ -89,9 +89,9 @@ public class Calculator extends AppCompatActivity {
         RadioGroup radioGroup = findViewById(R.id.unitRadioGroup);
         for (int i = 0; i < 3; i++) {
             if (i == getIndex) {
-                radioGroup.getChildAt(i).setBackgroundColor(getColor(R.color.colorList));
+                radioGroup.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.colorList));
             } else {
-                radioGroup.getChildAt(i).setBackgroundColor(getColor(R.color.colorListDark));
+                radioGroup.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.colorListDark));
             }
         }
     }
@@ -413,6 +413,9 @@ public class Calculator extends AppCompatActivity {
         }
         // Check changing operator
         if (eqNum2.equals("")) {
+            if (eqSubstring.equals("")) {
+                return;
+            }
             eqSubstring = eqSubstring.substring(0, eqSubstring.length() - 1);
             changingOperator = true;
         }

@@ -20,19 +20,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/calibrateButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:onClick="goCalibrate"
-        android:text="@string/calibrateButtonText"
-        app:layout_constraintEnd_toStartOf="@+id/resetButton"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/headSwitch"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/resetButton" />
+        app:layout_constraintTop_toBottomOf="@+id/clearDataButton" />
 
     <Switch
         android:id="@+id/headSwitch"
@@ -46,23 +42,18 @@
         android:text="@string/rulerHeadSwitchText"
         app:layout_constraintBottom_toTopOf="@+id/thickLinesSwitch"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/clearDataButton" />
 
-    <Button
-        android:id="@+id/resetButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="8dp"
-        android:onClick="showResetPopup"
-        android:text="@string/resetButtonText"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/calibrateButton"
-        app:layout_constraintTop_toBottomOf="@+id/metricRadioGroup" />
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/thickLinesSwitch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headSwitch" />
 
     <Switch
         android:id="@+id/thickLinesSwitch"
@@ -74,11 +65,45 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="@string/thickLineSwitchText"
-        app:layout_constraintBottom_toTopOf="@+id/guidingLinesSwitch"
+        app:layout_constraintBottom_toTopOf="@+id/shortFormUnitSwitch"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headSwitch" />
+
+    <View
+        android:id="@+id/divider6"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/shortFormUnitSwitch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/thickLinesSwitch" />
+
+    <Switch
+        android:id="@+id/shortFormUnitSwitch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/shortFormUnitSwitchText"
+        app:layout_constraintBottom_toTopOf="@+id/guidingLinesSwitch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/thickLinesSwitch" />
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@id/guidingLinesSwitch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shortFormUnitSwitch" />
 
     <Switch
         android:id="@+id/guidingLinesSwitch"
@@ -90,35 +115,36 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="@string/guidingLinesSwitchText"
-        app:layout_constraintBottom_toTopOf="@+id/decimalPlaceBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/thickLinesSwitch" />
-
-    <SeekBar
-        android:id="@+id/decimalPlaceBar"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="8dp"
-        android:max="2"
-        android:progress="1"
         app:layout_constraintBottom_toTopOf="@+id/decimalPlaceTextView"
-        app:layout_constraintStart_toStartOf="@+id/guidingLinesSwitch"
-        app:layout_constraintTop_toBottomOf="@+id/guidingLinesSwitch" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shortFormUnitSwitch" />
 
     <TextView
         android:id="@+id/decimalPlaceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
         android:text="@string/decimalPlaceText"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/metricRadioGroup"
-        app:layout_constraintStart_toStartOf="@+id/decimalPlaceBar"
-        app:layout_constraintTop_toBottomOf="@+id/decimalPlaceBar" />
+        app:layout_constraintStart_toStartOf="@id/guidingLinesSwitch"
+        app:layout_constraintTop_toBottomOf="@id/guidingLinesSwitch" />
+
+    <SeekBar
+        android:id="@+id/decimalPlaceBar"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:max="2"
+        android:progress="1"
+        app:layout_constraintBottom_toBottomOf="@+id/decimalPlaceTextView"
+        app:layout_constraintEnd_toEndOf="@+id/guidingLinesSwitch"
+        app:layout_constraintStart_toEndOf="@id/decimalPlaceTextView"
+        app:layout_constraintTop_toTopOf="@+id/decimalPlaceTextView" />
 
     <RadioGroup
         android:id="@+id/metricRadioGroup"
@@ -126,7 +152,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="8dp"
         android:checkedButton="@id/cmButton"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/resetButton"
@@ -159,6 +184,44 @@
 
     </RadioGroup>
 
+    <View
+        android:id="@+id/divider5"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/resetButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/metricRadioGroup" />
+
+    <Button
+        android:id="@+id/calibrateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:onClick="goCalibrate"
+        android:text="@string/calibrateButtonText"
+        app:layout_constraintEnd_toStartOf="@+id/resetButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/resetButton" />
+
+    <Button
+        android:id="@+id/resetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="showResetPopup"
+        android:text="@string/resetButtonText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/calibrateButton"
+        app:layout_constraintTop_toBottomOf="@+id/metricRadioGroup" />
+
     <ImageButton
         android:id="@+id/imageButton"
         android:layout_width="wrap_content"
@@ -172,46 +235,5 @@
         app:layout_constraintStart_toEndOf="@+id/resetButton"
         app:layout_constraintTop_toTopOf="@+id/resetButton"
         app:srcCompat="@android:drawable/ic_menu_info_details" />
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toTopOf="@+id/headSwitch"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clearDataButton" />
-
-    <View
-        android:id="@+id/divider3"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toTopOf="@+id/thickLinesSwitch"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headSwitch" />
-
-    <View
-        android:id="@+id/divider4"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toTopOf="@+id/guidingLinesSwitch"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/thickLinesSwitch" />
-
-    <View
-        android:id="@+id/divider5"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toTopOf="@+id/resetButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/metricRadioGroup" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

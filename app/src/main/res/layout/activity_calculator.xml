@@ -420,9 +420,9 @@
         android:text="@string/sumAllText"
         android:textSize="10sp"
         app:backgroundTint="@color/colorListButton"
-        app:layout_constraintBottom_toTopOf="@+id/adFrameLayout"
+        app:layout_constraintBottom_toTopOf="@id/unitRadioGroup"
         app:layout_constraintEnd_toStartOf="@+id/dataListView"
-        app:layout_constraintTop_toBottomOf="@+id/unitRadioGroup" />
+        app:layout_constraintTop_toBottomOf="@id/dotButton" />
 
     <ImageButton
         android:id="@+id/copyDataButton"
@@ -440,7 +440,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintEnd_toStartOf="@+id/dataListView"
-        app:layout_constraintTop_toTopOf="@id/dataListView">
+        app:layout_constraintBottom_toBottomOf="@id/dataListView">
 
         <RadioButton
             android:id="@+id/inchButton"
