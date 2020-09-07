@@ -44,8 +44,8 @@ public class Calculator extends AppCompatActivity {
         // Load Ad
         FrameLayout adContainerView = findViewById(R.id.adFrameLayout);
         Display display = getWindowManager().getDefaultDisplay();
-        GMS gmsAd = new GMS();
-        gmsAd.init(this, adContainerView, display);
+        MobileService mobileServiceAd = new MobileService();
+        mobileServiceAd.init(this, adContainerView, display);
 
         // Init and unit selection
         equationView = findViewById(R.id.equationTextView);
@@ -114,13 +114,13 @@ public class Calculator extends AppCompatActivity {
         String convertedText = "";
         switch (dataUnit) { // 0 = inch; 1 = mm; 2 = cm
             case 0:
-                convertedText = String.format("%." + decimalPlace + "f " + getString(R.string.inTextViewText), getValue / 2.54);
+                convertedText = String.format("%." + decimalPlace + "f " + MainActivity.inchForm, getValue / 2.54);
                 break;
             case 1:
-                convertedText = String.format("%." + decimalPlace + "f " + getString(R.string.mmTextViewText), getValue * 10);
+                convertedText = String.format("%." + decimalPlace + "f " + MainActivity.mmForm, getValue * 10);
                 break;
             case 2:
-                convertedText = String.format("%." + decimalPlace + "f " + getString(R.string.cmTextViewText), getValue);
+                convertedText = String.format("%." + decimalPlace + "f " + MainActivity.cmForm, getValue);
             default:
                 break;
         }

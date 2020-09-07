@@ -406,6 +406,7 @@
         android:id="@+id/dataListView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="4dp"
         android:background="@color/colorList"
         app:layout_constraintBottom_toTopOf="@+id/adFrameLayout"
         app:layout_constraintEnd_toEndOf="@id/equalButton"

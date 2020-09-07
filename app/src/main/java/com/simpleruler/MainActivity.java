@@ -1,4 +1,4 @@
-/*  Ruler (with Calc) v2.00
+/*  Ruler-caltor v2.00
     Wakeman Chau
     hauwingstudio@hotmail.com
     © 2020
@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     static boolean rulerHead;
     static boolean thickline;
     static boolean shortFormUnit;
+    static String inchForm, cmForm, mmForm;
     static String rulerImage = "rulerthin";
     static String rulerInchImage = "rulerinchthin";
     static String calibrateTextStatic;
@@ -89,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 Line2.setButtonY(maxScreenHeight / 2f);
             }
         }
+        setShortForm();
         chooseRuler();
         setRuler();
 
@@ -175,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putBoolean(getString(R.string.pref_metric_cm_key), true);
         editor.apply();
         // Display rulers and measurement lines
+        setShortForm();
         chooseRuler();
         findViewById(R.id.guidingButton1).postDelayed(new Runnable() {
             @Override
@@ -256,6 +259,7 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putBoolean(getString(R.string.pref_short_form_unit_key), shortFormUnit);
                 editor.apply();
+                setShortForm();
                 openOption();
             }
 
@@ -306,6 +310,18 @@ public class MainActivity extends AppCompatActivity {
                 setRuler();
                 Toast.makeText(this, R.string.resetToastText, Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    private void setShortForm() {
+        if (shortFormUnit) {
+            inchForm = getString(R.string.inchShortFormText);
+            cmForm = getString(R.string.cmShortFormText);
+            mmForm = getString(R.string.mmShortFormText);
+        } else {
+            inchForm = getString(R.string.inchTextViewText);
+            cmForm = getString(R.string.cmTextViewText);
+            mmForm = getString(R.string.mmTextViewText);
         }
     }
 
@@ -496,13 +512,13 @@ public class MainActivity extends AppCompatActivity {
         display.getMetrics(displayMetrics);
         measuredLength = (Math.abs(Line1.getY() - Line2.getY())) * 30 / rulerHeight;
         if (metricCM) {
-            lengthStringMetric = String.format("%." + decimalPlace + "f " + getString(R.string.cmTextViewText), measuredLength);
+            lengthStringMetric = String.format("%." + decimalPlace + "f " + cmForm, measuredLength);
         } else {
-            lengthStringMetric = String.format("%." + decimalPlace + "f " + getString(R.string.mmTextViewText), measuredLength * 10);
+            lengthStringMetric = String.format("%." + decimalPlace + "f " + mmForm, measuredLength * 10);
         }
         TextView cmView = findViewById(R.id.guidingLineCMText);
         cmView.setText(lengthStringMetric);
-        lengthStringInch = String.format("%." + decimalPlace + "f " + getString(R.string.inTextViewText), measuredLength / 2.54);
+        lengthStringInch = String.format("%." + decimalPlace + "f " + inchForm, measuredLength / 2.54);
         TextView inchView = findViewById(R.id.guidingLineInchText);
         inchView.setText(lengthStringInch);
         findViewById(R.id.tapTextView).setVisibility(View.VISIBLE);

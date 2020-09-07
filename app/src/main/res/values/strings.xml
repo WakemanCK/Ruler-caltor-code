@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ruler (with Calc)</string>
+    <string name="app_name">Ruler-caltor</string>
     <string name="calibrateButtonText">Calibrate</string>
     <string name="optionButtonText">Option</string>
     <string name="doneButtonText">Done</string>
@@ -16,30 +16,35 @@
     <string name="pref_thick_lines_key" translatable="false">prefThickLinesKey</string>
     <string name="thickLineSwitchText">Thick Lines</string>
     <string name="inchTextViewText">inch</string>
+    <string name="inTextViewText">in</string>
     <string name="cmTextViewText">cm</string>
+    <string name="mmTextViewText">mm</string>
     <string name="pref_guiding_lines_key" translatable="false">prefGuidingLinesKey</string>
     <string name="guidingLinesSwitchText">Show measurement lines</string>
     <string name="pref_decimal_place_key" translatable="false">prefDecimalPlaceKey</string>
     <string name="decimalPlaceText">"Decimal Place: "</string>
     <string name="resetToastText">Preferences are reset!\nAuto-calibration complete.</string>
-    <string name="mmTextViewText">mm</string>
     <string name="metricTextViewText">Metric unit:</string>
     <string name="pref_metric_cm_key" translatable="false">prefMetricCMKey</string>
     <string name="dataFullToastText">Data slots are full!</string>
     <string name="autoCalibrateText">Auto-calibration complete.</string>
     <string name="calculatorButtonText">Calculator</string>
-    <string name="inTextViewText">in</string>
     <string name="copyClipToastText">Copied to clipboard.</string>
     <string name="sumAllText">Sum</string>
     <string name="clearAllText">Clear all data</string>
     <string name="oneEmptySpaceText" translatable="false">" "</string>
     <string name="fiveEmptySpaceText" translatable="false">"     "</string>
-    <string name="informationTextViewText">"<b>Ruler (with Calc) v%s</b>\n\n\nWakeman Chau\nhauwingstudio@hotmail.com\n© 2020\nAll rights reserved"</string>
+    <string name="informationTextViewText">"<b>Ruler-caltor v%s</b>\n\n\nWakeman Chau\nhauwingstudio@hotmail.com\n© 2020\nAll rights reserved"</string>
     <string name="sumAllAnswerText">Sum of data</string>
     <string name="tapTextViewText">← Tap to record\nmeasurement →</string>
     <string name="errorText">Error!</string>
     <string name="dividedByZeroErrText">Error: divided by zero</string>
     <string name="exceedMaxErrText">Error: exceed maximum value</string>
     <string name="expressionTooLongText">Error: expression too long</string>
-    <string name="pref_short_form_unit_key">prefShortFormUnitKey</string>
+    <string name="pref_short_form_unit_key" translatable="false">prefShortFormUnitKey</string>
+    <string name="shareMessageText">Ruler-caltor\nA ruler tool with a built-in calculator.\n</string>
+    <string name="chooseAppText">Please choose the way you want to share the app</string>
+    <string name="inchShortFormText" translatable="false">in</string>
+    <string name="cmShortFormText" translatable="false">cm</string>
+    <string name="mmShortFormText" translatable="false">mm</string>
 </resources>

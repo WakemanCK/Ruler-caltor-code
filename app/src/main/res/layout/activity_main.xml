@@ -266,7 +266,6 @@
         android:layout_marginStart="70dp"
         android:layout_marginLeft="70dp"
         android:layout_marginTop="48dp"
-        android:onClick="clickInch"
         android:rotation="270"
         android:text="@string/inchTextViewText"
         android:textSize="30sp"
