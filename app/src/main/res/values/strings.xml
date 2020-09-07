@@ -4,14 +4,14 @@
     <string name="optionButtonText">Option</string>
     <string name="doneButtonText">Done</string>
     <string name="calibrateText">"Calibrated dots per inch: "</string>
-    <string name="rulerHeadSwitchText">Show ruler head</string>
-    <string name="shortFormUnitSwitchText">Short Form Units</string>
+    <string name="rulerHeadCheckBoxText">Show ruler head</string>
+    <string name="shortFormUnitCheckBoxText">Short Form Units</string>
     <string name="resetButtonText">Reset</string>
     <string name="resetPopupText">Are you sure you want \nto reset all preferences?</string>
     <string name="yesButtonText">Yes</string>
     <string name="cancelButtonText">Cancel</string>
-    <string name="thickLineSwitchText">Thick Lines</string>
-    <string name="guidingLinesSwitchText">Show measurement lines</string>
+    <string name="thickLineCheckBoxText">Thick Lines</string>
+    <string name="guidingLinesCheckBoxText">Show measurement lines</string>
     <string name="decimalPlaceText">"Decimal Place: "</string>
     <string name="resetToastText">Preferences are reset!\nAuto-calibration complete.</string>
     <string name="metricTextViewText">Metric unit:</string>
@@ -47,4 +47,8 @@
     <string name="expressionTooLongText">Error: expression too long</string>
     <string name="shareMessageText">Ruler-caltor\nA ruler tool with a built-in calculator.\n</string>
     <string name="chooseAppText">Please choose the way you want to share the app</string>
+    <string name="soundCheckBoxText">Sound</string>
+    <string name="rateButtonText">Rate app</string>
+    <string name="shareButtonText">Share app</string>
+    <string name="rulerColorText">Ruler Color</string>
 </resources>

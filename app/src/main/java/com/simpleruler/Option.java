@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
-import android.widget.Switch;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,11 +38,10 @@ public class Option extends AppCompatActivity {
 
         // Init
         if (!String.valueOf(java.util.Locale.getDefault()).contains("zh")){
-            findViewById(R.id.shortFormUnitSwitch).setVisibility(View.GONE);
-            findViewById(R.id.divider6).setVisibility(View.GONE);
+            findViewById(R.id.shortFormUnitCheckBox).setVisibility(View.GONE);
         }
         // Head switch
-        Switch toggleHead = findViewById(R.id.headSwitch);
+        CheckBox toggleHead = findViewById(R.id.headCheckBox);
         toggleHead.setChecked(rulerHead);
         toggleHead.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -54,7 +53,7 @@ public class Option extends AppCompatActivity {
             }
         });
         // Thick lines switch
-        Switch toggleThickLines = findViewById(R.id.thickLinesSwitch);
+        CheckBox toggleThickLines = findViewById(R.id.thickLinesCheckBox);
         toggleThickLines.setChecked(thickline);
         toggleThickLines.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -66,7 +65,7 @@ public class Option extends AppCompatActivity {
             }
         });
         // Use shortform unit switch
-        Switch toggleShortFormUnit = findViewById(R.id.shortFormUnitSwitch);
+        CheckBox toggleShortFormUnit = findViewById(R.id.shortFormUnitCheckBox);
         toggleShortFormUnit.setChecked(shortFormUnit);
         toggleShortFormUnit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -78,7 +77,7 @@ public class Option extends AppCompatActivity {
             }
         });
         // Guiding Lines switch
-        Switch toggleGuidingLines = findViewById(R.id.guidingLinesSwitch);
+        CheckBox toggleGuidingLines = findViewById(R.id.guidingLinesCheckBox);
         toggleGuidingLines.setChecked(guidingLines);
         toggleGuidingLines.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
