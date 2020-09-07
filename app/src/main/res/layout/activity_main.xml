@@ -4,68 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/rulerImageTop"
-        android:layout_width="100dp"
-        android:layout_height="200dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitStart"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/rulerImageMiddle"
-        android:layout_width="100dp"
-        android:layout_height="200dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitStart"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rulerImageTop" />
-
-    <ImageView
-        android:id="@+id/rulerImageBottom"
-        android:layout_width="100dp"
-        android:layout_height="200dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitStart"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rulerImageMiddle" />
-
-    <ImageView
-        android:id="@+id/rulerInchImageTop"
-        android:layout_width="100dp"
-        android:layout_height="200dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitStart"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/rulerInchImageMiddle"
-        android:layout_width="100dp"
-        android:layout_height="200dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitStart"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rulerInchImageTop" />
-
-    <ImageView
-        android:id="@+id/rulerInchImageBottom"
-        android:layout_width="100dp"
-        android:layout_height="200dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitStart"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rulerInchImageMiddle" />
+        android:id="@+id/rulerImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorAccent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <ImageView
         android:id="@+id/guidingButton1"
@@ -206,7 +153,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></com.google.android.material.chip.ChipGroup>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageButton
         android:id="@+id/upButton"

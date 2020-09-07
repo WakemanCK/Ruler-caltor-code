@@ -15,9 +15,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapRegionDecoder;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -36,22 +40,21 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-
 public class MainActivity extends AppCompatActivity {
 
     // Ruler related
-    public static final int RULER_IMAGE_HEIGHT = 3000;
-    final int RULER_IMAGE_WIDTH = 300;
-    static int rulerHeight, rulerWidth;
+    //public static final int RULER_IMAGE_HEIGHT = 3000;
+    //final int RULER_IMAGE_WIDTH = 300;
+    //static int rulerHeight; //, rulerWidth;
+    float finalYDpi = 400f;
     int maxScreenHeight;
     static boolean calibrated = false;
     static boolean rulerHead;
     static boolean thickline;
     static boolean shortFormUnit;
     static String inchForm, cmForm, mmForm;
-    static String rulerImage = "rulerthin";
-    static String rulerInchImage = "rulerinchthin";
-    static String calibrateTextStatic;
+    //  static String rulerImage = "rulerthin";
+    //  static String rulerInchImage = "rulerinchthin";
     // Measurement lines related
     static boolean guidingLines;
     static int decimalPlace;
@@ -79,7 +82,8 @@ public class MainActivity extends AppCompatActivity {
             if (!calibrated) {
                 initRuler(sharedPref);
             } else {
-                rulerHeight = sharedPref.getInt(getString(R.string.pref_ruler_height_key), RULER_IMAGE_HEIGHT);
+                //rulerHeight = sharedPref.getInt(getString(R.string.pref_ruler_height_key), RULER_IMAGE_HEIGHT);
+                finalYDpi = sharedPref.getFloat(getString(R.string.pref_final_y_dpi_key), 400);
                 rulerHead = sharedPref.getBoolean(getString(R.string.pref_ruler_head_key), true);
                 thickline = sharedPref.getBoolean(getString(R.string.pref_thick_lines_key), false);
                 shortFormUnit = sharedPref.getBoolean(getString(R.string.pref_short_form_unit_key), true);
@@ -91,8 +95,15 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         setShortForm();
-        chooseRuler();
-        setRuler();
+//        chooseRuler();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setRuler();
+            }
+        }, 100);
+        // setRuler();
 
         // Measurement Lines
         if (!guidingLines) {
@@ -158,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
     // Init
     private void initRuler(final SharedPreferences initPref) {
         // Init variables
-        rulerHeight = (int) autoCalibrate(this);
+        finalYDpi = (int) autoCalibrate(this);
         calibrated = true;
         rulerHead = true;
         thickline = false;
@@ -168,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
         metricCM = true;
         // Save variables
         SharedPreferences.Editor editor = initPref.edit();
-        editor.putInt(getString(R.string.pref_ruler_height_key), rulerHeight);
+        editor.putFloat(getString(R.string.pref_final_y_dpi_key), finalYDpi);
         editor.putBoolean(getString(R.string.pref_calibrated_key), true);
         editor.putBoolean(getString(R.string.pref_ruler_head_key), true);
         editor.putBoolean(getString(R.string.pref_thick_lines_key), false);
@@ -178,15 +189,16 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
         // Display rulers and measurement lines
         setShortForm();
-        chooseRuler();
-        findViewById(R.id.guidingButton1).postDelayed(new Runnable() {
+        //chooseRuler();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 Line1.setButtonY(maxScreenHeight / 2f - Line1.getButtonHeight(MainActivity.this) * 2);
                 Line2.setButtonY(maxScreenHeight / 2f);
                 showGuidingLines();
             }
-        }, 1000);
+        }, 100);
 
     }
 
@@ -194,7 +206,8 @@ public class MainActivity extends AppCompatActivity {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         Toast.makeText(this, R.string.autoCalibrateText, Toast.LENGTH_SHORT).show();
-        return (30 / 2.54) * displayMetrics.ydpi;
+        //return (30 / 2.54) * displayMetrics.ydpi;
+        return displayMetrics.ydpi;
     }
 
     // Open Option page
@@ -231,7 +244,6 @@ public class MainActivity extends AppCompatActivity {
                 optionButton.setVisibility(View.INVISIBLE);
                 hideGuidingLines();
             }
-
             //  Switch head
             if (resultCode == 2) {
                 setRuler();
@@ -241,10 +253,9 @@ public class MainActivity extends AppCompatActivity {
                 editor.apply();
                 openOption();
             }
-
             //  Switch lines thickness
             if (resultCode == 3) {
-                chooseRuler();
+                //chooseRuler();
                 setRuler();
                 SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
@@ -252,9 +263,8 @@ public class MainActivity extends AppCompatActivity {
                 editor.apply();
                 openOption();
             }
-
+            // Choose short form unit
             if (resultCode == 8) {
-
                 SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putBoolean(getString(R.string.pref_short_form_unit_key), shortFormUnit);
@@ -262,7 +272,6 @@ public class MainActivity extends AppCompatActivity {
                 setShortForm();
                 openOption();
             }
-
             //  Switch guiding lines presence
             if (resultCode == 4) {
                 if (guidingLines) {
@@ -276,7 +285,6 @@ public class MainActivity extends AppCompatActivity {
                 editor.apply();
                 openOption();
             }
-
             // Adjust decimal places
             if (resultCode == 5) {
                 SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
@@ -286,7 +294,6 @@ public class MainActivity extends AppCompatActivity {
                 printGuidingLineText();
                 openOption();
             }
-
             // Adjust cm or mm
             if (resultCode == 6) {
                 SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
@@ -296,13 +303,11 @@ public class MainActivity extends AppCompatActivity {
                 printGuidingLineText();
                 openOption();
             }
-
             // Clear data
             if (resultCode == 7) {
                 dataGroup.removeAllViews();
                 dataIndex = -1;
             }
-
             //  Reset
             if (resultCode == 9) {
                 SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
@@ -327,17 +332,17 @@ public class MainActivity extends AppCompatActivity {
 
     // Calibrate
     public void scaleUp(View view) {
-        rulerHeight += 10;
-        if (rulerHeight > 10000) {
-            rulerHeight = 10000;
+        finalYDpi += 1f;
+        if (finalYDpi > 1000f) {
+            finalYDpi = 1000f;
         }
         setRuler();
     }
 
     public void scaleDown(View view) {
-        rulerHeight -= 10;
-        if (rulerHeight < 1000) {
-            rulerHeight = 1000;
+        finalYDpi -= 1f;
+        if (finalYDpi < 100f) {
+            finalYDpi = 100f;
         }
         setRuler();
     }
@@ -352,7 +357,7 @@ public class MainActivity extends AppCompatActivity {
         // Save ruler height
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt(getString(R.string.pref_ruler_height_key), rulerHeight);
+        editor.putFloat(getString(R.string.pref_final_y_dpi_key), finalYDpi);
         editor.apply();
         if (guidingLines) {
             Line1.newLineY();
@@ -361,7 +366,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void chooseRuler() {
+ /*   private void chooseRuler() {
         if (thickline) {
             rulerImage = "rulerthick";
             rulerInchImage = "rulerinchthick";
@@ -371,96 +376,84 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+  */
+
     private void setRuler() {
-        rulerWidth = rulerHeight * RULER_IMAGE_WIDTH / RULER_IMAGE_HEIGHT;
-        ImageView[] imageView = new ImageView[3];
-        InputStream inputStream = null;
-        BitmapRegionDecoder decoder = null;
-        int headAdjustment = 50;
-        if (!rulerHead) {
-            headAdjustment = 100;
-        }
-        // Adjust cm ruler
-        imageView[0] = findViewById(R.id.rulerImageTop);
-        imageView[1] = findViewById(R.id.rulerImageMiddle);
-        imageView[2] = findViewById(R.id.rulerImageBottom);
-        for (int i = 0; i < 3; i++) {
-            try {
-                inputStream = this.getContentResolver().openInputStream(Uri.parse("android.resource://" + getPackageName() + "/drawable/" + rulerImage));
-            } catch (FileNotFoundException e1) {
-                e1.printStackTrace();
-            }
-            try {
-                decoder = BitmapRegionDecoder.newInstance(inputStream, false);
-            } catch (IOException e2) {
-                e2.printStackTrace();
-            }
-            Bitmap bitMap = null;
-            switch (i) {
-                case 0:
-                    bitMap = decoder.decodeRegion(new Rect(1, headAdjustment, 300, 1000 + headAdjustment), null);
-                    break;
-                case 1:
-                    bitMap = decoder.decodeRegion(new Rect(1, 1000 + headAdjustment, 300, 2000 + headAdjustment), null);
-                    break;
-                case 2:
-                    bitMap = decoder.decodeRegion(new Rect(1, 2000 + headAdjustment, 300, 3000 + headAdjustment), null);
-                    break;
-                default:
-                    break;
-            }
-            ViewGroup.LayoutParams params = imageView[i].getLayoutParams();
-            params.height = rulerHeight / 3;
-            params.width = rulerWidth;
-            imageView[i].setLayoutParams(params);
-            imageView[i].setImageBitmap(bitMap);
-        }
-        // Adjust inch ruler
+        WindowManager windowManager = getWindowManager();
+        Display display = windowManager.getDefaultDisplay();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        display.getMetrics(displayMetrics);
+        //Bitmap rulerBitmap = Bitmap.createBitmap(displayMetrics.widthPixels, displayMetrics.heightPixels, Bitmap.Config.ARGB_8888);
+
+
+        ImageView rulerImage = findViewById(R.id.rulerImageView);
+        Bitmap rulerBitmap = Bitmap.createBitmap(rulerImage.getWidth(), rulerImage.getHeight(), Bitmap.Config.ARGB_8888);
+        Paint rulerPaint = new Paint();
+        Canvas rulerCanvas = new Canvas(rulerBitmap);
+        rulerPaint.setColor(getResources().getColor(R.color.colorPrimaryDark));
+        float rulerHeadLength = 0f;
         if (rulerHead) {
-            headAdjustment = 61;
+            rulerHeadLength = 50f;
         }
-        imageView[0] = findViewById(R.id.rulerInchImageTop);
-        imageView[1] = findViewById(R.id.rulerInchImageMiddle);
-        imageView[2] = findViewById(R.id.rulerInchImageBottom);
-        for (int i = 0; i < 3; i++) {
-            try {
-                inputStream = this.getContentResolver().openInputStream(Uri.parse("android.resource://" + getPackageName() + "/drawable/" + rulerInchImage));
-            } catch (FileNotFoundException e1) {
-                Toast.makeText(this, "file not found", Toast.LENGTH_SHORT).show();
-                e1.printStackTrace();
+        rulerPaint.setTextSize(60);
+        rulerPaint.setColor(getResources().getColor(R.color.colorLine));
+        float lineLength;
+        int screenHeight = displayMetrics.heightPixels;
+        // Draw inch
+        rulerPaint.setTextAlign(Paint.Align.LEFT);
+        float lineY = 0f;
+        int lineCount = 0;
+        do {
+            if (lineCount % 16 == 0) {
+                lineLength = 100;
+                rulerCanvas.drawText(String.valueOf(lineCount / 16), 110, lineY + rulerHeadLength + 20, rulerPaint);
+            } else {
+                if (lineCount % 8 == 0) {
+                    lineLength = 90;
+                } else {
+                    if (lineCount % 4 == 0) {
+                        lineLength = 70;
+                    } else {
+                        if (lineCount % 2 == 0) {
+                            lineLength = 50;
+                        } else {
+                            lineLength = 40;
+                        }
+                    }
+                }
             }
-            try {
-                decoder = BitmapRegionDecoder.newInstance(inputStream, false);
-            } catch (IOException e) {
-                Toast.makeText(this, "file not found2 decoder", Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
+            rulerCanvas.drawLine(0, lineY + rulerHeadLength, lineLength, lineY + rulerHeadLength, rulerPaint);
+            lineY += finalYDpi / 16f;
+            lineCount++;
+        } while (lineY < screenHeight);
+        // Draw cm/mm
+        rulerPaint.setTextAlign(Paint.Align.RIGHT);
+        lineY = 0f;
+        lineCount = 0;
+        int screenWidth = displayMetrics.widthPixels;
+        do {
+            if (lineCount % 10 == 0) {
+                lineLength = 100;
+                if (metricCM) {
+                    rulerCanvas.drawText(String.valueOf(lineCount / 10), screenWidth - 110, lineY + rulerHeadLength + 20, rulerPaint);
+                } else {
+                    rulerCanvas.drawText(String.valueOf(lineCount), screenWidth - 110, lineY + rulerHeadLength + 20, rulerPaint);
+                }
+            } else {
+                if (lineCount % 5 == 0) {
+                    lineLength = 90;
+                } else {
+                    lineLength = 70;
+                }
             }
-            Bitmap bitMap = null;
-            switch (i) {
-                case 0:
-                    bitMap = decoder.decodeRegion(new Rect(1, headAdjustment, 300, 1000 + headAdjustment), null);
-                    break;
-                case 1:
-                    bitMap = decoder.decodeRegion(new Rect(1, 1000 + headAdjustment, 300, 2000 + headAdjustment), null);
-                    break;
-                case 2:
-                    bitMap = decoder.decodeRegion(new Rect(1, 2000 + headAdjustment, 300, 3000 + headAdjustment), null);
-                    break;
-                default:
-                    break;
-            }
-
-
-            ViewGroup.LayoutParams params = imageView[i].getLayoutParams();
-            params.height = (int) (rulerHeight / 3 * 1.27);
-            params.width = (int) (rulerWidth * 1.27);
-            imageView[i].setLayoutParams(params);
-            imageView[i].setImageBitmap(bitMap);
-        }
+            rulerCanvas.drawLine(screenWidth - lineLength, lineY + rulerHeadLength, screenWidth, lineY + rulerHeadLength, rulerPaint);
+            lineY += finalYDpi / 25.4f;
+            lineCount++;
+        } while (lineY < screenHeight);
+        rulerImage.setImageBitmap(rulerBitmap);
         // Show calibration ratio
         TextView textView = findViewById(R.id.calibrateTextView);
-        calibrateTextStatic = getString(R.string.calibrateText) + (rulerHeight / 10);
-        textView.setText(calibrateTextStatic);
+        textView.setText(getString(R.string.calibrateText) + finalYDpi);
     }
 
     // Guiding Lines
@@ -510,7 +503,7 @@ public class MainActivity extends AppCompatActivity {
         Display display = windowManager.getDefaultDisplay();
         DisplayMetrics displayMetrics = new DisplayMetrics();
         display.getMetrics(displayMetrics);
-        measuredLength = (Math.abs(Line1.getY() - Line2.getY())) * 30 / rulerHeight;
+        measuredLength = (Math.abs(Line1.getY() - Line2.getY())) * 2.54f / finalYDpi;
         if (metricCM) {
             lengthStringMetric = String.format("%." + decimalPlace + "f " + cmForm, measuredLength);
         } else {
@@ -636,16 +629,14 @@ class GuidingLine {
             }
         }
         if (MainActivity.rulerHead) {
-            float headPosition = MainActivity.rulerHeight * 50f / MainActivity.RULER_IMAGE_HEIGHT;
-            if (realY < headPosition) {
-                realY = headPosition;
+            if (realY < 50f) {
+                realY = 50f;
             }
-        } else if (realY < 0) {
+        } else if (realY < 0f) {
             realY = 0f;
         }
-        float endPosition = MainActivity.rulerHeight * (float) maxY / MainActivity.RULER_IMAGE_HEIGHT;
-        if (realY > endPosition) {
-            realY = endPosition;
+        if (realY > maxY) {
+            realY = maxY;
         }
         realEventY = 0;
         return realY;

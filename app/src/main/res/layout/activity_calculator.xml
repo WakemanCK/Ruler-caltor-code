@@ -67,7 +67,7 @@
         android:layout_marginRight="4dp"
         android:onClick="addSeven"
         android:text="7"
-        android:textColor="#000000"
+        android:textColor="@color/colorLine"
         android:textSize="30sp"
         app:backgroundTint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="@+id/divisionButton"
@@ -87,7 +87,7 @@
         android:layout_marginRight="4dp"
         android:onClick="addEight"
         android:text="8"
-        android:textColor="#000000"
+        android:textColor="@color/colorLine"
         android:textSize="30sp"
         app:backgroundTint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="@+id/divisionButton"
@@ -106,7 +106,7 @@
         android:layout_marginRight="4dp"
         android:onClick="addNine"
         android:text="9"
-        android:textColor="#000000"
+        android:textColor="@color/colorLine"
         android:textSize="30sp"
         app:backgroundTint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="@+id/divisionButton"
@@ -125,7 +125,7 @@
         android:layout_marginRight="8dp"
         android:onClick="addDivision"
         android:text="÷"
-        android:textColor="#000000"
+        android:textColor="@color/colorLine"
         android:textSize="30sp"
         app:backgroundTint="@color/colorPrimaryLight"
         app:layout_constraintBottom_toTopOf="@+id/multiplicationButton"
@@ -144,7 +144,7 @@
         android:layout_marginRight="4dp"
         android:onClick="addFour"
         android:text="4"
-        android:textColor="#000000"
+        android:textColor="@color/colorLine"
         android:textSize="30sp"
         app:backgroundTint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="@+id/multiplicationButton"
@@ -163,7 +163,7 @@
         android:layout_marginRight="4dp"
         android:onClick="addFive"
         android:text="5"
-        android:textColor="#000000"
+        android:textColor="@color/colorLine"
         android:textSize="30sp"
         app:backgroundTint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="@+id/multiplicationButton"
@@ -182,7 +182,7 @@
         android:layout_marginRight="4dp"
         android:onClick="addSix"
         android:text="6"
-        android:textColor="#000000"
+        android:textColor="@color/colorLine"
         android:textSize="30sp"
         app:backgroundTint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="@+id/multiplicationButton"
@@ -201,7 +201,7 @@
         android:layout_marginRight="8dp"
         android:onClick="addMultiplication"
         android:text="×"
-        android:textColor="#000000"
+        android:textColor="@color/colorLine"
         android:textSize="30sp"
         app:backgroundTint="@color/colorPrimaryLight"
         app:layout_constraintBottom_toTopOf="@+id/subtractionButton"
@@ -220,7 +220,7 @@
         android:layout_marginRight="4dp"
         android:onClick="addOne"
         android:text="1"
-        android:textColor="#000000"
+        android:textColor="@color/colorLine"
         android:textSize="30sp"
         app:backgroundTint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="@+id/subtractionButton"
@@ -239,7 +239,7 @@
         android:layout_marginRight="4dp"
         android:onClick="addTwo"
         android:text="2"
-        android:textColor="#000000"
+        android:textColor="@color/colorLine"
         android:textSize="30sp"
         app:backgroundTint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="@+id/subtractionButton"
@@ -259,7 +259,7 @@
         android:layout_marginRight="4dp"
         android:onClick="addThree"
         android:text="3"
-        android:textColor="#000000"
+        android:textColor="@color/colorLine"
         android:textSize="30sp"
         app:backgroundTint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="@+id/subtractionButton"
@@ -278,7 +278,7 @@
         android:layout_marginRight="8dp"
         android:onClick="addSubtraction"
         android:text="-"
-        android:textColor="#000000"
+        android:textColor="@color/colorLine"
         android:textSize="30sp"
         app:backgroundTint="@color/colorPrimaryLight"
         app:layout_constraintBottom_toTopOf="@+id/additionButton"
@@ -297,7 +297,7 @@
         android:layout_marginRight="4dp"
         android:onClick="addDot"
         android:text="."
-        android:textColor="#000000"
+        android:textColor="@color/colorLine"
         android:textSize="30sp"
         app:backgroundTint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="@+id/additionButton"
@@ -316,7 +316,7 @@
         android:layout_marginRight="4dp"
         android:onClick="addZero"
         android:text="0"
-        android:textColor="#000000"
+        android:textColor="@color/colorLine"
         android:textSize="30sp"
         app:backgroundTint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="@+id/additionButton"
@@ -336,7 +336,7 @@
         android:layout_marginRight="4dp"
         android:onClick="addEqual"
         android:text="="
-        android:textColor="#000000"
+        android:textColor="@color/colorLine"
         android:textSize="30sp"
         app:backgroundTint="@color/colorPrimaryLight"
         app:layout_constraintBottom_toBottomOf="@+id/additionButton"
@@ -355,7 +355,7 @@
         android:layout_marginRight="8dp"
         android:onClick="addAddition"
         android:text="+"
-        android:textColor="#000000"
+        android:textColor="@color/colorLine"
         android:textSize="30sp"
         app:backgroundTint="@color/colorPrimaryLight"
         app:layout_constraintBottom_toTopOf="@+id/delButton"
@@ -374,7 +374,7 @@
         android:layout_marginRight="8dp"
         android:onClick="delete"
         android:text="Del"
-        android:textColor="#000000"
+        android:textColor="@color/colorLine"
         android:textSize="14sp"
         app:backgroundTint="@color/colorPrimaryLight"
         app:layout_constraintBottom_toTopOf="@+id/cButton"
@@ -393,7 +393,7 @@
         android:layout_marginRight="8dp"
         android:onClick="clearEquation"
         android:text="C"
-        android:textColor="#000000"
+        android:textColor="@color/colorLine"
         android:textSize="30sp"
         app:backgroundTint="@color/colorPrimaryLight"
         app:layout_constraintBottom_toTopOf="@+id/adFrameLayout"
@@ -451,7 +451,7 @@
             android:button="?attr/selectableItemBackgroundBorderless"
             android:paddingLeft="15dp"
             android:text="@string/inchTextViewText"
-            android:textColor="#000000" />
+            android:textColor="@color/colorLine" />
 
         <RadioButton
             android:id="@+id/mmButton"
@@ -461,7 +461,7 @@
             android:button="?attr/selectableItemBackgroundBorderless"
             android:paddingLeft="15dp"
             android:text="@string/mmTextViewText"
-            android:textColor="#000000" />
+            android:textColor="@color/colorLine" />
 
         <RadioButton
             android:id="@+id/cmButton"
@@ -471,7 +471,7 @@
             android:button="?attr/selectableItemBackgroundBorderless"
             android:paddingLeft="15dp"
             android:text="@string/cmTextViewText"
-            android:textColor="#000000" />
+            android:textColor="@color/colorLine" />
 
     </RadioGroup>
 
@@ -481,6 +481,6 @@
         android:layout_height="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"></FrameLayout>
+        app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

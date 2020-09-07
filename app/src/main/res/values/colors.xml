@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#007ac1</color>
     <color name="colorPrimaryLight">#67daff</color>
     <color name="colorAccent">#ffffff</color>
+    <color name="colorLine">#000000</color>
     <color name="colorScreen">#fff59d</color>
     <color name="colorList">#9e9e9e</color>
     <color name="colorListDark">#424242</color>
