@@ -4,7 +4,7 @@
     <string name="calibrateButtonText">校準</string>
     <string name="optionButtonText">選項</string>
     <string name="doneButtonText">完成</string>
-    <string name="calibrateText">校準比例：</string>
+    <string name="calibrateText">校準每寸像數：</string>
     <string name="rulerHeadCheckBoxText">顯示尺子頭段</string>
     <string name="shortFormUnitCheckBoxText">單位使用簡寫</string>
     <string name="resetButtonText">重置</string>

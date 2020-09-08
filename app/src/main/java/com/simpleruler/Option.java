@@ -6,8 +6,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -16,13 +19,17 @@ import android.widget.SeekBar;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import static com.simpleruler.MainActivity.decimalPlace;
 import static com.simpleruler.MainActivity.guidingLines;
 import static com.simpleruler.MainActivity.metricCM;
+import static com.simpleruler.MainActivity.numberColor;
+import static com.simpleruler.MainActivity.rulerColor;
 import static com.simpleruler.MainActivity.rulerHead;
 import static com.simpleruler.MainActivity.shortFormUnit;
-import static com.simpleruler.MainActivity.sound;
-import static com.simpleruler.MainActivity.thickline;
+import static com.simpleruler.MainActivity.hasSound;
+import static com.simpleruler.MainActivity.thickLine;
 
 
 public class Option extends AppCompatActivity {
@@ -38,15 +45,15 @@ public class Option extends AppCompatActivity {
         getWindow().setLayout(width, height);
 
         // Init
-        if (!String.valueOf(java.util.Locale.getDefault()).contains("zh")){
+        if (!String.valueOf(java.util.Locale.getDefault()).contains("zh")) {
             findViewById(R.id.shortFormUnitCheckBox).setVisibility(View.GONE);
         }
         CheckBox toggleHead = findViewById(R.id.headCheckBox);
         toggleHead.setChecked(rulerHead);
         CheckBox toggleSound = findViewById(R.id.soundCheckBox);
-        toggleSound.setChecked(sound);
+        toggleSound.setChecked(hasSound);
         CheckBox toggleThickLines = findViewById(R.id.thickLinesCheckBox);
-        toggleThickLines.setChecked(thickline);
+        toggleThickLines.setChecked(thickLine);
         CheckBox toggleShortFormUnit = findViewById(R.id.shortFormUnitCheckBox);
         toggleShortFormUnit.setChecked(shortFormUnit);
         CheckBox toggleGuidingLines = findViewById(R.id.measurementLinesCheckBox);
@@ -57,8 +64,13 @@ public class Option extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-             MainActivity.rulerColorGroup = position;
-             colorList.setVisibility(View.INVISIBLE);
+                rulerColor = getRulerColor(position);
+                numberColor = getNumberColor(position);
+                colorList.setVisibility(View.INVISIBLE);
+                Intent intent = new Intent();
+                setResult(10, intent);   // Request 1 result 5 = adjust decimal places
+                finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
         // Seek bar and metric buttons
@@ -114,18 +126,74 @@ public class Option extends AppCompatActivity {
         finish();
     }
 
-    public void chooseColor(View view){
-        String[] colorString = new String[2];
-        colorString[0] = "White";
-        colorString[1] = "Black";
-        final ListView colorList = findViewById(R.id.colorListView);
-        colorList.setVisibility(View.VISIBLE);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, colorString);
-        colorList.setAdapter(adapter);
+    private int getRulerColor(int getPosition) {
+        int colorTemp = 0;
+        switch (getPosition) {
+            case 0:
+                colorTemp = getResources().getColor(R.color.colorWhite);
+                break;
+            case 1:
+                colorTemp = getResources().getColor(R.color.colorBlack);
+                break;
+            case 2:
+                colorTemp = getResources().getColor(R.color.colorRed);
+                break;
+            case 3:
+                colorTemp = getResources().getColor(R.color.colorYellow);
+                break;
+            case 4:
+                colorTemp = getResources().getColor(R.color.colorBlue);
+        }
+        return colorTemp;
     }
 
-    public void checkHead(View view){
+    private int getNumberColor(int getPosition) {
+        int colorTemp = 0;
+        switch (getPosition) {
+            case 0:
+                colorTemp = getResources().getColor(R.color.colorBlack);
+                break;
+            case 1:
+                colorTemp = getResources().getColor(R.color.colorWhite);
+                break;
+            case 2:
+                colorTemp = getResources().getColor(R.color.colorYellow);
+                break;
+            case 3:
+                colorTemp = getResources().getColor(R.color.colorBlack);
+                break;
+            case 4:
+                colorTemp = getResources().getColor(R.color.colorYellow);
+        }
+        return colorTemp;
+    }
+
+    public void chooseColor(View view) {
+        final ListView colorList = findViewById(R.id.colorListView);
+        if (colorList.getVisibility() == View.INVISIBLE) {
+            colorList.setVisibility(View.VISIBLE);
+            String[] colorString = new String[5];
+            for (int i = 0; i < 5; i++) {
+                colorString[i] = getString(R.string.colorText) + (i + 1);
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                    this, android.R.layout.simple_list_item_1, colorString) {
+
+                @Override
+                public View getView(int position, View convertView, ViewGroup parent) {
+                    TextView textView = (TextView) super.getView(position, convertView, parent);
+                    textView.setBackgroundColor(getRulerColor(position));
+                    textView.setTextColor(getNumberColor(position));
+                    return textView;
+                }
+            };
+            colorList.setAdapter(adapter);
+        } else {
+            colorList.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    public void checkHead(View view) {
         CheckBox box = findViewById(R.id.headCheckBox);
         rulerHead = box.isChecked();
         Intent intent = new Intent();
@@ -134,21 +202,21 @@ public class Option extends AppCompatActivity {
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
-    public void checkSound(View view){
+    public void checkSound(View view) {
         CheckBox box = findViewById(R.id.soundCheckBox);
-        sound = box.isChecked();
+        hasSound = box.isChecked();
     }
 
-    public void checkThickLine(View view){
+    public void checkThickLine(View view) {
         CheckBox box = findViewById(R.id.thickLinesCheckBox);
-        thickline = box.isChecked();
+        thickLine = box.isChecked();
         Intent intent = new Intent();
         setResult(3, intent);   // Request 1 result 3 = switch lines thickness
         finish();
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
-    public void checkShortForm(View view){
+    public void checkShortForm(View view) {
         CheckBox box = findViewById(R.id.shortFormUnitCheckBox);
         shortFormUnit = box.isChecked();
         Intent intent = new Intent();
@@ -157,7 +225,7 @@ public class Option extends AppCompatActivity {
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
-    public void checkMeasurementLine(View view){
+    public void checkMeasurementLine(View view) {
         CheckBox box = findViewById(R.id.measurementLinesCheckBox);
         guidingLines = box.isChecked();
         Intent intent = new Intent();

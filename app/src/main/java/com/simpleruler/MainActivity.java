@@ -48,12 +48,12 @@ public class MainActivity extends AppCompatActivity {
     int maxScreenHeight;
     static boolean calibrated = false;
     static boolean rulerHead;
-    static boolean sound;
-    static boolean thickline;
+    static boolean hasSound;
+    static boolean thickLine;
     static boolean shortFormUnit;
     static String inchForm, cmForm, mmForm;
-    static int rulerColorGroup;
-    static Color rulerColor, numberColor;
+  //  static int rulerColorGroup;
+    static int rulerColor, numberColor;
     // Measurement lines related
     static boolean guidingLines;
     static int decimalPlace;
@@ -83,8 +83,11 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 //rulerHeight = sharedPref.getInt(getString(R.string.pref_ruler_height_key), RULER_IMAGE_HEIGHT);
                 finalYDpi = sharedPref.getFloat(getString(R.string.pref_final_y_dpi_key), 400);
+                rulerColor = sharedPref.getInt(getString(R.string.pref_ruler_color_key), getResources().getColor(R.color.colorWhite));
+                numberColor = sharedPref.getInt(getString(R.string.pref_number_color_key), getResources().getColor(R.color.colorBlack));
                 rulerHead = sharedPref.getBoolean(getString(R.string.pref_ruler_head_key), true);
-                thickline = sharedPref.getBoolean(getString(R.string.pref_thick_lines_key), false);
+                hasSound = sharedPref.getBoolean(getString(R.string.pref_sound_key), true);
+                thickLine = sharedPref.getBoolean(getString(R.string.pref_thick_lines_key), false);
                 shortFormUnit = sharedPref.getBoolean(getString(R.string.pref_short_form_unit_key), true);
                 guidingLines = sharedPref.getBoolean(getString(R.string.pref_guiding_lines_key), true);
                 decimalPlace = sharedPref.getInt(getString(R.string.pref_decimal_place_key), 1);
@@ -99,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                setTextColor();
                 setRuler();
             }
         }, 100);
@@ -169,9 +173,12 @@ public class MainActivity extends AppCompatActivity {
     private void initRuler(final SharedPreferences initPref) {
         // Init variables
         finalYDpi = (int) autoCalibrate(this);
+        rulerColor = getResources().getColor(R.color.colorWhite);
+        numberColor = getResources().getColor(R.color.colorBlack);
         calibrated = true;
         rulerHead = true;
-        thickline = false;
+        hasSound = true;
+        thickLine = false;
         shortFormUnit = true;
         guidingLines = true;
         decimalPlace = 1;
@@ -233,6 +240,17 @@ public class MainActivity extends AppCompatActivity {
             showGuidingLines();
         }
         if (requestCode == 1) {
+            // Change color
+            if (resultCode == 10) {
+                setTextColor();
+                setRuler();
+                SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt(getString(R.string.pref_ruler_color_key), rulerColor);
+                editor.putInt(getString(R.string.pref_number_color_key), numberColor);
+                editor.apply();
+                openOption();
+            }
             // Calibrate
             if (resultCode == 1) {
                 int[] viewInt = {R.id.calibrateTextView, R.id.upButton, R.id.downButton, R.id.doneButton};
@@ -258,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
                 setRuler();
                 SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putBoolean(getString(R.string.pref_thick_lines_key), thickline);
+                editor.putBoolean(getString(R.string.pref_thick_lines_key), thickLine);
                 editor.apply();
                 openOption();
             }
@@ -312,9 +330,19 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == 9) {
                 SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
                 initRuler(sharedPref);
+                setTextColor();
                 setRuler();
                 Toast.makeText(this, R.string.resetToastText, Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    private void setTextColor() {
+        int[] viewInt = {R.id.calibrateTextView, R.id.inchTextView, R.id.cmTextView, R.id.tapTextView,
+                R.id.guidingLineInchText, R.id.guidingLineCMText};
+        for (int i : viewInt) {
+            TextView textView = findViewById(i);
+            textView.setTextColor(numberColor);
         }
     }
 
@@ -366,37 +394,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
- /*   private void chooseRuler() {
-        if (thickline) {
-            rulerImage = "rulerthick";
-            rulerInchImage = "rulerinchthick";
-        } else {
-            rulerImage = "rulerthin";
-            rulerInchImage = "rulerinchthin";
-        }
-    }
-
-  */
-
     private void setRuler() {
         WindowManager windowManager = getWindowManager();
         Display display = windowManager.getDefaultDisplay();
         DisplayMetrics displayMetrics = new DisplayMetrics();
         display.getMetrics(displayMetrics);
-        //Bitmap rulerBitmap = Bitmap.createBitmap(displayMetrics.widthPixels, displayMetrics.heightPixels, Bitmap.Config.ARGB_8888);
-
-
         ImageView rulerImage = findViewById(R.id.rulerImageView);
+        rulerImage.setBackgroundColor(rulerColor);
         Bitmap rulerBitmap = Bitmap.createBitmap(rulerImage.getWidth(), rulerImage.getHeight(), Bitmap.Config.ARGB_8888);
         Paint rulerPaint = new Paint();
         Canvas rulerCanvas = new Canvas(rulerBitmap);
-        rulerPaint.setColor(getResources().getColor(R.color.colorPrimaryDark));
+        rulerPaint.setColor(numberColor);
         float rulerHeadLength = 0f;
         if (rulerHead) {
             rulerHeadLength = 50f;
         }
         rulerPaint.setTextSize(60);
-        rulerPaint.setColor(getResources().getColor(R.color.colorLine));
+        rulerPaint.setColor(numberColor);
         float lineLength;
         int screenHeight = displayMetrics.heightPixels;
         // Draw inch
@@ -422,7 +436,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-            if (thickline){
+            if (thickLine){
                 rulerCanvas.drawRect(0,lineY+rulerHeadLength-1, lineLength, lineY + rulerHeadLength+1, rulerPaint);
             }else {
                 rulerCanvas.drawLine(0, lineY + rulerHeadLength, lineLength, lineY + rulerHeadLength, rulerPaint);
@@ -450,7 +464,7 @@ public class MainActivity extends AppCompatActivity {
                     lineLength = 70;
                 }
             }
-            if (thickline) {
+            if (thickLine) {
                 rulerCanvas.drawRect(screenWidth-lineLength, lineY+rulerHeadLength-1,screenWidth, lineY+rulerHeadLength+1, rulerPaint);
             }else{
                 rulerCanvas.drawLine(screenWidth - lineLength, lineY + rulerHeadLength, screenWidth, lineY + rulerHeadLength, rulerPaint);
@@ -586,6 +600,15 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, 2); // Calculator Request Code = 2
     }
 
+    public void rateApp(View view){
+        MobileService rateMS = new MobileService();
+        rateMS.rateApp(this);
+    }
+
+    public void shareApp(View view){
+        MobileService shareMS = new MobileService();
+        shareMS.shareApp(this);
+    }
 }
 
 class GuidingLine {
