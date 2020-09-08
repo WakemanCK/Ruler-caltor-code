@@ -23,7 +23,7 @@
         android:id="@+id/rulerColorButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="clearAll"
+        android:onClick="chooseColor"
         android:text="@string/rulerColorText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -44,6 +44,7 @@
         android:id="@+id/headCheckBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:onClick="checkHead"
         android:text="@string/rulerHeadCheckBoxText"
         app:layout_constraintBottom_toTopOf="@+id/thickLinesCheckBox"
         app:layout_constraintEnd_toStartOf="@+id/soundCheckBox"
@@ -55,6 +56,7 @@
         android:id="@+id/soundCheckBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:onClick="checkSound"
         android:text="@string/soundCheckBoxText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -75,8 +77,9 @@
         android:id="@+id/thickLinesCheckBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:onClick="checkThickLine"
         android:text="@string/thickLineCheckBoxText"
-        app:layout_constraintBottom_toTopOf="@+id/guidingLinesCheckBox"
+        app:layout_constraintBottom_toTopOf="@+id/measurementLinesCheckBox"
         app:layout_constraintEnd_toStartOf="@+id/shortFormUnitCheckBox"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -86,6 +89,7 @@
         android:id="@+id/shortFormUnitCheckBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:onClick="checkShortForm"
         android:text="@string/shortFormUnitCheckBoxText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -102,9 +106,10 @@
         app:layout_constraintTop_toBottomOf="@+id/headCheckBox" />
 
     <CheckBox
-        android:id="@+id/guidingLinesCheckBox"
+        android:id="@+id/measurementLinesCheckBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:onClick="checkMeasurementLine"
         android:text="@string/guidingLinesCheckBoxText"
         app:layout_constraintBottom_toTopOf="@+id/decimalPlaceTextView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -121,8 +126,8 @@
         android:text="@string/decimalPlaceText"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/metricRadioGroup"
-        app:layout_constraintStart_toStartOf="@+id/guidingLinesCheckBox"
-        app:layout_constraintTop_toBottomOf="@+id/guidingLinesCheckBox" />
+        app:layout_constraintStart_toStartOf="@+id/measurementLinesCheckBox"
+        app:layout_constraintTop_toBottomOf="@+id/measurementLinesCheckBox" />
 
     <SeekBar
         android:id="@+id/decimalPlaceBar"
@@ -146,7 +151,7 @@
         android:checkedButton="@id/cmButton"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/shareButton"
-        app:layout_constraintStart_toStartOf="@+id/guidingLinesCheckBox"
+        app:layout_constraintStart_toStartOf="@+id/measurementLinesCheckBox"
         app:layout_constraintTop_toBottomOf="@+id/decimalPlaceTextView">
 
         <TextView
@@ -183,7 +188,7 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toTopOf="@+id/guidingLinesCheckBox"
+        app:layout_constraintBottom_toTopOf="@+id/measurementLinesCheckBox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/thickLinesCheckBox" />
@@ -244,5 +249,15 @@
         app:layout_constraintStart_toEndOf="@+id/resetButton"
         app:layout_constraintTop_toTopOf="@+id/calibrateButton"
         app:srcCompat="@android:drawable/ic_menu_info_details" />
+
+    <ListView
+        android:id="@+id/colorListView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/rulerColorButton"
+        app:layout_constraintStart_toStartOf="@+id/rulerColorButton"
+        app:layout_constraintTop_toBottomOf="@+id/rulerColorButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

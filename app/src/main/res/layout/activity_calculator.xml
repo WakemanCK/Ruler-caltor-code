@@ -419,6 +419,7 @@
         android:layout_height="0dp"
         android:onClick="sumAll"
         android:text="@string/sumAllText"
+        android:textColor="@color/colorLine"
         android:textSize="10sp"
         app:backgroundTint="@color/colorListButton"
         app:layout_constraintBottom_toTopOf="@id/unitRadioGroup"

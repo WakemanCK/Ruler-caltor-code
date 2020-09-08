@@ -5,22 +5,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.icu.util.ULocale;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.CompoundButton;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import static com.simpleruler.MainActivity.decimalPlace;
 import static com.simpleruler.MainActivity.guidingLines;
 import static com.simpleruler.MainActivity.metricCM;
 import static com.simpleruler.MainActivity.rulerHead;
 import static com.simpleruler.MainActivity.shortFormUnit;
+import static com.simpleruler.MainActivity.sound;
 import static com.simpleruler.MainActivity.thickline;
 
 
@@ -40,52 +41,24 @@ public class Option extends AppCompatActivity {
         if (!String.valueOf(java.util.Locale.getDefault()).contains("zh")){
             findViewById(R.id.shortFormUnitCheckBox).setVisibility(View.GONE);
         }
-        // Head switch
         CheckBox toggleHead = findViewById(R.id.headCheckBox);
         toggleHead.setChecked(rulerHead);
-        toggleHead.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                rulerHead = buttonView.isChecked();
-                Intent intent = new Intent();
-                setResult(2, intent);    // Request 1 result 2 = switch head
-                finish();
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            }
-        });
-        // Thick lines switch
+        CheckBox toggleSound = findViewById(R.id.soundCheckBox);
+        toggleSound.setChecked(sound);
         CheckBox toggleThickLines = findViewById(R.id.thickLinesCheckBox);
         toggleThickLines.setChecked(thickline);
-        toggleThickLines.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                thickline = buttonView.isChecked();
-                Intent intent = new Intent();
-                setResult(3, intent);   // Request 1 result 3 = switch lines thickness
-                finish();
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            }
-        });
-        // Use shortform unit switch
         CheckBox toggleShortFormUnit = findViewById(R.id.shortFormUnitCheckBox);
         toggleShortFormUnit.setChecked(shortFormUnit);
-        toggleShortFormUnit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                shortFormUnit = buttonView.isChecked();
-                Intent intent = new Intent();
-                setResult(8, intent);   // Request 1 result 8 = switch shortform unit
-                finish();
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            }
-        });
-        // Guiding Lines switch
-        CheckBox toggleGuidingLines = findViewById(R.id.guidingLinesCheckBox);
+        CheckBox toggleGuidingLines = findViewById(R.id.measurementLinesCheckBox);
         toggleGuidingLines.setChecked(guidingLines);
-        toggleGuidingLines.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                guidingLines = buttonView.isChecked();
-                Intent intent = new Intent();
-                setResult(4, intent);   // Request 1 result 4 = switch guiding lines presence
-                finish();
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        // Color list
+        final ListView colorList = findViewById(R.id.colorListView);
+        colorList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+             MainActivity.rulerColorGroup = position;
+             colorList.setVisibility(View.INVISIBLE);
             }
         });
         // Seek bar and metric buttons
@@ -139,6 +112,58 @@ public class Option extends AppCompatActivity {
         Intent intent = new Intent();
         setResult(7, intent);  // Request 1 result 7 = clear data
         finish();
+    }
+
+    public void chooseColor(View view){
+        String[] colorString = new String[2];
+        colorString[0] = "White";
+        colorString[1] = "Black";
+        final ListView colorList = findViewById(R.id.colorListView);
+        colorList.setVisibility(View.VISIBLE);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, colorString);
+        colorList.setAdapter(adapter);
+    }
+
+    public void checkHead(View view){
+        CheckBox box = findViewById(R.id.headCheckBox);
+        rulerHead = box.isChecked();
+        Intent intent = new Intent();
+        setResult(2, intent);    // Request 1 result 2 = switch head
+        finish();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+    public void checkSound(View view){
+        CheckBox box = findViewById(R.id.soundCheckBox);
+        sound = box.isChecked();
+    }
+
+    public void checkThickLine(View view){
+        CheckBox box = findViewById(R.id.thickLinesCheckBox);
+        thickline = box.isChecked();
+        Intent intent = new Intent();
+        setResult(3, intent);   // Request 1 result 3 = switch lines thickness
+        finish();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+    public void checkShortForm(View view){
+        CheckBox box = findViewById(R.id.shortFormUnitCheckBox);
+        shortFormUnit = box.isChecked();
+        Intent intent = new Intent();
+        setResult(8, intent);   // Request 1 result 8 = switch shortform unit
+        finish();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+    public void checkMeasurementLine(View view){
+        CheckBox box = findViewById(R.id.measurementLinesCheckBox);
+        guidingLines = box.isChecked();
+        Intent intent = new Intent();
+        setResult(4, intent);   // Request 1 result 4 = switch guiding lines presence
+        finish();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     public void chooseCM(View view) {

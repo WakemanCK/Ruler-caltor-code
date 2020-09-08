@@ -16,6 +16,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapRegionDecoder;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -43,18 +44,16 @@ import java.io.InputStream;
 public class MainActivity extends AppCompatActivity {
 
     // Ruler related
-    //public static final int RULER_IMAGE_HEIGHT = 3000;
-    //final int RULER_IMAGE_WIDTH = 300;
-    //static int rulerHeight; //, rulerWidth;
     float finalYDpi = 400f;
     int maxScreenHeight;
     static boolean calibrated = false;
     static boolean rulerHead;
+    static boolean sound;
     static boolean thickline;
     static boolean shortFormUnit;
     static String inchForm, cmForm, mmForm;
-    //  static String rulerImage = "rulerthin";
-    //  static String rulerInchImage = "rulerinchthin";
+    static int rulerColorGroup;
+    static Color rulerColor, numberColor;
     // Measurement lines related
     static boolean guidingLines;
     static int decimalPlace;
@@ -301,6 +300,7 @@ public class MainActivity extends AppCompatActivity {
                 editor.putBoolean(getString(R.string.pref_metric_cm_key), metricCM);
                 editor.apply();
                 printGuidingLineText();
+                setRuler();
                 openOption();
             }
             // Clear data
@@ -422,10 +422,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-            rulerCanvas.drawLine(0, lineY + rulerHeadLength, lineLength, lineY + rulerHeadLength, rulerPaint);
+            if (thickline){
+                rulerCanvas.drawRect(0,lineY+rulerHeadLength-1, lineLength, lineY + rulerHeadLength+1, rulerPaint);
+            }else {
+                rulerCanvas.drawLine(0, lineY + rulerHeadLength, lineLength, lineY + rulerHeadLength, rulerPaint);
+            }
             lineY += finalYDpi / 16f;
             lineCount++;
-        } while (lineY < screenHeight);
+        } while (lineY < screenHeight + 50);
         // Draw cm/mm
         rulerPaint.setTextAlign(Paint.Align.RIGHT);
         lineY = 0f;
@@ -446,10 +450,14 @@ public class MainActivity extends AppCompatActivity {
                     lineLength = 70;
                 }
             }
-            rulerCanvas.drawLine(screenWidth - lineLength, lineY + rulerHeadLength, screenWidth, lineY + rulerHeadLength, rulerPaint);
+            if (thickline) {
+                rulerCanvas.drawRect(screenWidth-lineLength, lineY+rulerHeadLength-1,screenWidth, lineY+rulerHeadLength+1, rulerPaint);
+            }else{
+                rulerCanvas.drawLine(screenWidth - lineLength, lineY + rulerHeadLength, screenWidth, lineY + rulerHeadLength, rulerPaint);
+            }
             lineY += finalYDpi / 25.4f;
             lineCount++;
-        } while (lineY < screenHeight);
+        } while (lineY < screenHeight + 50);
         rulerImage.setImageBitmap(rulerBitmap);
         // Show calibration ratio
         TextView textView = findViewById(R.id.calibrateTextView);
