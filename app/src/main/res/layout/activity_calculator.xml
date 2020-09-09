@@ -432,6 +432,7 @@
         android:layout_height="wrap_content"
         android:alpha="0.5"
         android:onClick="copyDataToClip"
+        android:elevation="10dp"
         app:layout_constraintBottom_toTopOf="@+id/adFrameLayout"
         app:layout_constraintEnd_toEndOf="@+id/dataListView"
         app:srcCompat="?attr/actionModeCopyDrawable" />

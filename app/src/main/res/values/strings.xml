@@ -54,5 +54,5 @@
     <string name="pref_sound_key">prefSoundKey</string>
     <string name="pref_ruler_color_key">prefRulerColorKey</string>
     <string name="pref_number_color_key">prefNumberColorKey</string>
-    <string name="colorText">Color</string>
+    <string name="colorText">Color </string>
 </resources>

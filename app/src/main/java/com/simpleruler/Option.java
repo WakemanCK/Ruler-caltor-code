@@ -250,12 +250,21 @@ public class Option extends AppCompatActivity {
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
+    public void rateApp(View view){
+        MobileService rateMS = new MobileService();
+        rateMS.rateApp(this);
+    }
+
+    public void shareApp(View view){
+        MobileService shareMS = new MobileService();
+        shareMS.shareApp(this);
+    }
+
     public void goCalibrate(View view) {
         Intent intent = new Intent();
         setResult(1, intent);  // Request 1 result 1 = calibrate
         finish();
     }
-
 
     public void showResetPopup(View view) {
         Intent intent = new Intent(this, ResetPopup.class);

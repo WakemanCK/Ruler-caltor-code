@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
-import android.os.Build;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.View;
@@ -268,6 +268,7 @@ public class Calculator extends AppCompatActivity {
                 answerView.setText(eqNum1);
             } else {
                 Toast.makeText(this, getString(R.string.exceedMaxErrText), Toast.LENGTH_SHORT).show();
+                playErrorSound();
             }
         } else {
             if (eqNum2.length() < 10) {
@@ -275,6 +276,7 @@ public class Calculator extends AppCompatActivity {
                 answerView.setText(eqNum2);
             } else {
                 Toast.makeText(this, getString(R.string.exceedMaxErrText), Toast.LENGTH_SHORT).show();
+                playErrorSound();
             }
         }
     }
@@ -290,6 +292,7 @@ public class Calculator extends AppCompatActivity {
             eqEnteringNum1 = true;
             equationView.setTextSize(50);
             equationView.setText(getString(R.string.errorText));
+            playErrorSound();
             return;
         }
         if (stringToShow.length() > 11) {
@@ -311,6 +314,7 @@ public class Calculator extends AppCompatActivity {
             eqEnteringNum1 = true;
             answerView.setTextSize(50);
             answerView.setText(getString(R.string.errorText));
+            playErrorSound();
             return;
         }
         if (stringToShow.length() > 11) {
@@ -358,6 +362,7 @@ public class Calculator extends AppCompatActivity {
             BigDecimal tempNum2 = new BigDecimal(eqNum2).stripTrailingZeros();
             if ((eqString.charAt(eqString.length() - 1) == '÷') && (tempNum2.equals(BigDecimal.ZERO))) {
                 answerView.setText(getString(R.string.errorText));
+                playErrorSound();
                 Toast.makeText(this, getString(R.string.dividedByZeroErrText), Toast.LENGTH_SHORT).show();
                 eqNum2 = "";
                 return;
@@ -432,6 +437,7 @@ public class Calculator extends AppCompatActivity {
             BigDecimal tempNum2 = new BigDecimal(eqNum2).stripTrailingZeros();
             if ((eqString.charAt(eqString.length() - 1) == '÷') && (tempNum2.equals(BigDecimal.ZERO))) {
                 answerView.setText(getString(R.string.errorText));
+                playErrorSound();
                 Toast.makeText(this, getString(R.string.dividedByZeroErrText), Toast.LENGTH_SHORT).show();
                 eqNum2 = "";
                 return;
@@ -540,19 +546,33 @@ public class Calculator extends AppCompatActivity {
         Toast.makeText(Calculator.this, R.string.copyClipToastText, Toast.LENGTH_SHORT).show();
     }
  
-    MediaPlayer mediaPlayer;
+    MediaPlayer mediaPlayer, errMediaPlayer;
     public void playSound() {
-        if (hasSound) {
-        mediaPlayer = MediaPlayer.create(context, R.raw.beep_sound);
-        mediaPlayer.start();
-        } 
+        if (MainActivity.hasSound) {
+            mediaPlayer = MediaPlayer.create(this, R.raw.beep);
+            mediaPlayer.start();
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    mediaPlayer.release();
+                }
+            });
+        }
     }
 
-    //@Override
-    protected void onStop(){
-        //super.onStop();
-        mediaPlayer.release();
-        mediaPlayer = null;
+    public void playErrorSound() {
+        if (MainActivity.hasSound) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            errMediaPlayer = MediaPlayer.create(this, R.raw.error);
+            errMediaPlayer.start();
+            errMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer errMediaPlayer) {
+                    errMediaPlayer.release();
+                }
+            });
+        }
     }
     
 }

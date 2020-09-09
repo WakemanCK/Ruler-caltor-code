@@ -14,20 +14,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapRegionDecoder;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -36,10 +31,6 @@ import android.widget.Toast;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     static boolean thickLine;
     static boolean shortFormUnit;
     static String inchForm, cmForm, mmForm;
-  //  static int rulerColorGroup;
+    //  static int rulerColorGroup;
     static int rulerColor, numberColor;
     // Measurement lines related
     static boolean guidingLines;
@@ -118,19 +109,34 @@ public class MainActivity extends AppCompatActivity {
             Display display = windowManager.getDefaultDisplay();
             DisplayMetrics displayMetrics = new DisplayMetrics();
             display.getMetrics(displayMetrics);
-            maxScreenHeight = displayMetrics.heightPixels;
+            maxScreenHeight = displayMetrics.heightPixels + 50;
             Line1.setMax(maxScreenHeight);
             Line2.setMax(maxScreenHeight);
             // Measurement line 1
             guidingLineView1.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        stopSlidingSound();
+                        return true;
+                    }
                     float touchY = event.getY();
                     Line1.setButtonY(guidingLineView1.getY());
                     Line2.setButtonY(guidingLineView2.getY());
                     Line1.setEventY(touchY);
                     if (touchY > 3f || touchY < -3f) {
+                        playSlidingSound();
                         float lineY = Line1.newLineY();
+                      //  TextView textView1 = findViewById(R.id.inchTextView);
+                     //           textView1.setText(String.valueOf(lineY));
+                     //   TextView textView2 = findViewById(R.id.cmTextView);
+                    //    textView2.setText(String.valueOf(touchY));
+                   //     if (Math.abs(lineY - view.getY()) < 10) {
+                   //         stopSlidingSound();
+                   //     }
+                        if (Math.abs(touchY - Line1.getButtonHeight(MainActivity.this)) < 3){
+                            stopSlidingSound();
+                        }
                         view.setY(lineY - Line1.getButtonHeight(MainActivity.this));
                         view = findViewById(R.id.divider1);
                         view.setY(lineY);
@@ -147,12 +153,20 @@ public class MainActivity extends AppCompatActivity {
             guidingLineView2.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        stopSlidingSound();
+                        return true;
+                    }
                     float touchY = event.getY();
                     Line1.setButtonY(guidingLineView1.getY());
                     Line2.setButtonY(guidingLineView2.getY());
                     Line2.setEventY(touchY);
                     if (touchY > 3f || touchY < -3f) {
+                        playSlidingSound();
                         float lineY = Line2.newLineY();
+                        if (Math.abs(touchY - Line2.getButtonHeight(MainActivity.this)) < 3){
+                            stopSlidingSound();
+                        }
                         view.setY(lineY - Line2.getButtonHeight(MainActivity.this));
                         view = findViewById(R.id.divider2);
                         view.setY(lineY);
@@ -436,9 +450,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-            if (thickLine){
-                rulerCanvas.drawRect(0,lineY+rulerHeadLength-1, lineLength, lineY + rulerHeadLength+1, rulerPaint);
-            }else {
+            if (thickLine) {
+                rulerCanvas.drawRect(0, lineY + rulerHeadLength - 1, lineLength, lineY + rulerHeadLength + 1, rulerPaint);
+            } else {
                 rulerCanvas.drawLine(0, lineY + rulerHeadLength, lineLength, lineY + rulerHeadLength, rulerPaint);
             }
             lineY += finalYDpi / 16f;
@@ -465,8 +479,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             if (thickLine) {
-                rulerCanvas.drawRect(screenWidth-lineLength, lineY+rulerHeadLength-1,screenWidth, lineY+rulerHeadLength+1, rulerPaint);
-            }else{
+                rulerCanvas.drawRect(screenWidth - lineLength, lineY + rulerHeadLength - 1, screenWidth, lineY + rulerHeadLength + 1, rulerPaint);
+            } else {
                 rulerCanvas.drawLine(screenWidth - lineLength, lineY + rulerHeadLength, screenWidth, lineY + rulerHeadLength, rulerPaint);
             }
             lineY += finalYDpi / 25.4f;
@@ -600,14 +614,27 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, 2); // Calculator Request Code = 2
     }
 
-    public void rateApp(View view){
-        MobileService rateMS = new MobileService();
-        rateMS.rateApp(this);
+
+    MediaPlayer slidingMediaPlayer;
+
+    public void playSlidingSound() {
+        if (hasSound) {
+            if (slidingMediaPlayer == null) {
+                slidingMediaPlayer = MediaPlayer.create(this, R.raw.sliding);
+                slidingMediaPlayer.setLooping(true);
+                slidingMediaPlayer.start();
+            }
+        }
     }
 
-    public void shareApp(View view){
-        MobileService shareMS = new MobileService();
-        shareMS.shareApp(this);
+    public void stopSlidingSound() {
+        if (hasSound) {
+            if (slidingMediaPlayer != null) {
+                slidingMediaPlayer.stop();
+                slidingMediaPlayer.release();
+                slidingMediaPlayer = null;
+            }
+        }
     }
 }
 
@@ -635,6 +662,10 @@ class GuidingLine {
     public void setEventY(float getEventY) {
         realEventY = getEventY - buttonHeightGL;
     }
+
+//    public float getRealEventY(){
+  //      return realEventY;
+    //}
 
     public float getY() {
         return realY;
@@ -679,4 +710,5 @@ class GuidingLine {
         }
         return buttonHeightGL;
     }
+
 }
