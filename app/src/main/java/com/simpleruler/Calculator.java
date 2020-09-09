@@ -58,6 +58,7 @@ public class Calculator extends AppCompatActivity {
                 new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup radioGroup, int childIndex) {
+                        playSound();
                         dataUnit = radioGroup.indexOfChild(findViewById(childIndex));
                         highLight(dataUnit);
                         showList(dataValue);
@@ -75,6 +76,7 @@ public class Calculator extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
+                playSound();
                 if (eqEnteringNum1) {
                     eqNum1 = convertNumber(dataValue[position]);
                     answerView.setText(eqNum1);
@@ -219,6 +221,7 @@ public class Calculator extends AppCompatActivity {
     }
 
     public void delete(View view) {
+        playSound();
         if (eqEnteringNum1) {
             if (eqNum1.length() < 2) {
                 eqNum1 = "";
@@ -239,6 +242,7 @@ public class Calculator extends AppCompatActivity {
     }
 
     public void clearEquation(View view) {
+        playSound();
         eqString = "";
         eqSubstring = "";
         eqNum1 = "";
@@ -251,6 +255,7 @@ public class Calculator extends AppCompatActivity {
 
     // Calculate
     private void addNumber(String getNumber) {
+        playSound();
         changingOperator = false;
         answerView.setTextSize(50);
         if (justPressedEqual) {
@@ -317,6 +322,7 @@ public class Calculator extends AppCompatActivity {
     }
 
     private void checkEquation(String getOperator) {
+        playSound();
         justPressedEqual = false;
         // Check entering Num1
         if (eqEnteringNum1) {
@@ -409,6 +415,7 @@ public class Calculator extends AppCompatActivity {
     }
 
     private void equalPressed() {
+        playSound();
         if (eqEnteringNum1) {
             return;
         }
@@ -493,6 +500,7 @@ public class Calculator extends AppCompatActivity {
     }
 
     public void sumAll(View view) {
+        playSound();
         BigDecimal sum = BigDecimal.ZERO;
         String s;
         for (int i = 0; i <= dataIndex; i++) {
@@ -512,6 +520,7 @@ public class Calculator extends AppCompatActivity {
 
     // Copy to clipboard
     public void copyDataToClip(View view) {
+        playSound();
         StringBuilder dataText = new StringBuilder();
         for (int i = 0; i <= dataIndex; i++) {
             dataText.append(dataString[i]).append("\n");
@@ -523,11 +532,27 @@ public class Calculator extends AppCompatActivity {
     }
 
     public void copyAnswerToClip(View view) {
+        playSound();
         String answerText = answerView.getText() + "\n";
         ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("data text", answerText);
         clipboard.setPrimaryClip(clip);
         Toast.makeText(Calculator.this, R.string.copyClipToastText, Toast.LENGTH_SHORT).show();
     }
+ 
+    MediaPlayer mediaPlayer;
+    public void playSound() {
+        if (hasSound) {
+        mediaPlayer = MediaPlayer.create(context, R.raw.beep_sound);
+        mediaPlayer.start();
+        } 
+    }
 
+    //@Override
+    protected void onStop(){
+        //super.onStop();
+        mediaPlayer.release();
+        mediaPlayer = null;
+    }
+    
 }
