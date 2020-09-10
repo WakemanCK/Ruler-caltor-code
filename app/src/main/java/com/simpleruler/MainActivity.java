@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     static boolean thickLine;
     static boolean shortFormUnit;
     static String inchForm, cmForm, mmForm;
-    //  static int rulerColorGroup;
     static int rulerColor, numberColor;
     // Measurement lines related
     static boolean guidingLines;
@@ -72,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
             if (!calibrated) {
                 initRuler(sharedPref);
             } else {
-                //rulerHeight = sharedPref.getInt(getString(R.string.pref_ruler_height_key), RULER_IMAGE_HEIGHT);
                 finalYDpi = sharedPref.getFloat(getString(R.string.pref_final_y_dpi_key), 400);
                 rulerColor = sharedPref.getInt(getString(R.string.pref_ruler_color_key), getResources().getColor(R.color.colorWhite));
                 numberColor = sharedPref.getInt(getString(R.string.pref_number_color_key), getResources().getColor(R.color.colorBlack));
@@ -88,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         setShortForm();
-//        chooseRuler();
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -97,8 +94,6 @@ public class MainActivity extends AppCompatActivity {
                 setRuler();
             }
         }, 100);
-        // setRuler();
-
         // Measurement Lines
         if (!guidingLines) {
             hideGuidingLines();
@@ -127,14 +122,7 @@ public class MainActivity extends AppCompatActivity {
                     if (touchY > 3f || touchY < -3f) {
                         playSlidingSound();
                         float lineY = Line1.newLineY();
-                      //  TextView textView1 = findViewById(R.id.inchTextView);
-                     //           textView1.setText(String.valueOf(lineY));
-                     //   TextView textView2 = findViewById(R.id.cmTextView);
-                    //    textView2.setText(String.valueOf(touchY));
-                   //     if (Math.abs(lineY - view.getY()) < 10) {
-                   //         stopSlidingSound();
-                   //     }
-                        if (Math.abs(touchY - Line1.getButtonHeight(MainActivity.this)) < 3){
+                        if (Math.abs(touchY - Line1.getButtonHeight(MainActivity.this)) < 3) {
                             stopSlidingSound();
                         }
                         view.setY(lineY - Line1.getButtonHeight(MainActivity.this));
@@ -164,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                     if (touchY > 3f || touchY < -3f) {
                         playSlidingSound();
                         float lineY = Line2.newLineY();
-                        if (Math.abs(touchY - Line2.getButtonHeight(MainActivity.this)) < 3){
+                        if (Math.abs(touchY - Line2.getButtonHeight(MainActivity.this)) < 3) {
                             stopSlidingSound();
                         }
                         view.setY(lineY - Line2.getButtonHeight(MainActivity.this));
@@ -199,17 +187,20 @@ public class MainActivity extends AppCompatActivity {
         metricCM = true;
         // Save variables
         SharedPreferences.Editor editor = initPref.edit();
+        editor.putBoolean(getString(R.string.pref_calibrated_key), calibrated);
         editor.putFloat(getString(R.string.pref_final_y_dpi_key), finalYDpi);
-        editor.putBoolean(getString(R.string.pref_calibrated_key), true);
-        editor.putBoolean(getString(R.string.pref_ruler_head_key), true);
-        editor.putBoolean(getString(R.string.pref_thick_lines_key), false);
+        editor.putInt(getString(R.string.pref_ruler_color_key), rulerColor);
+        editor.putInt(getString(R.string.pref_number_color_key), numberColor);
+        editor.putBoolean(getString(R.string.pref_ruler_head_key), rulerHead);
+        editor.putBoolean(getString(R.string.pref_sound_key), hasSound);
+        editor.putBoolean(getString(R.string.pref_thick_lines_key), thickLine);
+        editor.putBoolean(getString(R.string.pref_short_form_unit_key), shortFormUnit);
         editor.putBoolean(getString(R.string.pref_guiding_lines_key), true);
         editor.putInt(getString(R.string.pref_decimal_place_key), 1);
         editor.putBoolean(getString(R.string.pref_metric_cm_key), true);
         editor.apply();
         // Display rulers and measurement lines
         setShortForm();
-        //chooseRuler();
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -284,9 +275,16 @@ public class MainActivity extends AppCompatActivity {
                 editor.apply();
                 openOption();
             }
+            //  Change sound
+            if (resultCode == 12) {
+                SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putBoolean(getString(R.string.pref_sound_key), hasSound);
+                editor.apply();
+                openOption();
+            }
             //  Switch lines thickness
             if (resultCode == 3) {
-                //chooseRuler();
                 setRuler();
                 SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
@@ -489,7 +487,8 @@ public class MainActivity extends AppCompatActivity {
         rulerImage.setImageBitmap(rulerBitmap);
         // Show calibration ratio
         TextView textView = findViewById(R.id.calibrateTextView);
-        textView.setText(getString(R.string.calibrateText) + finalYDpi);
+        String s = getString(R.string.calibrateText) + finalYDpi;
+        textView.setText(s);
     }
 
     // Guiding Lines
@@ -553,7 +552,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.tapTextView).setVisibility(View.VISIBLE);
     }
 
-
     // Data group
     public void saveInchData(View view) {
         if (lengthStringInch == null) {
@@ -595,7 +593,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (dataGroup.getChildCount() - 1 - dataGroup.indexOfChild(chip) >= 0)
-                    System.arraycopy(dataValue, dataGroup.indexOfChild(chip) + 1, dataValue, dataGroup.indexOfChild(chip), dataGroup.getChildCount() - 1 - dataGroup.indexOfChild(chip));
+                    System.arraycopy(dataValue, dataGroup.indexOfChild(chip) + 1, dataValue,
+                            dataGroup.indexOfChild(chip), dataGroup.getChildCount() - 1 - dataGroup.indexOfChild(chip));
                 dataGroup.removeView(chip);
                 if (dataGroup.getHeight() < findViewById(R.id.tapTextView).getY() - 100) {
                     dataGroup.setChipSpacingVertical(0);
@@ -662,10 +661,6 @@ class GuidingLine {
     public void setEventY(float getEventY) {
         realEventY = getEventY - buttonHeightGL;
     }
-
-//    public float getRealEventY(){
-  //      return realEventY;
-    //}
 
     public float getY() {
         return realY;

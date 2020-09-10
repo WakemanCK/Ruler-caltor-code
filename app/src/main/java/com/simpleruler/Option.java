@@ -6,8 +6,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +16,6 @@ import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.CheckBox;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import static com.simpleruler.MainActivity.decimalPlace;
 import static com.simpleruler.MainActivity.guidingLines;
@@ -205,6 +201,10 @@ public class Option extends AppCompatActivity {
     public void checkSound(View view) {
         CheckBox box = findViewById(R.id.soundCheckBox);
         hasSound = box.isChecked();
+        Intent intent = new Intent();
+        setResult(12, intent);    // Request 1 result 12 = change sound
+        finish();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     public void checkThickLine(View view) {
@@ -250,12 +250,12 @@ public class Option extends AppCompatActivity {
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
-    public void rateApp(View view){
+    public void rateApp(View view) {
         MobileService rateMS = new MobileService();
         rateMS.rateApp(this);
     }
 
-    public void shareApp(View view){
+    public void shareApp(View view) {
         MobileService shareMS = new MobileService();
         shareMS.shareApp(this);
     }

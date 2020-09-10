@@ -35,4 +35,9 @@
     <string name="expressionTooLongText">错误：公式太长了</string>
     <string name="shareMessageText">小尺子—计算器\n一个尺子工具，并有内建计算器。\n</string>
     <string name="chooseAppText">请选择分享应用的方法</string>
+    <string name="rateButtonText">给应用评分</string>
+    <string name="shareButtonText">分享应用</string>
+    <string name="soundCheckBoxText">音效</string>
+    <string name="rulerColorText">尺子颜色</string>
+    <string name="colorText">颜色</string>
 </resources>

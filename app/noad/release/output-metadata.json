@@ -4,17 +4,17 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.simpleruler.g",
-  "variantName": "withadRelease",
+  "applicationId": "com.simpleruler.noad",
+  "variantName": "noadRelease",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "properties": [],
-      "versionCode": 12,
-      "versionName": "2.00g",
+      "versionCode": 11,
+      "versionName": "2.00n",
       "enabled": true,
-      "outputFile": "app-withad-release.apk"
+      "outputFile": "app-noad-release.apk"
     }
   ]
 }

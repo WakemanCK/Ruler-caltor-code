@@ -23,6 +23,9 @@
     <string name="pref_decimal_place_key" translatable="false">prefDecimalPlaceKey</string>
     <string name="pref_metric_cm_key" translatable="false">prefMetricCMKey</string>
     <string name="pref_short_form_unit_key" translatable="false">prefShortFormUnitKey</string>
+    <string name="pref_sound_key" translatable="false">prefSoundKey</string>
+    <string name="pref_ruler_color_key" translatable="false">prefRulerColorKey</string>
+    <string name="pref_number_color_key" translatable="false">prefNumberColorKey</string>
     <string name="inchTextViewText">inch</string>
     <string name="inTextViewText">in</string>
     <string name="cmTextViewText">cm</string>
@@ -51,8 +54,5 @@
     <string name="rateButtonText">Rate app</string>
     <string name="shareButtonText">Share app</string>
     <string name="rulerColorText">Ruler Color</string>
-    <string name="pref_sound_key">prefSoundKey</string>
-    <string name="pref_ruler_color_key">prefRulerColorKey</string>
-    <string name="pref_number_color_key">prefNumberColorKey</string>
     <string name="colorText">Color </string>
 </resources>

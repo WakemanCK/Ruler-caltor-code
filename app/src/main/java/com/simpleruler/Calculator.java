@@ -545,8 +545,9 @@ public class Calculator extends AppCompatActivity {
         clipboard.setPrimaryClip(clip);
         Toast.makeText(Calculator.this, R.string.copyClipToastText, Toast.LENGTH_SHORT).show();
     }
- 
+
     MediaPlayer mediaPlayer, errMediaPlayer;
+
     public void playSound() {
         if (MainActivity.hasSound) {
             mediaPlayer = MediaPlayer.create(this, R.raw.beep);
@@ -574,5 +575,5 @@ public class Calculator extends AppCompatActivity {
             });
         }
     }
-    
+
 }
