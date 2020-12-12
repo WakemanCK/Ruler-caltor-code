@@ -94,7 +94,7 @@ public class Calculator extends AppCompatActivity {
             if (i == getIndex) {
                 radioGroup.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.colorList));
             } else {
-                radioGroup.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.colorListDark));
+                radioGroup.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.redDark));
             }
         }
     }

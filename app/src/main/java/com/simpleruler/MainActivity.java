@@ -72,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
                 initRuler(sharedPref);
             } else {
                 finalYDpi = sharedPref.getFloat(getString(R.string.pref_final_y_dpi_key), 400);
-                rulerColor = sharedPref.getInt(getString(R.string.pref_ruler_color_key), getResources().getColor(R.color.colorWhite));
-                numberColor = sharedPref.getInt(getString(R.string.pref_number_color_key), getResources().getColor(R.color.colorBlack));
+                rulerColor = sharedPref.getInt(getString(R.string.pref_ruler_color_key), getResources().getColor(R.color.white));
+                numberColor = sharedPref.getInt(getString(R.string.pref_number_color_key), getResources().getColor(R.color.black));
                 rulerHead = sharedPref.getBoolean(getString(R.string.pref_ruler_head_key), true);
                 hasSound = sharedPref.getBoolean(getString(R.string.pref_sound_key), true);
                 thickLine = sharedPref.getBoolean(getString(R.string.pref_thick_lines_key), false);
@@ -175,8 +175,8 @@ public class MainActivity extends AppCompatActivity {
     private void initRuler(final SharedPreferences initPref) {
         // Init variables
         finalYDpi = (int) autoCalibrate(this);
-        rulerColor = getResources().getColor(R.color.colorWhite);
-        numberColor = getResources().getColor(R.color.colorBlack);
+        rulerColor = getResources().getColor(R.color.white);
+        numberColor = getResources().getColor(R.color.black);
         calibrated = true;
         rulerHead = true;
         hasSound = true;

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Color1" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Calculator color. -->
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimarySurface">@color/blueLight</item>
+        <item name="colorPrimaryVariant">@color/blueDark</item>
+        <!-- List color. -->
+        <item name="colorSecondary">@color/red</item>
+        <item name="colorOnSecondary">@color/redLight</item>
+        <item name="colorSecondaryVariant">@color/redDark</item>
+        <!-- Screen color. -->
+        <item name="android:windowBackground">@color/yellowLight</item>
+        <!-- Text color. -->
+        <item name="colorOnPrimary">@color/black</item>
+    </style>
+</resources>

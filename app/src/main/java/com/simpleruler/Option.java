@@ -126,19 +126,19 @@ public class Option extends AppCompatActivity {
         int colorTemp = 0;
         switch (getPosition) {
             case 0:
-                colorTemp = getResources().getColor(R.color.colorWhite);
+                colorTemp = getResources().getColor(R.color.white);
                 break;
             case 1:
-                colorTemp = getResources().getColor(R.color.colorBlack);
+                colorTemp = getResources().getColor(R.color.black);
                 break;
             case 2:
-                colorTemp = getResources().getColor(R.color.colorRed);
+                colorTemp = getResources().getColor(R.color.red);
                 break;
             case 3:
-                colorTemp = getResources().getColor(R.color.colorYellow);
+                colorTemp = getResources().getColor(R.color.yellow);
                 break;
             case 4:
-                colorTemp = getResources().getColor(R.color.colorBlue);
+                colorTemp = getResources().getColor(R.color.blue);
         }
         return colorTemp;
     }
@@ -147,19 +147,19 @@ public class Option extends AppCompatActivity {
         int colorTemp = 0;
         switch (getPosition) {
             case 0:
-                colorTemp = getResources().getColor(R.color.colorBlack);
+                colorTemp = getResources().getColor(R.color.black);
                 break;
             case 1:
-                colorTemp = getResources().getColor(R.color.colorWhite);
+                colorTemp = getResources().getColor(R.color.white);
                 break;
             case 2:
-                colorTemp = getResources().getColor(R.color.colorYellow);
+                colorTemp = getResources().getColor(R.color.yellow);
                 break;
             case 3:
-                colorTemp = getResources().getColor(R.color.colorBlack);
+                colorTemp = getResources().getColor(R.color.black);
                 break;
             case 4:
-                colorTemp = getResources().getColor(R.color.colorYellow);
+                colorTemp = getResources().getColor(R.color.yellow);
         }
         return colorTemp;
     }
