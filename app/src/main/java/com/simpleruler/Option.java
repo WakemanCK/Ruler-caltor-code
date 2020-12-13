@@ -22,6 +22,7 @@ import static com.simpleruler.MainActivity.guidingLines;
 import static com.simpleruler.MainActivity.metricCM;
 import static com.simpleruler.MainActivity.numberColor;
 import static com.simpleruler.MainActivity.rulerColor;
+import static com.simpleruler.MainActivity.colorType;
 import static com.simpleruler.MainActivity.rulerHead;
 import static com.simpleruler.MainActivity.shortFormUnit;
 import static com.simpleruler.MainActivity.hasSound;
@@ -60,6 +61,7 @@ public class Option extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
+                colorType = position;
                 rulerColor = getRulerColor(position);
                 numberColor = getNumberColor(position);
                 colorList.setVisibility(View.INVISIBLE);

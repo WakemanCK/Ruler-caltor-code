@@ -1,4 +1,4 @@
-/*  Ruler-caltor v2.00
+/*  Ruler-caltor v2.01
     Wakeman Chau
     hauwingstudio@hotmail.com
     © 2020
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     static boolean thickLine;
     static boolean shortFormUnit;
     static String inchForm, cmForm, mmForm;
-    static int rulerColor, numberColor;
+    static int colorType, rulerColor, numberColor;
     // Measurement lines related
     static boolean guidingLines;
     static int decimalPlace;
@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 initRuler(sharedPref);
             } else {
                 finalYDpi = sharedPref.getFloat(getString(R.string.pref_final_y_dpi_key), 400);
+                colorType = sharedPref.getInt(getString(R.string.pref_color_type_key), 0);
                 rulerColor = sharedPref.getInt(getString(R.string.pref_ruler_color_key), getResources().getColor(R.color.white));
                 numberColor = sharedPref.getInt(getString(R.string.pref_number_color_key), getResources().getColor(R.color.black));
                 rulerHead = sharedPref.getBoolean(getString(R.string.pref_ruler_head_key), true);
@@ -175,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
     private void initRuler(final SharedPreferences initPref) {
         // Init variables
         finalYDpi = (int) autoCalibrate(this);
+        colorType = 0;
         rulerColor = getResources().getColor(R.color.white);
         numberColor = getResources().getColor(R.color.black);
         calibrated = true;
@@ -189,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = initPref.edit();
         editor.putBoolean(getString(R.string.pref_calibrated_key), calibrated);
         editor.putFloat(getString(R.string.pref_final_y_dpi_key), finalYDpi);
+        editor.putInt(getString(R.string.pref_color_type_key), colorType);
         editor.putInt(getString(R.string.pref_ruler_color_key), rulerColor);
         editor.putInt(getString(R.string.pref_number_color_key), numberColor);
         editor.putBoolean(getString(R.string.pref_ruler_head_key), rulerHead);
@@ -251,6 +254,7 @@ public class MainActivity extends AppCompatActivity {
                 setRuler();
                 SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt(getString(R.string.pref_color_type_key), colorType);
                 editor.putInt(getString(R.string.pref_ruler_color_key), rulerColor);
                 editor.putInt(getString(R.string.pref_number_color_key), numberColor);
                 editor.apply();

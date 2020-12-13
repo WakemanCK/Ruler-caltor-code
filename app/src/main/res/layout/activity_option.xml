@@ -254,7 +254,7 @@
         android:id="@+id/colorListView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/blueDark"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/rulerColorButton"
         app:layout_constraintStart_toStartOf="@+id/rulerColorButton"

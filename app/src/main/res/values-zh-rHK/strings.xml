@@ -38,6 +38,6 @@
     <string name="rateButtonText">給應用評分</string>
     <string name="shareButtonText">分享應用</string>
     <string name="soundCheckBoxText">音效</string>
-    <string name="rulerColorText">尺子顏色</string>
+    <string name="rulerColorText">顏色</string>
     <string name="colorText">顏色</string>
 </resources>

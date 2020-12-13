@@ -53,6 +53,7 @@
     <string name="soundCheckBoxText">Sound</string>
     <string name="rateButtonText">Rate app</string>
     <string name="shareButtonText">Share app</string>
-    <string name="rulerColorText">Ruler Color</string>
+    <string name="rulerColorText">Color</string>
     <string name="colorText">Color </string>
+    <string name="pref_color_type_key" translatable="false">prefColorTypeKey</string>
 </resources>

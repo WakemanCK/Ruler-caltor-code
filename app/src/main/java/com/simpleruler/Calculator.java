@@ -40,6 +40,23 @@ public class Calculator extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        switch (MainActivity.colorType) {
+            case 0:
+                setTheme(R.style.Theme_Color1);
+                break;
+            case 1:
+                setTheme(R.style.Theme_Color2);
+                break;
+            case 2:
+                setTheme(R.style.Theme_Color3);
+                break;
+            case 3:
+                setTheme(R.style.Theme_Color4);
+                break;
+            case 4:
+                setTheme(R.style.Theme_Color5);
+                break;
+        }
         setContentView(R.layout.activity_calculator);
 
         // Load Ad
@@ -92,9 +109,42 @@ public class Calculator extends AppCompatActivity {
         RadioGroup radioGroup = findViewById(R.id.unitRadioGroup);
         for (int i = 0; i < 3; i++) {
             if (i == getIndex) {
-                radioGroup.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.colorList));
+                switch (MainActivity.colorType) {
+                    case 0:
+                        radioGroup.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.yellow));
+                        break;
+                    case 1:
+                        radioGroup.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.blueDark));
+                        break;
+                    case 2:
+                        radioGroup.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.yellowDark));
+                        break;
+                    case 3:
+                        radioGroup.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.red));
+                        break;
+                    case 4:
+                        radioGroup.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.gray));
+                        break;
+                }
+
             } else {
-                radioGroup.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.redDark));
+                switch (MainActivity.colorType) {
+                    case 0:
+                        radioGroup.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.yellowDark));
+                        break;
+                    case 1:
+                        radioGroup.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.blue));
+                        break;
+                    case 2:
+                        radioGroup.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.yellow));
+                        break;
+                    case 3:
+                        radioGroup.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.redDark));
+                        break;
+                    case 4:
+                        radioGroup.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.grayDark));
+                        break;
+                }
             }
         }
     }
@@ -107,7 +157,7 @@ public class Calculator extends AppCompatActivity {
                 dataString[i] = "";
             }
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, dataString);
         ListView listView = findViewById(R.id.dataListView);
         listView.setAdapter(adapter);
@@ -346,16 +396,14 @@ public class Calculator extends AppCompatActivity {
         if (eqNum2.equals("")) {
             if (eqSubstring.equals("")) {
                 eqEnteringNum1 = true;
-                checkEquation(getOperator);
-                return;
             } else {
                 eqSubstring = eqSubstring.substring(0, eqSubstring.length() - 1);
                 eqNum2 = eqSubstring;
                 eqSubstring = "";
                 changingOperator = true;
-                checkEquation(getOperator);
-                return;
             }
+            checkEquation(getOperator);
+            return;
         }
         // Check not divided by zero
         if (!changingOperator) {
