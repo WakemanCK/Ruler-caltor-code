@@ -23,19 +23,17 @@ import java.math.RoundingMode;
 import static com.simpleruler.MainActivity.decimalPlace;
 
 public class Calculator extends AppCompatActivity {
-    float[] dataValue;
-    String[] dataString;
-    int dataUnit = 2; // 0 = inch; 1 = mm; 2 = cm
-    int dataIndex = 0;
-    String eqString = "";
-    String eqSubstring = "";
-    String eqNum1 = "";
-    String eqNum2 = "";
-    String eqOperator = "";
-    boolean eqEnteringNum1 = true;
-    boolean justPressedEqual = false;
-    boolean changingOperator = false;
-    TextView equationView, answerView;
+    private float[] dataValue;
+    private String[] dataString;
+    private int dataUnit = 2; // 0 = inch; 1 = mm; 2 = cm
+    private int dataIndex = 0;
+    private String eqString = "";
+    private String eqSubstring = "";
+    private String eqNum1 = "";
+    private String eqNum2 = "";
+    private String eqOperator = "";
+    private boolean eqEnteringNum1 = true, justPressedEqual = false, changingOperator = false;
+    private TextView equationView, answerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +121,7 @@ public class Calculator extends AppCompatActivity {
                         radioGroup.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.red));
                         break;
                     case 4:
-                        radioGroup.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.gray));
+                        radioGroup.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.grayLight));
                         break;
                 }
 
@@ -142,7 +140,7 @@ public class Calculator extends AppCompatActivity {
                         radioGroup.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.redDark));
                         break;
                     case 4:
-                        radioGroup.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.grayDark));
+                        radioGroup.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.gray));
                         break;
                 }
             }
@@ -623,5 +621,4 @@ public class Calculator extends AppCompatActivity {
             });
         }
     }
-
 }

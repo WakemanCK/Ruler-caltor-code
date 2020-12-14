@@ -16,10 +16,6 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 public class MobileService {
-    AdView mAdView;
-
-    MobileService() {
-    }
 
     public void init(Context getContext, FrameLayout adContainerView, Display display) {
         MobileAds.initialize(getContext, new OnInitializationCompleteListener() {
@@ -27,7 +23,7 @@ public class MobileService {
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
-        mAdView = new AdView(getContext);
+        AdView mAdView = new AdView(getContext);
         mAdView.setAdUnitId("ca-app-pub-1067337728169403/4623341024");
         adContainerView.addView(mAdView);
         AdRequest adRequest = new AdRequest.Builder().build();

@@ -9,16 +9,13 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 public class MobileService {
-    MobileService() {
-    }
-
     public void init(Context getContext, FrameLayout adContainerView, Display display) {
         adContainerView.setVisibility(View.GONE);
     }
 
     public void rateApp(Context getContext) {
         try {
-            Intent rateIntent = rateIntentForUrl("market://details?id=com.simpleruler.noad");
+            Intent rateIntent = rateIntentForUrl("market://details?id=com.simpleruler.noad"); // No need to change!
             getContext.startActivity(rateIntent);
         } catch (ActivityNotFoundException e) {
             Intent rateIntent = rateIntentForUrl("https://appgallery.huawei.com/#/app/C102640913");

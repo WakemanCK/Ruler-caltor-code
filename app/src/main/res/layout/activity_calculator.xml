@@ -28,7 +28,7 @@
             android:layout_gravity="center|top"
             android:gravity="end"
             android:textAlignment="textEnd"
-            android:textColor="?attr/android:textColorPrimary"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="50sp"
             android:typeface="monospace"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +41,7 @@
             android:layout_gravity="center|bottom"
             android:gravity="end"
             android:textAlignment="textEnd"
-            android:textColor="?attr/android:textColorPrimary"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="50sp"
             android:typeface="monospace"
             app:layout_constraintEnd_toEndOf="parent"
@@ -432,27 +432,36 @@
             android:layout_width="60dp"
             android:layout_height="35dp"
             android:button="?attr/selectableItemBackgroundBorderless"
+            android:paddingStart="15dp"
             android:paddingLeft="15dp"
+            android:paddingEnd="15dp"
+            android:paddingRight="15dp"
             android:text="@string/inchTextViewText"
-            android:textColor="?attr/android:textColorPrimary" />
+            android:textColor="?android:attr/textColorPrimary" />
 
         <RadioButton
             android:id="@+id/mmButton"
             android:layout_width="60dp"
             android:layout_height="35dp"
             android:button="?attr/selectableItemBackgroundBorderless"
+            android:paddingStart="15dp"
             android:paddingLeft="15dp"
+            android:paddingEnd="15dp"
+            android:paddingRight="15dp"
             android:text="@string/mmTextViewText"
-            android:textColor="?attr/android:textColorPrimary" />
+            android:textColor="?android:attr/textColorPrimary" />
 
         <RadioButton
             android:id="@+id/cmButton"
             android:layout_width="60dp"
             android:layout_height="35dp"
             android:button="?attr/selectableItemBackgroundBorderless"
+            android:paddingStart="15dp"
             android:paddingLeft="15dp"
+            android:paddingEnd="15dp"
+            android:paddingRight="15dp"
             android:text="@string/cmTextViewText"
-            android:textColor="?attr/android:textColorPrimary" />
+            android:textColor="?android:attr/textColorPrimary" />
 
     </RadioGroup>
 

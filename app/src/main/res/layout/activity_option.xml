@@ -234,21 +234,21 @@
         android:layout_height="wrap_content"
         android:onClick="showResetPopup"
         android:text="@string/resetButtonText"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton"
+        app:layout_constraintEnd_toStartOf="@+id/infoButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/calibrateButton"
         app:layout_constraintTop_toTopOf="@+id/calibrateButton" />
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/infoButton"
+        android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:onClick="showInformationPopup"
+        android:text="Ⓘ"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/resetButton"
-        app:layout_constraintTop_toTopOf="@+id/calibrateButton"
-        app:srcCompat="@android:drawable/ic_menu_info_details" />
+        app:layout_constraintTop_toTopOf="@+id/calibrateButton" />
 
     <ListView
         android:id="@+id/colorListView"

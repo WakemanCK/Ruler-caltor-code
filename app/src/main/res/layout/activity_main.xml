@@ -25,7 +25,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.45"
-        app:srcCompat="@drawable/ovalbutton3r" />
+        app:srcCompat="@drawable/oval_button_red" />
 
     <View
         android:id="@+id/divider1"
@@ -51,7 +51,7 @@
         app:layout_constraintEnd_toStartOf="@+id/divider1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/divider1"
-        app:srcCompat="@drawable/arrowheadred" />
+        app:srcCompat="@drawable/arrowhead_red" />
 
     <ImageView
         android:id="@+id/arrowHeadCMView1"
@@ -61,7 +61,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/divider1"
         app:layout_constraintTop_toTopOf="@+id/divider1"
-        app:srcCompat="@drawable/arrowheadred" />
+        app:srcCompat="@drawable/arrowhead_red" />
 
     <ImageView
         android:id="@+id/guidingButton2"
@@ -74,7 +74,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.55"
-        app:srcCompat="@drawable/ovalbutton3g" />
+        app:srcCompat="@drawable/oval_button_green" />
 
     <View
         android:id="@+id/divider2"
@@ -100,7 +100,7 @@
         app:layout_constraintEnd_toStartOf="@+id/divider2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/divider2"
-        app:srcCompat="@drawable/arrowheadgreen" />
+        app:srcCompat="@drawable/arrowhead_green" />
 
     <ImageView
         android:id="@+id/arrowHeadCMView2"
@@ -110,7 +110,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/divider2"
         app:layout_constraintTop_toTopOf="@+id/divider2"
-        app:srcCompat="@drawable/arrowheadgreen" />
+        app:srcCompat="@drawable/arrowhead_green" />
 
     <TextView
         android:id="@+id/guidingLineInchText"
@@ -153,7 +153,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/upButton"

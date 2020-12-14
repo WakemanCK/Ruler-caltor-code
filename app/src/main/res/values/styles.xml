@@ -10,7 +10,6 @@
     <style name="AppTheme.PopupTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
-        <item name="colorPrimary">@color/blue</item>
         <item name="colorPrimaryDark">@color/blueDark</item>
         <item name="colorAccent">@color/white</item>
     </style>
@@ -19,7 +18,6 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
         <item name="colorPrimary">@color/blue</item>
-        <item name="colorPrimaryDark">@color/blueDark</item>
         <item name="colorAccent">@color/white</item>
     </style>
 </resources>

@@ -35,27 +35,22 @@ import com.google.android.material.chip.ChipGroup;
 public class MainActivity extends AppCompatActivity {
 
     // Ruler related
-    float finalYDpi = 400f;
-    int maxScreenHeight;
-    static boolean calibrated = false;
-    static boolean rulerHead;
-    static boolean hasSound;
-    static boolean thickLine;
-    static boolean shortFormUnit;
-    static String inchForm, cmForm, mmForm;
-    static int colorType, rulerColor, numberColor;
+    private float finalYDpi = 400f;
+    private int maxScreenHeight;
+    public static boolean calibrated = false, rulerHead, hasSound, thickLine, shortFormUnit;
+    public static String inchForm, cmForm, mmForm;
+    public static int colorType, rulerColor, numberColor;
     // Measurement lines related
-    static boolean guidingLines;
-    static int decimalPlace;
-    static boolean metricCM;
-    View guidingLineView1;
-    View guidingLineView2;
-    GuidingLine Line1 = new GuidingLine();
-    GuidingLine Line2 = new GuidingLine();
+    public static boolean guidingLines, metricCM;
+    public static int decimalPlace;
+    private View guidingLineView1, guidingLineView2;
+    private final GuidingLine Line1 = new GuidingLine();
+    private final GuidingLine Line2 = new GuidingLine();
     // Data group related
-    float[] dataValue = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1}; //new float[10];
-    int dataIndex = -1;
-    ChipGroup dataGroup;
+    private final float[] dataValue = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+    private int dataIndex = -1;
+    private ChipGroup dataGroup;
+    private MediaPlayer slidingMediaPlayer;
     public static final String EXTRA_VALUE = "com.simpleruler.VALUE";
     public static final String EXTRA_INDEX = "com.simpleruler.INDEX";
 
@@ -213,14 +208,12 @@ public class MainActivity extends AppCompatActivity {
                 showGuidingLines();
             }
         }, 100);
-
     }
 
     double autoCalibrate(Activity activity) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         Toast.makeText(this, R.string.autoCalibrateText, Toast.LENGTH_SHORT).show();
-        //return (30 / 2.54) * displayMetrics.ydpi;
         return displayMetrics.ydpi;
     }
 
@@ -506,8 +499,8 @@ public class MainActivity extends AppCompatActivity {
         ImageView aHIView1 = findViewById(R.id.arrowHeadInchView1);
         aHIView1.setY(Line1.getY() - aHIView1.getHeight() / 2f);
         // Guiding line 2
-        ImageView gBview2 = findViewById(R.id.guidingButton2);
-        gBview2.setY(Line2.getY() - Line2.getButtonHeight(this));
+        ImageView gBView2 = findViewById(R.id.guidingButton2);
+        gBView2.setY(Line2.getY() - Line2.getButtonHeight(this));
         findViewById(R.id.divider2).setY(Line2.getY());
         ImageView aHCView2 = findViewById(R.id.arrowHeadCMView2);
         aHCView2.setY(Line2.getY() - aHCView2.getHeight() / 2f);
@@ -617,9 +610,6 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, 2); // Calculator Request Code = 2
     }
 
-
-    MediaPlayer slidingMediaPlayer;
-
     public void playSlidingSound() {
         if (hasSound) {
             if (slidingMediaPlayer == null) {
@@ -642,10 +632,8 @@ public class MainActivity extends AppCompatActivity {
 }
 
 class GuidingLine {
-    float realY;
-    float realEventY;
-    int buttonHeightGL;
-    int maxY;
+    private float realY, realEventY;
+    private int buttonHeightGL, maxY;
 
     GuidingLine() {
         realY = 1000;
@@ -709,5 +697,4 @@ class GuidingLine {
         }
         return buttonHeightGL;
     }
-
 }

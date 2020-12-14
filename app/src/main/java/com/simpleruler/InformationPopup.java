@@ -25,7 +25,7 @@ public class InformationPopup extends AppCompatActivity {
             PackageInfo packageInfo = getApplicationContext().getPackageManager().getPackageInfo(getPackageName(), 0);
             TextView textView = findViewById(R.id.informationTextView);
             String version = packageInfo.versionName;
-            String s = String.format(getString(R.string.informationTextViewText), version);
+            String s = String.format(getString(R.string.informationTextViewText), getString(R.string.app_name),version);
             textView.setText(s);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();

@@ -222,7 +222,7 @@ public class Option extends AppCompatActivity {
         CheckBox box = findViewById(R.id.shortFormUnitCheckBox);
         shortFormUnit = box.isChecked();
         Intent intent = new Intent();
-        setResult(8, intent);   // Request 1 result 8 = switch shortform unit
+        setResult(8, intent);   // Request 1 result 8 = switch short form unit
         finish();
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }

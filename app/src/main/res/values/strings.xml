@@ -24,10 +24,10 @@
     <string name="pref_metric_cm_key" translatable="false">prefMetricCMKey</string>
     <string name="pref_short_form_unit_key" translatable="false">prefShortFormUnitKey</string>
     <string name="pref_sound_key" translatable="false">prefSoundKey</string>
+    <string name="pref_color_type_key" translatable="false">prefColorTypeKey</string>
     <string name="pref_ruler_color_key" translatable="false">prefRulerColorKey</string>
     <string name="pref_number_color_key" translatable="false">prefNumberColorKey</string>
     <string name="inchTextViewText">inch</string>
-    <string name="inTextViewText">in</string>
     <string name="cmTextViewText">cm</string>
     <string name="mmTextViewText">mm</string>
     <string name="inchShortFormText" translatable="false">in</string>
@@ -39,9 +39,7 @@
     <string name="copyClipToastText">Copied to clipboard.</string>
     <string name="sumAllText">Sum</string>
     <string name="clearAllText">Clear all data</string>
-    <string name="oneEmptySpaceText" translatable="false">" "</string>
-    <string name="fiveEmptySpaceText" translatable="false">"     "</string>
-    <string name="informationTextViewText">"<b>Ruler-caltor v%s</b>\n\n\nWakeman Chau\nhauwingstudio@hotmail.com\n© 2020\nAll rights reserved"</string>
+    <string name="informationTextViewText">"<b>%s v%s</b>\n\n\nWakeman Chau\nhauwingstudio@hotmail.com\n© 2020\nAll rights reserved"</string>
     <string name="sumAllAnswerText">Sum of data</string>
     <string name="tapTextViewText">← Tap to record\nmeasurement →</string>
     <string name="errorText">Error!</string>
@@ -55,5 +53,4 @@
     <string name="shareButtonText">Share app</string>
     <string name="rulerColorText">Color</string>
     <string name="colorText">Color </string>
-    <string name="pref_color_type_key" translatable="false">prefColorTypeKey</string>
 </resources>
