@@ -1,19 +1,17 @@
 {
-  "version": 1,
+  "version": 2,
   "artifactType": {
     "type": "APK",
     "kind": "Directory"
   },
   "applicationId": "com.simpleruler.noad",
-  "variantName": "noadRelease",
+  "variantName": "processNoadReleaseResources",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
-      "properties": [],
-      "versionCode": 11,
-      "versionName": "2.00n",
-      "enabled": true,
+      "versionCode": 13,
+      "versionName": "2.01n",
       "outputFile": "app-noad-release.apk"
     }
   ]
