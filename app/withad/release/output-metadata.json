@@ -1,19 +1,17 @@
 {
-  "version": 1,
+  "version": 2,
   "artifactType": {
     "type": "APK",
     "kind": "Directory"
   },
   "applicationId": "com.simpleruler.g",
-  "variantName": "withadRelease",
+  "variantName": "processWithadReleaseResources",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
-      "properties": [],
-      "versionCode": 12,
-      "versionName": "2.00g",
-      "enabled": true,
+      "versionCode": 14,
+      "versionName": "2.01g",
       "outputFile": "app-withad-release.apk"
     }
   ]
